@@ -2,24 +2,25 @@
 using GameSite.Data;
 using GameSite.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameSite.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-    private readonly ApplicationDbContext _context;
+    private readonly ILogger<HomeController> logger;
+    private readonly ApplicationDbContext context;
 
     public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
     {
-        _logger = logger;
-        _context = context;
+        this.logger = logger;
+        this.context = context;
     }
 
     public IActionResult Index()
     {
-        var publications = _context.Publications.ToList().Skip(1);
-        ViewBag.Publications = publications;
+        var news = context.News.ToList().Skip(1);
+        ViewBag.Publications = news;
         return View();
     }
 
@@ -31,9 +32,9 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Show(int id)
     {
-        var publication = _context.Publications.ToList()[id - 1];
-        var coments = _context.Coments.Where(x => x.PublicationId == id - 1).ToList();
-        ViewBag.Publication = publication;
+        var @new = context.News.ToList()[id - 1];
+        var coments = context.NewsComments.Where(x => x.NewsId == id - 1).ToList();
+        ViewBag.Publication = @new;
         ViewBag.Coments = coments;
 
         return View();
@@ -44,18 +45,18 @@ public class HomeController : Controller
     {
         if (!string.IsNullOrEmpty(author) && !string.IsNullOrEmpty(text))
         {
-            Coment coment = new(id - 1, author, text);
-            _context.Coments.Add(coment);
-            await _context.SaveChangesAsync();
+            NewsComment coment = new(id - 1, author, text);
+            context.NewsComments.Add(coment);
+            await context.SaveChangesAsync();
 
             // Після успішного додавання коментаря редіректимо на ту саму сторінку
             return RedirectToAction("Show", new { id = id });
         }
 
         // Якщо дані недійсні, залишаємо користувача на тій же сторінці.
-        var publication = _context.Publications.FirstOrDefault(p => p.Id == id);
-        ViewBag.Publication = publication;
-        var coments = _context.Coments.Where(x => x.PublicationId == id).ToList();
+        var news = await context.News.FirstOrDefaultAsync(p => p.Id == id);
+        var coments = await context.NewsComments.Where(x => x.NewsId == id).ToListAsync();
+        ViewBag.Publication = news;
         ViewBag.Coments = coments;
         return View();
     }

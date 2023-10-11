@@ -51,12 +51,12 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        PublicationDbInitializer.Initialize(context);
-        ComentDbInitializer.Initialize(context);
+        NewsDbInitializer.Initialize(context);
+        NewsCommentDbInitializer.Initialize(context);
     }
     catch (Exception)
     {
-        Console.WriteLine("Помилка ApplicationDbContext");
+        Console.WriteLine("Error ApplicationDbContext");
     }
 }
 

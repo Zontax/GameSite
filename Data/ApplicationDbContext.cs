@@ -12,8 +12,8 @@ public class ApplicationDbContext : IdentityDbContext
         Database.EnsureCreated();
     }
 
-    public DbSet<Publication> Publications { get; set; }
-    public DbSet<Coment> Coments { get; set; }
+    public DbSet<News> News { get; set; }
+    public DbSet<NewsComment> NewsComments { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
