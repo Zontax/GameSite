@@ -1,0 +1,52 @@
+﻿@using Humanizer;
+@{
+    ViewData["Title"] = "Show";
+}
+
+<div class="text-center">
+    <h1 class="display-4"></h1>
+
+    <div class="publication" style="background-color: rgb(199, 199, 199);">
+        <h3>@(ViewBag.Publication.Id) @ViewBag.Publication.Title</h3>
+        <p>@ViewBag.Publication.Text</p>
+        <p>@ViewBag.Publication.Date @ViewBag.Publication.Author</p>
+    </div>
+    <a href="/Home">Назад</a>
+
+    <div>
+        <h3>Написати коментар</h3>
+        <form method="post">
+            <table>
+                <input type="hidden" value="@ViewBag.Publication.Id" name="PublicationId" />
+                <tr>
+                    <td>
+                        <p>Введіть своє ім'я</p>
+                    </td>
+                    <td><input type="text" name="Author" /> </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Текст</p>
+                    </td>
+                    <td>
+                        <input type="text" name="Text" />
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Відправити" />
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <h3>Коментарі</h3>
+    @foreach (var coment in ViewBag.Coments)
+    {
+        <div>
+            <p><b>@(coment.Author): </b> @coment.Text</p>
+            <p title="@(coment.Date.ToString("yyyy-MM-dd HH:mm"))">
+                @(DateTime.Now.Add(-((TimeSpan)(DateTime.Now - coment.Date))).Humanize())</p>
+        </div>
+    }
