@@ -19,3 +19,7 @@
 
 ## Видалити контейнер
 ```docker rm gamesite-app```
+
+## Зробити представлення з БД
+```dotnet ef dbcontext scaffold "строка підключення" провайдер_бд```
+```Scaffold-DbContext "Data Source=D:\\GameSite.db" Microsoft.EntityFrameworkCore.Sqlite```

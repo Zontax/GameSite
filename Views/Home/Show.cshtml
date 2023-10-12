@@ -8,7 +8,7 @@
 
     <div class="publication" style="background-color: rgb(199, 199, 199);">
         <h3>@(ViewBag.Publication.Id) @ViewBag.Publication.Title</h3>
-        <p>@ViewBag.Publication.Text</p>
+        <p>@Html.Raw(ViewBag.Publication.Text)</p>
         <p>@ViewBag.Publication.Date @ViewBag.Publication.Author</p>
         <p>
             👍@(ViewBag.Publication.LikesCount)

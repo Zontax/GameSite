@@ -8,8 +8,8 @@ namespace GameSite.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> logger;
-    private readonly ApplicationDbContext context;
+    readonly ILogger<HomeController> logger;
+    readonly ApplicationDbContext context;
 
     public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
     {
@@ -17,20 +17,47 @@ public class HomeController : Controller
         this.context = context;
     }
 
-    public IActionResult Index()
+    public ActionResult Index()
     {
         var news = context.News.ToList().Skip(1);
         ViewBag.Publications = news;
         return View();
     }
 
-    public IActionResult Privacy()
+    public ActionResult News()
+    {
+        var news = context.News.ToList().Skip(1);
+        ViewBag.Publications = news;
+        return View();
+    }
+
+    public string Reviews()
+    {
+        return "Пизда";
+    }
+
+    public ActionResult Articles()
+    {
+        return View();
+    }
+
+    public ActionResult Guides()
+    {
+        return View();
+    }
+
+    public ActionResult Videos()
+    {
+        return View();
+    }
+
+    public ActionResult Podcasts()
     {
         return View();
     }
 
     [HttpGet]
-    public IActionResult Show(int id)
+    public ActionResult Show(int id)
     {
         var @new = context.News.ToList()[id - 1];
         var coments = context.NewsComments.Where(x => x.NewsId == id - 1).ToList();
@@ -41,7 +68,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Show(int id, string author, string text)
+    public async Task<ActionResult> Show(int id, string author, string text)
     {
         if (!string.IsNullOrEmpty(author) && !string.IsNullOrEmpty(text))
         {
@@ -62,7 +89,7 @@ public class HomeController : Controller
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    public ActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
