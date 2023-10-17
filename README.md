@@ -1,7 +1,14 @@
 # Веб-сайт ігрової тематики для публікації новин, рецензій, оглядів для ігор
 
+# NumGet
+Humanizer.Core.uk
+Newtonsoft.Json
+
 ## Запуск проекта
+```dotnet run```
 ```dotnet watch run```
+
+
 
 ## Створення docker контейнера
 ```docker build -t gamesite-app .```

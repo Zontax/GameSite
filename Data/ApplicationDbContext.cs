@@ -12,11 +12,7 @@ public class ApplicationDbContext : IdentityDbContext
         Database.EnsureCreated();
     }
 
-    public DbSet<News> News { get; set; }
-    public DbSet<NewsComment> NewsComments { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlite("Data Source=GameSite.db");
-    }
+    public DbSet<Publication> Publications { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<PublicationType> PublicationTypes { get; set; }
 }

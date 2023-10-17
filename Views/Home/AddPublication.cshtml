@@ -1,0 +1,44 @@
+﻿@model Publication;
+@{
+    ViewData["Title"] = "Створити пост";
+}
+
+<div class="text-center">
+    <div>
+        <h3>Створити пост</h3>
+
+        <form asp-controller="Home" asp-action="AddPublication" method="post">
+
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="TypeId"></label>
+                    <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content"></label>
+                    <textarea asp-for="Content" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Author"></label>
+                    <input asp-for="Author" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tags"></label>
+                    <input asp-for="Tags" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="GameId"></label>
+                    <input asp-for="GameId" class="form-control">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Опублікувати</button>
+
+        </form>
+
+        <a href="/Home">Назад</a>
+    </div>
+</div>

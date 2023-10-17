@@ -36,27 +36,28 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+app.MapRazorPages();
+
 
 app.MapDefaultControllerRoute();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages();
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-
     try
     {
+        var services = scope.ServiceProvider;
         var context = services.GetRequiredService<ApplicationDbContext>();
-        NewsDbInitializer.Initialize(context);
-        NewsCommentDbInitializer.Initialize(context);
+
+        PublicationDbInitializer.Initialize(context);
+        CommentDbInitializer.Initialize(context);
     }
     catch (Exception)
     {
-        Console.WriteLine("Error ApplicationDbContext");
+        Console.WriteLine("ApplicationDbContext error");
     }
 }
 

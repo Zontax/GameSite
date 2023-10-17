@@ -1,0 +1,31 @@
+@using Humanizer;
+@{
+    ViewData["Title"] = "Create publication";
+}
+
+<div class="text-center">
+    <h1 class="display-4"></h1>
+    <a href="/Home">Назад</a>
+
+    <div>
+        <h3>Публікація</h3>
+
+        @* <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+        </div> *@
+
+        <form method="post">
+
+            <input type="hidden" value="@ViewBag.Publication.Id" name="PublicationId" />
+            <p>Автор</p>
+            <input type="text" name="Author" /> </td>
+            <p>Текст</p>
+            <input type="text" name="Text" />
+
+            <input type="submit" value="Опублікувати" />
+
+        </form>
+    </div>
+</div>

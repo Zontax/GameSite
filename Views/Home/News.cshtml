@@ -4,7 +4,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Index</h1>
+    <h1 class="display-4">Новини</h1>
 
     <div>
         @foreach (var publication in ViewBag.Publications)
@@ -13,7 +13,7 @@
                 <h3><b>@(publication.Id)</b> @publication.Title</h3>
                 <p>@publication.Content</p>
                 <p>@publication.Author</p>
-                <p><a href="/Home/Show/@(publication.Id)">Переглянути</a></p>
+                <p><a href="/Home/Show/@(publication.Id)">Дивитись</a></p>
                 <p title="@publication.Date.ToString("yyyy-MM-dd HH:mm")">
                     @(DateTime.Now.Add(-((TimeSpan)(DateTime.Now - publication.Date))).Humanize())</p>
             </div>

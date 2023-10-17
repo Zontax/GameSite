@@ -1,4 +1,5 @@
 ﻿@using Humanizer;
+@model Comment;
 @{
     ViewData["Title"] = "Show";
 }
@@ -8,7 +9,7 @@
 
     <div class="publication" style="background-color: rgb(199, 199, 199);">
         <h3>@(ViewBag.Publication.Id) @ViewBag.Publication.Title</h3>
-        <p>@Html.Raw(ViewBag.Publication.Text)</p>
+        <p>@Html.Raw(ViewBag.Publication.Content)</p>
         <p>@ViewBag.Publication.Date @ViewBag.Publication.Author</p>
         <p>
             👍@(ViewBag.Publication.LikesCount)
@@ -18,33 +19,20 @@
     </div>
     <a href="/Home">Назад</a>
 
-    <div>
-        <h3>Написати коментар</h3>
-        <form method="post">
-            <table>
-                <input type="hidden" value="@ViewBag.Publication.Id" name="PublicationId" />
-                <tr>
-                    <td>
-                        <p>Введіть своє ім'я</p>
-                    </td>
-                    <td><input type="text" name="Author" /> </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>Текст</p>
-                    </td>
-                    <td>
-                        <input type="text" name="Text" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Відправити" />
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
-        </form>
-    </div>
+    <h3>Написати коментар</h3>
+    <form asp-action="Show" method="post">
+
+        <input type="hidden" value="@ViewBag.Publication.Id" name="PublicationId" />
+        <div class="form-group">
+            <label asp-for="Author" class="form-control"></label>
+            <input asp-for="Author" class="form-control">
+        </div>
+        <div class="form-group">
+            <textarea asp-for="Text" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Додати коментар</button>
+
+    </form>
 
     <h3>Коментарі</h3>
     @foreach (var coment in ViewBag.Coments)
@@ -55,3 +43,4 @@
                 @(DateTime.Now.Add(-((TimeSpan)(DateTime.Now - coment.Date))).Humanize())</p>
         </div>
     }
+</div>

@@ -2,14 +2,15 @@
 using GameSite.Data;
 using GameSite.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameSite.Controllers;
 
 public class HomeController : Controller
 {
-    readonly ILogger<HomeController> logger;
-    readonly ApplicationDbContext context;
+    ILogger<HomeController> logger;
+    ApplicationDbContext context;
 
     public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
     {
@@ -19,21 +20,23 @@ public class HomeController : Controller
 
     public ActionResult Index()
     {
-        var news = context.News.ToList().Skip(1);
-        ViewBag.Publications = news;
+        var all = context.Publications.ToList();
+        ViewBag.Publications = all;
         return View();
     }
 
     public ActionResult News()
     {
-        var news = context.News.ToList().Skip(1);
+        var news = context.Publications.ToList().Where(x => x.TypeId == Models.Type.Новина);
         ViewBag.Publications = news;
         return View();
     }
 
-    public string Reviews()
+    public ActionResult Reviews()
     {
-        return "Пизда";
+        var reviews = context.Publications.ToList().Where(x => x.TypeId == Models.Type.Огляд); ;
+        ViewBag.Publications = reviews;
+        return View();
     }
 
     public ActionResult Articles()
@@ -56,38 +59,70 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet]
+    public ActionResult AddPublication()
+    {
+
+        var typeList = Enum.GetValues(typeof(Models.Type));
+        SelectList list = new(typeList);
+        ViewBag.SelectItems = list;
+
+        return View();
+    }
+
+    [HttpPost]
+    public ActionResult AddPublication(Publication publication)
+    {
+        if (ModelState.IsValid)
+        {
+            Debug.WriteLine(publication.Id);
+            Debug.WriteLine(publication.Author);
+            Debug.WriteLine(publication.Title);
+            Debug.WriteLine(publication.Content);
+
+            context.Publications.Add(publication);
+            context.SaveChanges();
+
+            return RedirectToAction("AddPublication");
+        }
+        else
+        {
+            return RedirectToAction("Index");
+        }
+
+    }
+
     public ActionResult Show(int id)
     {
-        var @new = context.News.ToList()[id - 1];
-        var coments = context.NewsComments.Where(x => x.NewsId == id - 1).ToList();
-        ViewBag.Publication = @new;
+        var publication = context.Publications.Find(id);
+        var coments = context.Comments.Where(x => x.PublicationId == id).ToList();
+
+        ViewBag.Publication = publication;
         ViewBag.Coments = coments;
 
         return View();
     }
 
     [HttpPost]
-    public async Task<ActionResult> Show(int id, string author, string text)
+    public ActionResult Show(int id, string author, string text)
     {
-        if (!string.IsNullOrEmpty(author) && !string.IsNullOrEmpty(text))
+        if (ModelState.IsValid)
         {
-            NewsComment coment = new(id - 1, author, text);
-            context.NewsComments.Add(coment);
-            await context.SaveChangesAsync();
+            if (!string.IsNullOrEmpty(author) && !string.IsNullOrEmpty(text))
+            {
+                Comment coment = new(id, author, text);
+                context.Comments.Add(coment); context.SaveChanges();
+                context.SaveChanges();
+            }
 
-            // Після успішного додавання коментаря редіректимо на ту саму сторінку
-            return RedirectToAction("Show", new { id = id });
+            return RedirectToAction("Show", id);
         }
-
-        // Якщо дані недійсні, залишаємо користувача на тій же сторінці.
-        var news = await context.News.FirstOrDefaultAsync(p => p.Id == id);
-        var coments = await context.NewsComments.Where(x => x.NewsId == id).ToListAsync();
-        ViewBag.Publication = news;
-        ViewBag.Coments = coments;
-        return View();
+        else
+        {
+            return RedirectToAction("Index");
+        }
     }
 
+    //! Error
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public ActionResult Error()
     {
