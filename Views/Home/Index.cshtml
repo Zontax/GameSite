@@ -6,18 +6,5 @@
 <div class="text-center">
     <h1 class="display-4">Index</h1>
 
-    <div>
-        @foreach (var publication in ViewBag.Publications)
-        {
-            <div class="publication" style="background-color: rgb(199, 199, 199);">
-                <h3><b>@(publication.Id)</b> @publication.Title</h3>
-                <p>@publication.Content</p>
-                <p>@publication.Author</p>
-                <p><a href="/Home/Show/@(publication.Id)">Переглянути</a></p>
-                <p title="@publication.Date.ToString("yyyy-MM-dd HH:mm")">
-                    @(DateTime.Now.Add(-((TimeSpan)(DateTime.Now - publication.Date))).Humanize())</p>
-            </div>
-        }
-    </div>
-
+    <partial name="_PublicationList" />
 </div>

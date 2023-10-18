@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using GameSite.Data;
 using GameSite.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,18 @@ public class HomeController : Controller
         this.context = context;
     }
 
+    [AllowAnonymous]
     public ActionResult Index()
     {
         var all = context.Publications.ToList();
         ViewBag.Publications = all;
+
+        var commentsCount = context.Comments
+        .GroupBy(com => com.PublicationId)
+        .Select(group => new { PublicationId = group.Key, Count = group.Count() })
+        .ToDictionary(i => i.PublicationId, i => i.Count);
+        ViewBag.CommentsCount = commentsCount;
+
         return View();
     }
 
@@ -29,6 +38,13 @@ public class HomeController : Controller
     {
         var news = context.Publications.ToList().Where(x => x.TypeId == Models.Type.Новина);
         ViewBag.Publications = news;
+
+        var commentsCount = context.Comments
+        .GroupBy(com => com.PublicationId)
+        .Select(group => new { PublicationId = group.Key, Count = group.Count() })
+        .ToDictionary(i => i.PublicationId, i => i.Count);
+        ViewBag.CommentsCount = commentsCount;
+
         return View();
     }
 
@@ -36,6 +52,13 @@ public class HomeController : Controller
     {
         var reviews = context.Publications.ToList().Where(x => x.TypeId == Models.Type.Огляд); ;
         ViewBag.Publications = reviews;
+
+        var commentsCount = context.Comments
+        .GroupBy(com => com.PublicationId)
+        .Select(group => new { PublicationId = group.Key, Count = group.Count() })
+        .ToDictionary(i => i.PublicationId, i => i.Count);
+        ViewBag.CommentsCount = commentsCount;
+
         return View();
     }
 
@@ -59,12 +82,13 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize]
     public ActionResult AddPublication()
     {
-
         var typeList = Enum.GetValues(typeof(Models.Type));
-        SelectList list = new(typeList);
-        ViewBag.SelectItems = list;
+        ViewBag.SelectItems = new SelectList(typeList);
+        ViewBag.Username = User?.Identity?.Name ?? "null";
+        ViewBag.IsAuthenticated = User?.Identity?.IsAuthenticated ?? false;
 
         return View();
     }
@@ -72,23 +96,21 @@ public class HomeController : Controller
     [HttpPost]
     public ActionResult AddPublication(Publication publication)
     {
+        if (string.IsNullOrEmpty(publication.Tags))
+            ModelState.AddModelError(nameof(publication.Tags), "!!!");
+
         if (ModelState.IsValid)
         {
-            Debug.WriteLine(publication.Id);
-            Debug.WriteLine(publication.Author);
-            Debug.WriteLine(publication.Title);
-            Debug.WriteLine(publication.Content);
-
             context.Publications.Add(publication);
             context.SaveChanges();
-
-            return RedirectToAction("AddPublication");
+            return RedirectToAction(nameof(Index));
         }
         else
         {
-            return RedirectToAction("Index");
+            var typeList = Enum.GetValues(typeof(Models.Type));
+            ViewBag.SelectItems = new SelectList(typeList);
+            return View(publication);
         }
-
     }
 
     public ActionResult Show(int id)

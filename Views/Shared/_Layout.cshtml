@@ -23,30 +23,29 @@
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="News">Новини</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="News">Новини</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Reviews">Огляди</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Reviews">Огляди</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Articles">Статті</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Articles">Статті</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Guides">Гайди</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Guides">Гайди</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Videos">Відео</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Videos">Відео</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Podcasts">Подкасти</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Podcasts">Подкасти</a>
+                        </li>
+
+                        <li class="nav-item align-content-end">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="AddPublication">Створити</a>
                         </li>
                     </ul>
 
@@ -56,6 +55,7 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -64,12 +64,16 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - GameSite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - GameSite - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

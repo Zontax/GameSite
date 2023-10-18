@@ -3,8 +3,16 @@
     ViewData["Title"] = "Створити пост";
 }
 
+<style>
+    .input-validation-error {
+        border-color: red;
+    }
+</style>
+
 <div class="text-center">
     <div>
+        <h3>Username: @ViewBag.Username</h3>
+        <h3>IsAuthenticated: @ViewBag.IsAuthenticated</h3>
         <h3>Створити пост</h3>
 
         <form asp-controller="Home" asp-action="AddPublication" method="post">
@@ -13,29 +21,35 @@
                 <div class="form-group">
                     <label asp-for="TypeId"></label>
                     <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control"></select>
+                    <span asp-validation-for="TypeId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Title"></label>
                     <input asp-for="Title" class="form-control">
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Content"></label>
                     <textarea asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Author"></label>
                     <input asp-for="Author" class="form-control">
+                    <span asp-validation-for="Author" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Tags"></label>
                     <input asp-for="Tags" class="form-control">
+                    <span asp-validation-for="Tags" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="GameId"></label>
-                    <input asp-for="GameId" class="form-control">
+                    <input asp-for="GameId" value="0" class="form-control">
+                    <span asp-validation-for="GameId" class="text-danger"></span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Опублікувати</button>
+            <button type="submit" class="btn btn-success">Опублікувати</button>
 
         </form>
 

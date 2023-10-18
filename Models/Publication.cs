@@ -5,28 +5,41 @@ namespace GameSite.Models;
 public class Publication
 {
     public int Id { get; set; }
+
     [Display(Name = "Тип публікації")]
     public Type TypeId { get; set; } = Type.Новина;
+
     public string UrlSlug { get; set; } = string.Empty;
-    [Required]
-    [StringLength(100)]
+
+    [Required(ErrorMessage = "Це поле обов'язкове")]
+    [StringLength(100, ErrorMessage = "не більше 100 символів")]
     [Display(Name = "Назва")]
     public string Title { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Це поле обов'язкове")]
     [Display(Name = "Текст")]
-    [Required]
     public string Content { get; set; } = string.Empty;
+
     public string ImageUrl { get; set; } = string.Empty;
+
     public string VideoUrl { get; set; } = string.Empty;
-    [Required]
+
+    [Required(ErrorMessage = "Це поле обов'язкове")]
     [Display(Name = "Автор")]
     public string Author { get; set; } = string.Empty;
+
     public DateTime Date { get; set; } = DateTime.Now;
+
     public int LikesCount { get; set; } = 0;
+
     public int DislikesCount { get; set; } = 0;
+
+    [Required(ErrorMessage = "Введіть теги")]
     [Display(Name = "Теги")]
-    public string Tags { get; set; } = string.Empty;
+    public string? Tags { get; set; } = string.Empty;
+
     [Display(Name = "Гра")]
-    public int GameId { get; set; } = 0;
+    public int? GameId { get; set; } = 0;
 
     public Publication()
     {
@@ -54,6 +67,27 @@ public class Publication
     {
         UrlSlug = Id.ToString();
     }
+
+    public string GetColorCode(Type typeId)
+    {
+        switch (typeId)
+        {
+            case Type.Новина:
+                return "blue";
+            case Type.Огляд:
+                return "green";
+            case Type.Стаття:
+                return "red";
+            case Type.Гайд:
+                return "orange";
+            case Type.Відео:
+                return "purple";
+            case Type.Подкаст:
+                return "brown";
+            default:
+                return "black"; // Колір за замовчуванням для невідомих типів
+        }
+    }
 }
 
 public enum Type
@@ -65,3 +99,4 @@ public enum Type
     Відео,
     Подкаст,
 }
+
