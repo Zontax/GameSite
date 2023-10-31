@@ -7,27 +7,29 @@
 <div class="text-center">
     <h1 class="display-4"></h1>
 
-    <div class="publication" style="background-color: rgb(199, 199, 199);">
-        <h3>@(ViewBag.Publication.Id) @ViewBag.Publication.Title</h3>
-        <p>@Html.Raw(ViewBag.Publication.Content)</p>
-        <p>@ViewBag.Publication.Date @ViewBag.Publication.Author</p>
+    <div class="show-post" style="background-color: rgb(199, 199, 199);">
+        <h3>@(ViewBag.Post.Id) @ViewBag.Post.Title</h3>
+        <p>@Html.Raw(ViewBag.Post.Content)</p>
+        <p>@ViewBag.Post.Date @ViewBag.Post.Author</p>
         <p>
-            👍@(ViewBag.Publication.LikesCount)
-            😢@(ViewBag.Publication.DislikesCount)
-            Теги: @ViewBag.Publication.Tags
+            👍@(ViewBag.Post.LikesCount)
+            👎@(ViewBag.Post.DislikesCount)
         </p>
+        <p>Теги: @ViewBag.Post.Tags</p>
     </div>
     <a href="/Home">Назад</a>
 
     <h3>Написати коментар</h3>
-    <form asp-action="Show" method="post">
+    <form asp-action="Show" method="post" class="comment-form">
 
-        <input type="hidden" value="@ViewBag.Publication.Id" name="PublicationId" />
+        <input type="hidden" value="@ViewBag.Post.Id" name="PostId" />
         <div class="form-group">
+            <span asp-validation-for="Author" class="text-danger"></span>
             <label asp-for="Author" class="form-control"></label>
             <input asp-for="Author" class="form-control">
         </div>
         <div class="form-group">
+            <span asp-validation-for="Text" class="text-danger"></span>
             <textarea asp-for="Text" class="form-control"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Додати коментар</button>
@@ -37,10 +39,15 @@
     <h3>Коментарі</h3>
     @foreach (var comment in ViewBag.Coments)
     {
-        <div class="col-md-12">
+        <div class="post-comment">
             <p><b>@(comment.Author): </b> @comment.Text</p>
-            <p title="@(comment.Date.ToString("yyyy-MM-dd HH:mm"))">
-                @(DateTime.Now.Add(-((TimeSpan)(DateTime.Now - comment.Date))).Humanize())</p>
+            <p class="date-time" title="@(comment.Date.ToString("yyyy-MM-dd HH:mm"))">
+                @(DateTime.Now.Add(-((TimeSpan)(DateTime.Now - comment.Date))).Humanize())
+                @if ((bool)comment.Edited)
+                {
+                    <b> редаговано</b>
+                }
+            </p>
         </div>
     }
 </div>

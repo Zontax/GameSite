@@ -2,7 +2,7 @@
 
 namespace GameSite.Models;
 
-public class Publication
+public class Post
 {
     public int Id { get; set; }
 
@@ -12,7 +12,7 @@ public class Publication
     public string UrlSlug { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Це поле обов'язкове")]
-    [StringLength(100, ErrorMessage = "не більше 100 символів")]
+    [StringLength(150, ErrorMessage = "не більше 100 символів")]
     [Display(Name = "Назва")]
     public string Title { get; set; } = string.Empty;
 
@@ -36,17 +36,17 @@ public class Publication
 
     [Required(ErrorMessage = "Введіть теги")]
     [Display(Name = "Теги")]
-    public string? Tags { get; set; } = string.Empty;
+    public string Tags { get; set; } = string.Empty;
 
     [Display(Name = "Гра")]
     public int? GameId { get; set; } = 0;
 
-    public Publication()
+    public Post()
     {
         UrlSlug = Id.ToString();
     }
 
-    public Publication(Type type, string title, string content, string author)
+    public Post(Type type, string title, string content, string author)
     {
         UrlSlug = Id.ToString();
         TypeId = type;
@@ -55,17 +55,18 @@ public class Publication
         Author = author;
     }
 
-    public Publication(Type type, string title, string content, string author, DateTime date)
+    public Post(Type type, string title, string content, string author, DateTime date)
     : this(type, title, content, author)
     {
         UrlSlug = Id.ToString();
         Date = date;
     }
 
-    public Publication(Type type, string title, string content, string author, int likes = 0, int dislikes = 0, string tags = "", int gameId = 0)
+    public Post(Type type, string title, string content, string author, string tags, int likes = 0, int dislikes = 0, int gameId = 0)
     : this(type, title, content, author)
     {
         UrlSlug = Id.ToString();
+        Tags = tags;
     }
 
     public string GetColorCode(Type typeId)
@@ -85,7 +86,7 @@ public class Publication
             case Type.Подкаст:
                 return "brown";
             default:
-                return "black"; // Колір за замовчуванням для невідомих типів
+                return "black";
         }
     }
 }

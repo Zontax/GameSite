@@ -5,27 +5,22 @@ namespace GameSite.Models;
 public class Comment
 {
     public int Id { get; set; }
-    public int PublicationId { get; set; }
+    public int PostId { get; set; }
     public int? ReplyCommentId { get; set; }
     [Display(Name = "Автор")]
+    [Required(ErrorMessage = "Автор")]
     public string Author { get; set; }
+    [Required(ErrorMessage = "Введіть текст до коментаря")]
     public string Text { get; set; }
     public DateTime Date { get; set; } = DateTime.Now;
     public bool Edited { get; set; }
 
-    public Comment(int publicationId, string author, string text, int? replyCommentId = null)
+    public Comment(int postId, string author, string text, bool edited = false, int? replyCommentId = null)
     {
-        if (replyCommentId == null)
-        {
-            PublicationId = publicationId;
-        }
-        else
-        {
-            ReplyCommentId = replyCommentId;
-        }
-
+        PostId = postId;
         Text = text;
         Author = author;
-        Date = DateTime.Now;
+        Edited = edited;
+        ReplyCommentId = replyCommentId;
     }
 }

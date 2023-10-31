@@ -1,0 +1,10 @@
+﻿@using Humanizer
+@{
+    ViewData["Title"] = $"Tag {ViewBag.Tag}";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Tag @ViewBag.Tag</h1>
+
+    <partial name="_PostList" />
+</div>

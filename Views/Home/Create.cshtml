@@ -1,21 +1,13 @@
-﻿@model Publication;
+﻿@model Post;
 @{
     ViewData["Title"] = "Створити пост";
 }
 
-<style>
-    .input-validation-error {
-        border-color: red;
-    }
-</style>
-
 <div class="text-center">
     <div>
-        <h3>Username: @ViewBag.Username</h3>
-        <h3>IsAuthenticated: @ViewBag.IsAuthenticated</h3>
         <h3>Створити пост</h3>
 
-        <form asp-controller="Home" asp-action="AddPublication" method="post">
+        <form asp-controller="Home" asp-action="Create" method="post">
 
             <div class="form-group">
                 <div class="form-group">

@@ -27,3 +27,128 @@ body {
 div.container {
     background-color: rgb(223, 223, 223);
 }
+
+.publication {
+    background-color: rgb(199, 199, 199);
+}
+
+.input-validation-error {
+    border-color: red;
+}
+
+a.no-underline {
+    color: rgb(32, 32, 32);
+    text-decoration: none;
+}
+
+/* Стилі для списка постів */
+a.no-underline:hover {
+    color: rgb(75, 75, 75);
+    text-decoration: none;
+}
+
+.post {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.post h3 {
+    color: #007bff;
+}
+
+.post p {
+    margin-bottom: 10px;
+}
+
+.post a {
+    color: #28a745;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.post a:hover {
+    text-decoration: underline;
+}
+
+.post button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.post button:hover {
+    background-color: #bd2130;
+}
+
+/* Стилі для дати */
+.post p[title]::before {
+    content: '\1F4C5';
+    margin-right: 5px;
+}
+
+/* Стилі для коментарів */
+.comment-count {
+    color: #ff6600;
+    font-weight: bold;
+}
+
+/* Стили для страницы показа поста */
+.show-post {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.likes-dislikes {
+    margin-top: 10px;
+}
+
+/* Стили для формы добавления комментария */
+.comment-form {
+    margin-top: 20px;
+}
+
+.comment-form .form-group {
+    margin-bottom: 15px;
+}
+
+.comment-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для списка комментариев */
+.comment {
+    border-bottom: 1px solid #ced4da;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.post-comment:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.post-comment p[title]::before {
+    content: '\1F4C5';
+}
+
+.post-comment p.date-time {
+    font-size: 12px;
+}

@@ -1,0 +1,30 @@
+@using Humanizer
+@model List<Post>
+
+<div class="post-list">
+    @foreach (var post in ViewBag.Posts)
+    {
+        <div class="post">
+            <a class="no-underline" asp-action="Show" asp-route-id="@post.Id">
+                <h3>@post.Title</h3>
+            </a>
+            <b style="color: @(MyVoids.GetColorCode(post.TypeId))">@post.TypeId</b>
+            <p>@post.Content</p>
+            <p>@post.Author</p>
+            <p>теги: @post.Tags</p>
+            <p>
+                <a asp-action="Edit" asp-route-id="@post.Id">Редагувати</a>
+            <form method="post" asp-action="Delete" asp-route-id="@post.Id">
+            </form>
+            </p>
+
+            <p title="@post.Date.ToString("yyyy-MM-dd HH:mm")">
+                @post.Date.ToString("dd MMMM, yyyy")
+                <span class="comment-icon">💬</span>
+                @(ViewBag.CommentsCount.ContainsKey(post.Id) ? ViewBag.CommentsCount[post.Id] : 0)
+            </p>
+
+
+        </div>
+    }
+</div>

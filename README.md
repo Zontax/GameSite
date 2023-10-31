@@ -1,6 +1,10 @@
 # Веб-сайт ігрової тематики для публікації новин, рецензій, оглядів для ігор
 # Валідація на сервері і в jQuery
 
+# Щоб робити міграції
+dotnet tool install -g dotnet-ef
+# Міграція
+dotnet ef database update
 # NumGet
 Humanizer.Core.uk
 Newtonsoft.Json
@@ -8,6 +12,8 @@ Newtonsoft.Json
 ## Запуск проекта
 ```dotnet run```
 ```dotnet watch run```
+
+
 
 
 

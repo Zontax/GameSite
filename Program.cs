@@ -1,8 +1,8 @@
-using System.Globalization;
 using GameSite.Data;
 using GameSite.Models;
+using GameSite.Services;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,27 +13,15 @@ var connectionString = builder.Configuration.GetConnectionString("SQLiteConnecti
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString)); //  SQLite
-
-//options.UseSqlServer(connectionString)); // MS SQL Server
+                                          //options.UseSqlServer(connectionString)); // MSSQL Server
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+//builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddControllersWithViews();
-
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    var supportedCultures = new[]
-    {
-        //new CultureInfo("en-US"), // Англійська культура
-        new CultureInfo("uk-UA")  // Українська культура
-    };
-
-    options.DefaultRequestCulture = new RequestCulture("uk-UA");
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-});
 
 var app = builder.Build();
 
@@ -60,6 +48,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// app.MapControllerRoute(
+//         name: "home",
+//         pattern: "{action}",
+//         defaults: new { controller = "Home", action = "Index" });
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -68,12 +61,12 @@ using (var scope = app.Services.CreateScope())
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<ApplicationDbContext>();
 
-        PublicationDbInitializer.Initialize(context);
+        PostDbInitializer.Initialize(context);
         CommentDbInitializer.Initialize(context);
     }
-    catch (Exception)
+    catch (Exception excep)
     {
-        Console.WriteLine("ApplicationDbContext error");
+        Console.WriteLine($"ApplicationDbContext error {excep}");
     }
 }
 

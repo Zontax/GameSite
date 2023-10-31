@@ -4,5 +4,5 @@ namespace GameSite.Data;
 
 public class ApplicationIdentityUser : IdentityUser
 {
-    public long AppId { get; set; }
+    public string CustomRole { get; set; }
 }
