@@ -48,6 +48,9 @@ a.no-underline:hover {
 }
 
 .post {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     padding: 15px;
@@ -55,15 +58,28 @@ a.no-underline:hover {
     border-radius: 5px;
 }
 
+.post img {
+    margin-right: 20px; /* Збільшено відступ для зображення */
+    max-width: 150px;
+    flex-shrink: 0; /* Запобігає зміні розміру зображення */
+    border-radius: 5px; /* Округлення країв зображення */
+}
+
+.post-content {
+    flex: 1;
+}
+
 .post h3 {
     color: #007bff;
+    margin-top: 0; /* Зниження відступу для заголовка */
 }
 
 .post p {
     margin-bottom: 10px;
+    line-height: 1.5; /* Збільшення міжрядкового інтервалу для кращої читабельності */
 }
 
-.post a {
+a.post-tags {
     color: #28a745;
     text-decoration: none;
     margin-right: 10px;
@@ -91,15 +107,15 @@ a.no-underline:hover {
     margin-right: 5px;
 }
 
-/* Стилі для коментарів */
+/* Коментарі поста */
 .comment-count {
     color: #ff6600;
     font-weight: bold;
 }
 
-/* Стили для страницы показа поста */
+/* Сторінка показа поста */
 .show-post {
-    background-color: #f8f9fa;
+    background-color: rgb(238, 238, 238);
     border: 1px solid #ced4da;
     border-radius: 10px;
     padding: 20px;
@@ -110,7 +126,7 @@ a.no-underline:hover {
     margin-top: 10px;
 }
 
-/* Стили для формы добавления комментария */
+/* Форма додавання коментаря */
 .comment-form {
     margin-top: 20px;
 }
@@ -132,7 +148,7 @@ a.no-underline:hover {
     background-color: #0056b3;
 }
 
-/* Стили для списка комментариев */
+/* Стилі для списка коментарів */
 .comment {
     border-bottom: 1px solid #ced4da;
     margin-bottom: 20px;
@@ -151,4 +167,11 @@ a.no-underline:hover {
 
 .post-comment p.date-time {
     font-size: 12px;
+}
+
+.reply-comment {
+    background-color: coral;
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }

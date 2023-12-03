@@ -18,8 +18,7 @@ public class ApplicationDbContext : IdentityDbContext
     //     .WithMany(s => s.Tags);
     // }
 
-    DbSet<ApplicationIdentityUser> ApplicationIdentityUsers { get; set; }
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<Post> Posts { get; set; }
-    //public DbSet<Tag> Tags { get; set; }
     public DbSet<Comment> Comments { get; set; }
 }

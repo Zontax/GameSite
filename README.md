@@ -5,6 +5,9 @@
 dotnet tool install -g dotnet-ef
 # Міграція
 dotnet ef database update
+або 
+Add-Migration Init
+Update-Database
 # NumGet
 Humanizer.Core.uk
 Newtonsoft.Json
@@ -13,26 +16,9 @@ Newtonsoft.Json
 ```dotnet run```
 ```dotnet watch run```
 
-
-
-
-
-## Створення docker контейнера
-```docker build -t gamesite-app .```
-
-## Запуск docker контейнера
-```docker run -d -p 80:80 -p 443:443 gamesite-app``` 
-### Опція -d робить контейнер фоновим, а опції -p 80:80 -p 443:443 вказують на те, що порти 80 та 443 на локальній машині повинні бути спрямовані на порти 80 та 443 у контейнері. Тепер ваш C# ASP.NET MVC додаток повинен бути доступний за адресою http://localhost. Будьте впевнені, що ваш контейнер дотримується всіх налаштувань та залежностей, які потрібні для правильного функціонування вашого додатку.
-```http://localhost```
-
-## Перегляд активних контейнерів
-```docker ps```
-
-## Зупинити контейнер
-```docker stop gamesite-app```
-
-## Видалити контейнер
-```docker rm gamesite-app```
+## Відкад то коміта
+git reset --hard <хеш_коміта>
+git push --force
 
 ## Зробити представлення з БД
 ```dotnet ef dbcontext scaffold "строка підключення" провайдер_бд```

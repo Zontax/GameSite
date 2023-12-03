@@ -1,57 +1,71 @@
 ﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
 using GameSite.Data;
 using GameSite.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Linq;
 
 namespace GameSite.Controllers;
 
 public class HomeController : Controller
 {
-    ILogger<HomeController> logger;
-    ApplicationDbContext context;
+    readonly ILogger<HomeController> logger;
+    readonly ApplicationDbContext context;
+    readonly IWebHostEnvironment webHostEnv;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IWebHostEnvironment webHostEnv)
     {
         this.logger = logger;
         this.context = context;
+        this.webHostEnv = webHostEnv;
     }
 
     public async Task<ActionResult> Index()
     {
-        var all = await context.Posts.OrderByDescending(post => post.Date).ToListAsync();
-        var commentsCount = await context.Comments
-        .GroupBy(com => com.PostId)
-        .Select(group => new { PostId = group.Key, Count = group.Count() })
-        .ToDictionaryAsync(i => i.PostId, i => i.Count);
+        var posts = await context.Posts
+            .OrderByDescending(post => post.Date)
+            .ToListAsync();
 
-        ViewBag.Posts = all;
+        var commentsCount = await context.Comments
+            .GroupBy(com => com.PostId)
+            .Select(group => new { PostId = group.Key, Count = group.Count() })
+            .ToDictionaryAsync(i => i.PostId, i => i.Count);
+
+        ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 
         return View();
     }
 
+    public IActionResult UserList()
+    {
+        var users = context.ApplicationUsers.ToList();
+
+        return View(users);
+    }
+
     public async Task<ActionResult> Tag(string tag)
     {
-        var postsWithTag = await context.Posts
-        .Where(post => post.Tags.Contains(tag))
-        .ToListAsync();
+        string[] tags = tag.Split(new[] { ',' });
+        var searchTags = string.Join("|", tags.Select(t => $"\\b{Regex.Escape(t.Trim())}\\b"));
+        List<Post> postsWithTag = await context.Posts
+            .Where(post => Regex.IsMatch(post.Tags, searchTags))
+            .ToListAsync();
 
         var commentsCount = await context.Comments
-        .GroupBy(com => com.PostId)
-        .Select(group => new { PostId = group.Key, Count = group.Count() })
-        .ToDictionaryAsync(i => i.PostId, i => i.Count);
+            .GroupBy(com => com.PostId)
+            .Select(group => new { PostId = group.Key, Count = group.Count() })
+            .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
+        ViewBag.Tag = tag;
         ViewBag.Posts = postsWithTag;
         ViewBag.CommentsCount = commentsCount;
 
-        if (postsWithTag == null)
-        {
-            return RedirectToAction(nameof(Index));
-        }
+        if (postsWithTag == null) return RedirectToAction(nameof(Index));
+
         return View();
     }
 
@@ -68,38 +82,58 @@ public class HomeController : Controller
 
         ViewBag.Posts = news;
         ViewBag.CommentsCount = commentsCount;
-
         return View();
     }
 
     public async Task<ActionResult> Reviews()
     {
         var reviews = await context.Posts
-        .Where(x => x.TypeId == Models.Type.Огляд)
-        .OrderByDescending(post => post.Date)
-        .ToListAsync();
+            .Where(x => x.TypeId == Models.Type.Огляд)
+            .OrderByDescending(post => post.Date)
+            .ToListAsync();
         var commentsCount = await context.Comments
-        .GroupBy(com => com.PostId)
-        .Select(group => new { PostId = group.Key, Count = group.Count() })
-        .ToDictionaryAsync(i => i.PostId, i => i.Count);
+            .GroupBy(com => com.PostId)
+            .Select(group => new { PostId = group.Key, Count = group.Count() })
+            .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
         ViewBag.Posts = reviews;
         ViewBag.CommentsCount = commentsCount;
-
         return View();
     }
 
-    public ActionResult Articles()
+    public async Task<ActionResult> Articles()
     {
+        var reviews = await context.Posts
+            .Where(x => x.TypeId == Models.Type.Стаття)
+            .OrderByDescending(post => post.Date)
+            .ToListAsync();
+        var commentsCount = await context.Comments
+            .GroupBy(com => com.PostId)
+            .Select(group => new { PostId = group.Key, Count = group.Count() })
+            .ToDictionaryAsync(i => i.PostId, i => i.Count);
+
+        ViewBag.Posts = reviews;
+        ViewBag.CommentsCount = commentsCount;
         return View();
     }
 
-    public ActionResult Guides()
+    public async Task<ActionResult> Guides()
     {
+        var reviews = await context.Posts
+            .Where(x => x.TypeId == Models.Type.Гайд)
+            .OrderByDescending(post => post.Date)
+            .ToListAsync();
+        var commentsCount = await context.Comments
+            .GroupBy(com => com.PostId)
+            .Select(group => new { PostId = group.Key, Count = group.Count() })
+            .ToDictionaryAsync(i => i.PostId, i => i.Count);
+
+        ViewBag.Posts = reviews;
+        ViewBag.CommentsCount = commentsCount;
         return View();
     }
 
-    public ActionResult Videos()
+    public IActionResult Videos()
     {
         return View();
     }
@@ -107,37 +141,6 @@ public class HomeController : Controller
     public ActionResult Podcasts()
     {
         return View();
-    }
-
-    //[Authorize]
-    public ActionResult Create()
-    {
-        var typeList = Enum.GetValues(typeof(Models.Type));
-        ViewBag.SelectItems = new SelectList(typeList);
-
-        return View();
-    }
-
-    [HttpPost]
-    public async Task<ActionResult> Create(Post post)
-    {
-        // if (string.IsNullOrEmpty(post.Tags))
-        //     ModelState.AddModelError(nameof(post.Tags), "!!!");
-
-        if (ModelState.IsValid)
-        {
-            context.Posts.Attach(post);
-            context.Entry(post).State = EntityState.Added;
-            //context.Posts.Add(post);
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        else
-        {
-            var typeList = Enum.GetValues(typeof(Models.Type));
-            ViewBag.SelectItems = new SelectList(typeList);
-            return View(post);
-        }
     }
 
     public async Task<ActionResult> Show(int id)
@@ -163,67 +166,130 @@ public class HomeController : Controller
                 await context.SaveChangesAsync();
             }
 
-            return RedirectToAction("Show", id);
+            return RedirectToAction(nameof(Show), id);
         }
-        else
-        {
-            return RedirectToAction("Index");
-        }
+
+        return RedirectToAction(nameof(Index));
     }
 
+    [Authorize]
+    public ActionResult Create()
+    {
+        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.Type)));
+        return View();
+    }
+
+    [HttpPost, Authorize]
+    public async Task<ActionResult> Create(Post post, IFormFile file)
+    {
+        // if (string.IsNullOrEmpty(post.ImageUrl))
+        //     ModelState.AddModelError(nameof(post.ImageUrl), "Де файл?!");
+
+        if (ModelState.IsValid)
+        {
+            if (file != null && file.Length > 0)
+            {
+                // Збережіть файл у папці wwwroot або в потрібному вам шляху
+                var uploadsDirectory = Path.Combine(webHostEnv.WebRootPath, "uploads");
+                if (!Directory.Exists(uploadsDirectory)) Directory.CreateDirectory(uploadsDirectory);
+
+                var fileExtension = Path.GetExtension(file.FileName);
+                var uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
+                var filePath = Path.Combine(webHostEnv.WebRootPath, "uploads", uniqueFileName);
+
+                using (FileStream stream = new(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                post.ImageUrl = "/post_title_image/" + uniqueFileName;
+            }
+
+            await context.Posts.AddAsync(post);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.Type)));
+        return View(post);
+    }
+
+    [Authorize]
     public async Task<ActionResult> Edit(int id)
     {
-        var typeList = Enum.GetValues(typeof(Models.Type));
-        ViewBag.SelectItems = new SelectList(typeList);
+        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.Type)));
+        var post = await context.Posts.FindAsync(id);
 
-        Post post = await context.Posts.FindAsync(id);
-
-        if (post != null)
-        {
-            return View(post);
-        }
-
-        return NotFound();
+        if (post == null) return NotFound();
+        return View(await context.Posts.FindAsync(id));
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Edit(Post post)
+    [HttpPost, Authorize]
+    public async Task<ActionResult> Edit(Post post, IFormFile file)
     {
         if (ModelState.IsValid)
         {
-            context.Posts.Attach(post);
-            // Встановити стан об'єкта як Modified, щоб EF знав, що цей об'єкт потрібно оновити в БД
-            context.Entry(post).State = EntityState.Modified;
+            if (file != null && file.Length > 0)
+            {
+                string uploadsDirectory = Path.Combine(webHostEnv.WebRootPath, "uploads");
+                if (!Directory.Exists(uploadsDirectory)) Directory.CreateDirectory(uploadsDirectory);
+
+                string fileExtension = Path.GetExtension(file.FileName);
+                string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
+                string filePath = Path.Combine(webHostEnv.WebRootPath, "uploads", uniqueFileName);
+
+                using (FileStream fileStream = new(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
+                post.ImageUrl = "/post_title_image/" + uniqueFileName;
+            }
+            else
+            {
+                // Якщо файл не був вибраний, використовуйте поточне зображення
+                var existingPost = await context.Posts.FindAsync(post.Id);
+                post.ImageUrl = existingPost?.ImageUrl;
+            }
+
+            context.Posts.Update(post);
             await context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
-        else
-        {
-            var typeList = Enum.GetValues(typeof(Models.Type));
-            ViewBag.SelectItems = new SelectList(typeList);
-            return View(post);
-        }
+
+        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.Type)));
+        post.ImageUrl = context.Posts.Find(post.Id)?.ImageUrl;
+        await context.SaveChangesAsync();
+        return View(post);
     }
 
-    //[Authorize]
-    [HttpPost]
+    [Authorize]
     public async Task<ActionResult> Delete(int id)
     {
         var post = await context.Posts.FindAsync(id);
 
-        if (post != null)
-        {
-            context.Posts.Remove(post);
-            await context.SaveChangesAsync();
+        if (post == null) return NotFound();
 
-            return RedirectToAction(nameof(Index));
-        }
-
-        return NotFound();
+        context.Posts.Remove(post);
+        await context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
-    //! Error Action
+    [Authorize]
+    public async Task<ActionResult> SetRole()
+    {
+        await context.SaveChangesAsync();
+        return View();
+    }
+
+    [HttpPost, Authorize]
+    public async Task<ActionResult> SetRole(int userId)
+    {
+        await context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public ActionResult Error()
     {

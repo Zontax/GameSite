@@ -1,0 +1,20 @@
+﻿@model IEnumerable<GameSite.Data.ApplicationUser>
+@{
+    ViewData["Title"] = "Список користувачів";
+}
+
+<h1>Список користувачів</h1>
+<ul>
+    @foreach (var user in Model)
+    {
+        <li>
+            <p><b>Email:</b> @user.Email</p>
+
+            <p><b>Username:</b> @user.UserName</p>
+
+            <p><b>Years:</b> @user?.Years</p>
+        </li>
+        <br>
+        <br>
+    }
+</ul>

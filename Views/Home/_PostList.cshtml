@@ -1,30 +1,51 @@
+@using Microsoft.AspNetCore.Identity
+@using GameSite.Data
 @using Humanizer
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model List<Post>
 
 <div class="post-list">
-    @foreach (var post in ViewBag.Posts)
+    @foreach (Post post in ViewBag.Posts)
     {
         <div class="post">
-            <a class="no-underline" asp-action="Show" asp-route-id="@post.Id">
-                <h3>@post.Title</h3>
-            </a>
-            <b style="color: @(MyVoids.GetColorCode(post.TypeId))">@post.TypeId</b>
-            <p>@post.Content</p>
-            <p>@post.Author</p>
-            <p>теги: @post.Tags</p>
-            <p>
-                <a asp-action="Edit" asp-route-id="@post.Id">Редагувати</a>
-            <form method="post" asp-action="Delete" asp-route-id="@post.Id">
-            </form>
-            </p>
+            @if (!string.IsNullOrEmpty(post.ImageUrl))
+            {
+                <a class="no-underline" asp-action="Show" asp-route-id="@post.Id">
+                    <img src="@post.ImageUrl" alt="TitleImage" />
+                </a>
+            }
+            <div class="post-content">
+                <a class="no-underline" asp-action="Show" asp-route-id="@post.Id">
+                    <h3>@post.Title</h3>
+                </a>
+                <b style="color: @(MyVoids.GetColorCode(post.TypeId))">@post.TypeId</b>
+                <p>@((string)post.Content.Substring(0, 125))...</p>
+                <p>@post.Author</p>
+                <p>
+                    <i>Теги:
+                        @foreach (string tag in @post.Tags.Split(","))
+                        {
+                            <a class="post-tags" asp-action="Tag" asp-route-tag="@tag.Trim()">@tag.Trim().Replace('_', ' ')</a><b>,</b>
+                        }
+                    </i>
+                </p>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <p>
+                        <a asp-action="Edit" asp-route-id="@post.Id">Редагувати</a>
+                    </p>
 
-            <p title="@post.Date.ToString("yyyy-MM-dd HH:mm")">
-                @post.Date.ToString("dd MMMM, yyyy")
-                <span class="comment-icon">💬</span>
-                @(ViewBag.CommentsCount.ContainsKey(post.Id) ? ViewBag.CommentsCount[post.Id] : 0)
-            </p>
-
-
+                    <p>
+                        <a asp-action="Delete" asp-route-id="@post.Id">Видалити</a>
+                    </p>
+                }
+                <p title="@post.Date.ToString("yyyy-MM-dd HH:mm")">
+                    @post.Date.ToString("dd MMMM, yyyy")
+                    <span class="comment-icon">💬</span>
+                    @(ViewBag.CommentsCount.ContainsKey(post.Id) ? ViewBag.CommentsCount[post.Id] : 0)
+                </p>
+            </div>
         </div>
     }
 </div>

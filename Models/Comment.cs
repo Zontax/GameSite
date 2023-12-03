@@ -18,9 +18,9 @@ public class Comment
     public Comment(int postId, string author, string text, bool edited = false, int? replyCommentId = null)
     {
         PostId = postId;
+        ReplyCommentId = replyCommentId;
         Text = text;
         Author = author;
         Edited = edited;
-        ReplyCommentId = replyCommentId;
     }
 }

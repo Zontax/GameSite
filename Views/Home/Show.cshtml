@@ -1,53 +1,88 @@
-﻿@using Humanizer;
+﻿@using Microsoft.AspNetCore.Identity
+@using GameSite.Data
+@using Humanizer
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model Comment;
 @{
-    ViewData["Title"] = "Show";
+    ViewData["Title"] = @ViewBag.Post.Title;
 }
 
 <div class="text-center">
     <h1 class="display-4"></h1>
 
-    <div class="show-post" style="background-color: rgb(199, 199, 199);">
-        <h3>@(ViewBag.Post.Id) @ViewBag.Post.Title</h3>
+    <div class="show-post">
+        <h4>@(ViewBag.Post.Id) @ViewBag.Post.Title</h4>
         <p>@Html.Raw(ViewBag.Post.Content)</p>
         <p>@ViewBag.Post.Date @ViewBag.Post.Author</p>
         <p>
             👍@(ViewBag.Post.LikesCount)
             👎@(ViewBag.Post.DislikesCount)
         </p>
-        <p>Теги: @ViewBag.Post.Tags</p>
-    </div>
-    <a href="/Home">Назад</a>
-
-    <h3>Написати коментар</h3>
-    <form asp-action="Show" method="post" class="comment-form">
-
-        <input type="hidden" value="@ViewBag.Post.Id" name="PostId" />
-        <div class="form-group">
-            <span asp-validation-for="Author" class="text-danger"></span>
-            <label asp-for="Author" class="form-control"></label>
-            <input asp-for="Author" class="form-control">
-        </div>
-        <div class="form-group">
-            <span asp-validation-for="Text" class="text-danger"></span>
-            <textarea asp-for="Text" class="form-control"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Додати коментар</button>
-
-    </form>
-
-    <h3>Коментарі</h3>
-    @foreach (var comment in ViewBag.Coments)
-    {
-        <div class="post-comment">
-            <p><b>@(comment.Author): </b> @comment.Text</p>
-            <p class="date-time" title="@(comment.Date.ToString("yyyy-MM-dd HH:mm"))">
-                @(DateTime.Now.Add(-((TimeSpan)(DateTime.Now - comment.Date))).Humanize())
-                @if ((bool)comment.Edited)
+        <p>
+            <i>Теги:
+                @foreach (string tag in ViewBag.Post.Tags.Split(","))
                 {
-                    <b> редаговано</b>
+                    <a class="post-tags" asp-action="Tag" asp-route-tag="@tag.Trim()">@tag.Trim()</a>
                 }
-            </p>
-        </div>
+            </i>
+        </p>
+    </div>
+    <h5>Коментарі</h5>
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <p>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Увійдіть
+            </a> щоб залишати коментарі
+        </p>
+    }
+    else
+    {
+        <form asp-action="Show" method="post" class="comment-form">
+
+            <input type="hidden" value="@ViewBag.Post.Id" name="PostId" />
+            <div class="form-group">
+                <span asp-validation-for="Author" class="text-danger"></span>
+                <input asp-for="Author" class="form-control" value="@User.Identity?.Name" readonly hidden>
+            </div>
+            <div class="form-group">
+                <span asp-validation-for="Text" class="text-danger"></span>
+                <textarea asp-for="Text" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Додати коментар</button>
+
+        </form>
+    }
+
+    @foreach (Comment comment in ViewBag.Coments)
+    {
+        @if (comment.ReplyCommentId == null)
+        {
+            <div class="post-comment">
+                <p><b>@(comment.Author): </b> @comment.Text</p>
+                <p class="date-time" title="@(comment.Date.ToString("yyyy-MM-dd HH:mm"))">
+                    @(DateTime.UtcNow.Add(-((TimeSpan)(DateTime.UtcNow - comment.Date))).Humanize())
+                    @if (comment.Edited)
+                    {
+                        <b> (змінено)</b>
+                    }
+                </p>
+            </div>
+
+            <!-- Вкладений цикл для коментарів-відповідей -->
+            @foreach (Comment reply in ((List<Comment>)ViewBag.Coments).Where(c => c.ReplyCommentId == comment.Id))
+            {
+                <div class="reply-comment">
+                    <p><b>(reply to @(comment.Author)) @(reply.Author): </b> @reply.Text</p>
+                    <p class="date-time" title="@(reply.Date.ToString("yyyy-MM-dd HH:mm"))">
+                        @(DateTime.UtcNow.Add(-((TimeSpan)(DateTime.UtcNow - reply.Date))).Humanize())
+                        @if (reply.Edited)
+                        {
+                            <b> (змінено)</b>
+                        }
+                    </p>
+                </div>
+            }
+        }
     }
 </div>

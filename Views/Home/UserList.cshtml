@@ -1,0 +1,29 @@
+﻿@using GameSite.Data
+@model IEnumerable<GameSite.Data.ApplicationUser>
+@{
+    ViewData["Title"] = "Список користувачів";
+}
+
+<h1>Список користувачів</h1>
+<ul>
+    @foreach (ApplicationUser user in Model)
+    {
+        @if (user == null)
+        {
+            <p>Користувачів нема</p>
+        }
+
+        <li>
+            <p><b>Email:</b> @user?.Email</p>
+
+            <p><b>Username:</b> @user?.UserName</p>
+
+            <p><b>Role:</b> @user?.Role</p>
+
+            <p><b>Years:</b> @user?.Years</p>
+
+            <p><b>Дата реєстрації:</b> @user?.RegistrationDate</p>
+        </li>
+        <br>
+    }
+</ul>

@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using GameSite.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -23,9 +28,6 @@
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="News">Новини</a>
                         </li>
                         <li class="nav-item">
@@ -38,15 +40,22 @@
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Guides">Гайди</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Videos">Відео</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Podcasts">Подкасти</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="UserList">UserList</a>
                         </li>
 
-                        <li class="nav-item align-content-end">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Create">Створити</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item align-content-end">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Create">Створити</a>
+                            </li>
+
+                            @if (User?.Identity?.Name == "Administrator")
+                            {
+                                <li class="nav-item align-content-end">
+                                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Create">Назначити роль</a>
+                                </li>
+                            }
+                        }
                     </ul>
 
                     <partial name="_LoginPartial" />
@@ -64,7 +73,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - GameSite - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - GameSite - <a asp-controller="Home" asp-action="Privacy">Конфіденційність</a>
         </div>
     </footer>
 
