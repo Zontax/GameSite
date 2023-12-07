@@ -70,11 +70,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Ім&apos;я, яке буде відображатись на сайті.
+        ///   Ищет локализованную строку, похожую на Ім&apos;я, що буде відображатись на сайті.
         /// </summary>
         public static string User_Name {
             get {
                 return ResourceManager.GetString("User_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Список користувачів.
+        /// </summary>
+        public static string UserList {
+            get {
+                return ResourceManager.GetString("UserList", resourceCulture);
             }
         }
     }

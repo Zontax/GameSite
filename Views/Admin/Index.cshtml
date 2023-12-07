@@ -1,18 +1,31 @@
-﻿@model IEnumerable<global::GameSite.Data.ApplicationUser>
+﻿@using Microsoft.AspNetCore.Identity
+@using GameSite.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@model IEnumerable<ApplicationUser>
 @{
-    ViewData["Title"] = "Список користувачів";
+    ViewData["Title"] = "Адмін панель";
 }
 
-<h1>Список користувачів</h1>
+<h1>Адмін панель</h1>
 <ul>
-    @foreach (var user in Model)
+    @foreach (ApplicationUser user in Model)
     {
-        <li>
-            <p><b>Email:</b> @user.Email</p>
-            <p><b>Username:</b> @user.UserName</p>
-            <p><b>Age:</b> @user?.Age</p>
-        </li>
-        <br>
-        <br>
+        @if (user == null)
+        {
+            <li>Користувачів нема</li>
+        }
+        else
+        {
+            <li>
+                <p><b>Email:</b> @user?.Email</p>
+                <p><b>UserName:</b> @user?.UserName</p>
+                <p><b>Name:</b> @user?.Name</p>
+                <p><b>PhoneNumber:</b> @user?.PhoneNumber</p>
+                <p><b>Role:</b> @user?.Role</p>
+                <p><b>Age:</b> @user?.Age</p>
+                <p><b>Дата реєстрації:</b> @user?.RegistrationDate</p>
+                <br>
+            </li>
+        }
     }
 </ul>

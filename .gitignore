@@ -1,5 +1,6 @@
 /.vscode
 /.vs
-/obj/
+/obj
+/bin
 *.db-shm
 *.db-wal

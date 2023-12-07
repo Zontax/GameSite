@@ -120,7 +120,10 @@
   <data name="RequiredField" xml:space="preserve">
     <value>Це поле ім'я обов'язкове</value>
   </data>
+  <data name="UserList" xml:space="preserve">
+    <value>Список користувачів</value>
+  </data>
   <data name="User_Name" xml:space="preserve">
-    <value>Ім'я, яке буде відображатись на сайті</value>
+    <value>Ім'я, що буде відображатись на сайті</value>
   </data>
 </root>

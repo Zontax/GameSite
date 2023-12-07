@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Створити новий акаунт.</h2>
+            <h2>Створити новий акаунт</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
@@ -37,15 +37,16 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use another service to register.</h3>
+            <h3>Використати для реєстрації інший сервіс</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
+                            Немає налаштованих зовнішніх служб автентифікації.
+                            Перегляньте цю <a href="https://go.microsoft.com/fwlink/?LinkID=532715">статтю</a>
+                            про налаштування цієї програми ASP.NET для підтримки входу через зовнішні служби
                         </p>
                     </div>
                 }

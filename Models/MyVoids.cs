@@ -4,22 +4,15 @@ public static class MyVoids
 {
     public static string GetColorCode(PostType typeId)
     {
-        switch (typeId)
+        return typeId switch
         {
-            case PostType.Новина:
-                return "rgb(201, 142, 5)";
-            case PostType.Огляд:
-                return "orange";
-            case PostType.Стаття:
-                return "yellow";
-            case PostType.Гайд:
-                return "green";
-            case PostType.Відео:
-                return "blue";
-            case PostType.Подкаст:
-                return "brown";
-            default:
-                return "black";
-        }
+            PostType.Новина => "rgb(201, 142, 5)",
+            PostType.Огляд => "orange",
+            PostType.Стаття => "yellow",
+            PostType.Гайд => "green",
+            PostType.Відео => "blue",
+            PostType.Подкаст => "brown",
+            _ => "black",
+        };
     }
 }

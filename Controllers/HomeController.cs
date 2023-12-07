@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GameSite.Controllers;
 
+[Culture]
 public class HomeController : Controller
 {
     readonly ILogger<HomeController> logger;
@@ -23,9 +24,23 @@ public class HomeController : Controller
         this.webHostEnv = webHostEnv;
     }
 
-    public IActionResult LangChange()
+    public IActionResult ChangeCulture(string lang)
     {
-        return View("Lang Change");
+        string returnUrl = Request.Headers["Referer"].ToString();
+        List<string> cultures = new() { "uk", "en" };
+
+        if (!cultures.Contains(lang))
+        {
+            lang = "uk";
+        }
+
+        Response.Cookies.Append("lang", lang, new CookieOptions
+        {
+            HttpOnly = false,
+            Expires = DateTime.Now.AddYears(1)
+        });
+
+        return RedirectToAction("Index");
     }
 
     public IActionResult About()
@@ -35,6 +50,7 @@ public class HomeController : Controller
 
     public async Task<ActionResult> Index()
     {
+
         int page = 1;
         int pageSize = 20;
         if (page < 1) NotFound();

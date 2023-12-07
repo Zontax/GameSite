@@ -12,12 +12,13 @@ public class ApplicationDbContext : IdentityDbContext
         Database.EnsureCreated();
     }
 
-    // protected override void OnModelCreating(ModelBuilder modelBuilder)
-    // {
-    //     modelBuilder.Entity<Tag>()
-    //     .HasMany(c => c.Posts)
-    //     .WithMany(s => s.Tags);
-    // }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        // modelBuilder.Entity<Comment>()
+        // .HasMany(c => c.Posts)
+        // .WithMany(s => s.Tags);
+    }
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public override DbSet<IdentityRole> Roles { get; set; }

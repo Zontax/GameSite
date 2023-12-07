@@ -52,10 +52,11 @@ public class PostDbInitializer
 
         List<Comment> comments = new()
         {
-            new(1, "Вадим Горішник", "Мені сподобався ваш перший сайт на asp mvc", true),
-            new(1, "Ілля Теркан", "Так, непогано як для першого проекта", false, 1),
-            new(1, "Vadimchik", "The best info", true),
-            new(1, "Ждан", "Хай додасть більше функцій для ствовення публікацій", true, 1),
+            new(1, "Вадим Горішник", "Коментар 1", true),
+            new(1, "Ілля Теркан", "Коментар 2", false, 1),
+            new(1, "Ждан", "Коментар 3", true, 1),
+            new(1, "Vadimchik", "Коментар 4", true),
+
 
             new(2, "Vlad", "Cool story", true),
             new(2, "Вадим", "Коментар Вадим", true),
@@ -67,30 +68,32 @@ public class PostDbInitializer
         context.Posts.AddRange(posts);
         context.Comments.AddRange(comments);
 
+        var adminEmail = "jrvadim18@gmail.com";
+        var adminPassword = "asd123456";
+        var roles = new[] { "Admin", "Author", "Manager" };
 
-        var role1 = new IdentityRole { Name = "Admin" };
-        var role2 = new IdentityRole { Name = "Author" };
-        var role3 = new IdentityRole { Name = "Manager" };
-
-        if (!context.Roles.Any())
-        {
-            await roleManager.CreateAsync(role1);
-            await roleManager.CreateAsync(role2);
-            await roleManager.CreateAsync(role3);
-        }
+        foreach (var role in roles)
+            if (!await roleManager.RoleExistsAsync(role))
+                await roleManager.CreateAsync(new IdentityRole(role));
 
         if (!context.Users.Any())
         {
-            var adminUser = new ApplicationUser { UserName = "jrvadim18@gmail.com", Email = "jrvadim18@gmail.com" };
-            adminUser.Name = "АДМІН";
-            adminUser.RegistrationDate = DateTime.Now;
-            adminUser.EmailConfirmed = true;
-
-            var result = await userManager.CreateAsync(adminUser, "asd123456");
-            if (result.Succeeded)
+            if (await userManager.FindByEmailAsync(adminEmail) == null)
             {
-                await userManager.AddToRoleAsync(adminUser, "Admin");
+                var admin = new ApplicationUser
+                {
+                    Name = "ADMIN",
+                    Email = adminEmail,
+                    UserName = adminEmail,
+                    RegistrationDate = DateTime.Now,
+                    EmailConfirmed = true
+                };
+
+                await userManager.CreateAsync(admin, adminPassword);
+                await userManager.AddToRoleAsync(admin, "Admin");
+                await userManager.AddToRoleAsync(admin, "Author");
             }
+
         }
 
         context.SaveChanges();

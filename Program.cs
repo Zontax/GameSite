@@ -11,11 +11,14 @@ var connectionString = builder.Configuration.GetConnectionString("SQLiteConnecti
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString)); //  SQLite
                                           //options.UseSqlServer(connectionString)); // MSSQL Server
-
+                                          //options.UsePostgreSqlServer(connectionString)); // Postgre
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddScoped<UserManager<ApplicationUser>>();
+builder.Services.AddScoped<SignInManager<ApplicationUser>>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
