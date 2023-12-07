@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using GameSite.Models
 @using GameSite.Data
 @using Humanizer
 @inject SignInManager<ApplicationUser> SignInManager
@@ -12,28 +13,49 @@
     <h1 class="display-4"></h1>
 
     <div class="show-post">
-        <h4>@(ViewBag.Post.Id) @ViewBag.Post.Title</h4>
+        <h4>@ViewBag.Post.Title</h4>
         <p>@Html.Raw(ViewBag.Post.Content)</p>
-        <p>@ViewBag.Post.Date @ViewBag.Post.Author</p>
+
+        @if ((PostType)ViewBag.Post.TypeId == PostType.Огляд)
+        {
+            <p>Плюси: @ViewBag.Post.ReviewPlus</p>
+            <p>Мінуси: @ViewBag.Post.ReviewMinus </p>
+            <p>ОЦІНКА: <b>@ViewBag.Post.ReviewRating</b></p>
+        }
+
+        <p>@ViewBag.Post.Date <b>@ViewBag.Post.Author</b></p>
         <p>
-            👍@(ViewBag.Post.LikesCount)
-            👎@(ViewBag.Post.DislikesCount)
+            <a title="Подобається">👍@(ViewBag.Post.LikesCount)</a>
+            <a title="Неподобається">👎@(ViewBag.Post.DislikesCount)</a>
         </p>
         <p>
             <i>Теги:
-                @foreach (string tag in ViewBag.Post.Tags.Split(","))
-                {
-                    <a class="post-tags" asp-action="Tag" asp-route-tag="@tag.Trim()">@tag.Trim()</a>
+                @{
+                    var tags = ViewBag.Post.Tags.Split(",");
+                    for (var i = 0; i < tags.Length; i++)
+                    {
+                        <a class="post-tags" asp-action="Tag" asp-route-tag="@tags[i].Trim()">@tags[i].Trim().Replace('_', ' ')</a>
+                        @if (i < tags.Length - 1)
+                        {
+                            @:<b>,</b>
+                        }
+                    }
                 }
             </i>
         </p>
     </div>
+
+    <div class="">
+
+    </div>
+
     <h5>Коментарі</h5>
     @if (!SignInManager.IsSignedIn(User))
     {
         <p>
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Увійдіть
-            </a> щоб залишати коментарі
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                Увійдіть щоб залишати коментарі
+            </a> 
         </p>
     }
     else
@@ -41,6 +63,7 @@
         <form asp-action="Show" method="post" class="comment-form">
 
             <input type="hidden" value="@ViewBag.Post.Id" name="PostId" />
+            <input type="hidden" value="@null" name="ReplyId" />
             <div class="form-group">
                 <span asp-validation-for="Author" class="text-danger"></span>
                 <input asp-for="Author" class="form-control" value="@User.Identity?.Name" readonly hidden>
@@ -69,6 +92,25 @@
                 </p>
             </div>
 
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <form asp-action="Show" method="post" class="comment-form" id="commentReplyForm">
+
+                    <input type="hidden" value="@ViewBag.Post.Id" name="PostId" />
+                    <input type="hidden" value="@comment.Id" name="ReplyId" />
+                    <div class="form-group">
+                        <span asp-validation-for="Author" class="text-danger"></span>
+                        <input asp-for="Author" class="form-control" value="@User.Identity?.Name" readonly hidden>
+                    </div>
+                    <div class="form-group">
+                        <span asp-validation-for="Text" class="text-danger"></span>
+                        <textarea asp-for="Text" class="form-control"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Відповісти</button>
+
+                </form>
+            }
+
             <!-- Вкладений цикл для коментарів-відповідей -->
             @foreach (Comment reply in ((List<Comment>)ViewBag.Coments).Where(c => c.ReplyCommentId == comment.Id))
             {
@@ -86,3 +128,6 @@
         }
     }
 </div>
+
+
+

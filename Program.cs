@@ -35,8 +35,20 @@ builder.Services.Configure<IdentityOptions>(options =>
     // User settings.
     options.User.AllowedUserNameCharacters =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-    options.User.RequireUniqueEmail = false;
+    options.User.RequireUniqueEmail = true;
 });
+
+
+void ConfigureServices(IServiceCollection services)
+{
+    services.AddRazorPages();
+    services.Configure<RouteOptions>(options =>
+    {
+        options.LowercaseUrls = true;
+    });
+}
+
+ConfigureServices(builder.Services);
 
 //builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddControllersWithViews();
@@ -61,22 +73,25 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 
+
 app.MapDefaultControllerRoute();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// app.MapControllerRoute(
+//app.MapControllerRoute(
 //         name: "home",
 //         pattern: "{action}",
-//         defaults: new { controller = "Home", action = "Index" });
+//         defaults: new { controller = "Home", action = "Index", page = 1 });
 
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    PostDbInitializer.Initialize(context);
+    PostDbInitializer.Initialize(context, userManager, roleManager);
 }
 app.Run();
 

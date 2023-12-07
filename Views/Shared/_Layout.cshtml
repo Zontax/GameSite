@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GameSite</title>
+    <title>@ViewData["Title"] - IgroNewsUa</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GameSite.styles.css" asp-append-version="true" />
@@ -19,7 +19,10 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameSite</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span style="color: red;">Igro</span><span style="color: green;">News</span><span
+                        style="color: blue;">Ua</span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -45,16 +48,19 @@
 
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item align-content-end">
-                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Create">Створити</a>
-                            </li>
-
-                            @if (User?.Identity?.Name == "Administrator")
+                            @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item align-content-end">
-                                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Create">Назначити роль</a>
+                                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Create">Створити</a>
                                 </li>
                             }
+
+                            @* @if (User.IsInRole("Admin"))
+                        {
+                        <li class="nav-item align-content-end">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Create">Назначити роль</a>
+                        </li>
+                        } *@
                         }
                     </ul>
 
@@ -73,7 +79,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - GameSite - <a asp-controller="Home" asp-action="Privacy">Конфіденційність</a>
+            &copy; @(DateTime.UtcNow.ToString("yyyy")) - IgroNewsUa - <a asp-controller="Home" asp-action="About">Про
+                нас</a>
         </div>
     </footer>
 

@@ -1,4 +1,5 @@
 ﻿using GameSite.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,7 @@ public class ApplicationDbContext : IdentityDbContext
     // }
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public override DbSet<IdentityRole> Roles { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Comment> Comments { get; set; }
 }

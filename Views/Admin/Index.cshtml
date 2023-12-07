@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GameSite.Data.ApplicationUser>
+﻿@model IEnumerable<global::GameSite.Data.ApplicationUser>
 @{
     ViewData["Title"] = "Список користувачів";
 }
@@ -9,10 +9,8 @@
     {
         <li>
             <p><b>Email:</b> @user.Email</p>
-
             <p><b>Username:</b> @user.UserName</p>
-
-            <p><b>Years:</b> @user?.Years</p>
+            <p><b>Age:</b> @user?.Age</p>
         </li>
         <br>
         <br>

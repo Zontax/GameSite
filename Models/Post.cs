@@ -7,12 +7,12 @@ public class Post
     public int Id { get; set; }
 
     [Display(Name = "Тип публікації")]
-    public Type TypeId { get; set; } = Type.Новина;
+    public PostType TypeId { get; set; } = PostType.Новина;
 
     public string UrlSlug { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Це поле обов'язкове")]
-    [StringLength(150, ErrorMessage = "не більше 100 символів")]
+    [StringLength(140, ErrorMessage = "не більше 140 символів")]
     [Display(Name = "Назва")]
     public string Title { get; set; } = string.Empty;
 
@@ -21,7 +21,7 @@ public class Post
     public string Content { get; set; } = string.Empty;
 
     [Display(Name = "Обкладинка публікації")]
-    public string? ImageUrl { get; set; } = string.Empty;
+    public string? TitleImage { get; set; } = string.Empty;
 
     public string? VideoUrl { get; set; } = string.Empty;
 
@@ -45,15 +45,26 @@ public class Post
     [Display(Name = "Дата редагування")]
     public DateTime EditedDate { get; set; } = DateTime.UtcNow;
 
-    [Display(Name = "Гра")]
-    public int? GameId { get; set; } = 0;
+    //// Якщо тип Огляд
+    [Display(Name = "Гра на огляді")]
+    public int? ReviewGameId { get; set; }
+
+    [Display(Name = "Оцінка")]
+    public string? ReviewRating { get; set; } = string.Empty;
+
+    [Display(Name = "Плюси")]
+    public string? ReviewPlus { get; set; } = string.Empty;
+
+    [Display(Name = "Мінуси")]
+    public string? ReviewMinus { get; set; } = string.Empty;
+    ////
 
     public Post()
     {
         UrlSlug = Id.ToString();
     }
 
-    public Post(Type type, string title, string content, string author)
+    public Post(PostType type, string title, string content, string author)
     {
         UrlSlug = Id.ToString();
         TypeId = type;
@@ -62,14 +73,14 @@ public class Post
         Author = author;
     }
 
-    public Post(Type type, string title, string content, string author, DateTime date)
+    public Post(PostType type, string title, string content, string author, DateTime date)
     : this(type, title, content, author)
     {
         UrlSlug = Id.ToString();
         Date = date;
     }
 
-    public Post(Type type, string title, string content, string author, string tags, int likes = 0, int dislikes = 0)
+    public Post(PostType type, string title, string content, string author, string tags, int likes = 0, int dislikes = 0)
     : this(type, title, content, author)
     {
         UrlSlug = Id.ToString();
@@ -78,7 +89,7 @@ public class Post
         DislikesCount = dislikes;
     }
 
-    public Post(Type type, string title, string content, string author, string tags, DateTime date, int likes = 0, int dislikes = 0, string imageUrl = "")
+    public Post(PostType type, string title, string content, string author, string tags, DateTime date, int likes = 0, int dislikes = 0, string imageUrl = "")
     : this(type, title, content, author)
     {
         UrlSlug = Id.ToString();
@@ -86,25 +97,25 @@ public class Post
         LikesCount = likes;
         DislikesCount = dislikes;
         Date = date;
-        ImageUrl = imageUrl;
+        TitleImage = imageUrl;
     }
 
-    public string GetColorCode(Type typeId)
+    public string GetColorCode(PostType typeId)
     {
 #pragma warning disable IDE0066
         switch (typeId)
         {
-            case Type.Новина:
+            case PostType.Новина:
                 return "blue";
-            case Type.Огляд:
+            case PostType.Огляд:
                 return "green";
-            case Type.Стаття:
+            case PostType.Стаття:
                 return "red";
-            case Type.Гайд:
+            case PostType.Гайд:
                 return "orange";
-            case Type.Відео:
+            case PostType.Відео:
                 return "purple";
-            case Type.Подкаст:
+            case PostType.Подкаст:
                 return "brown";
             default:
                 return "black";
@@ -113,7 +124,7 @@ public class Post
     }
 }
 
-public enum Type
+public enum PostType
 {
     Новина,
     Огляд,
@@ -122,4 +133,3 @@ public enum Type
     Відео,
     Подкаст,
 }
-

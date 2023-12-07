@@ -6,7 +6,7 @@ dotnet tool install -g dotnet-ef
 # Міграція
 dotnet ef database update
 або 
-Add-Migration Init
+Add-Migration InitialCreate
 Update-Database
 # NumGet
 Humanizer.Core.uk

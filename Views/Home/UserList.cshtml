@@ -1,5 +1,8 @@
-﻿@using GameSite.Data
-@model IEnumerable<GameSite.Data.ApplicationUser>
+﻿@using Microsoft.AspNetCore.Identity
+@using GameSite.Data
+@inject SignInManager<ApplicationUser> SignInManager
+
+@model IEnumerable<ApplicationUser>
 @{
     ViewData["Title"] = "Список користувачів";
 }
@@ -10,20 +13,17 @@
     {
         @if (user == null)
         {
-            <p>Користувачів нема</p>
+            <li>Користувачів нема</li>
         }
-
         <li>
             <p><b>Email:</b> @user?.Email</p>
-
-            <p><b>Username:</b> @user?.UserName</p>
-
+            <p><b>UserName:</b> @user?.UserName</p>
+            <p><b>Name:</b> @user?.Name</p>
+            <p><b>PhoneNumber:</b> @user?.PhoneNumber</p>
             <p><b>Role:</b> @user?.Role</p>
-
-            <p><b>Years:</b> @user?.Years</p>
-
+            <p><b>Age:</b> @user?.Age</p>
             <p><b>Дата реєстрації:</b> @user?.RegistrationDate</p>
+            <br>
         </li>
-        <br>
     }
 </ul>

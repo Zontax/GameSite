@@ -16,13 +16,13 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="TypeId"></label>
-                    <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control"></select>
+                    <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control" id="TypeIdSelect"></select>
                     <span asp-validation-for="TypeId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ImageUrl"></label>
-                    <input asp-for="ImageUrl" name="file" type="file" class="form-control">
-                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    <label asp-for="TitleImage"></label>
+                    <input asp-for="TitleImage" name="file" type="file" class="form-control">
+                    <span asp-validation-for="TitleImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Title"></label>
@@ -44,10 +44,28 @@
                     <input asp-for="Tags" class="form-control">
                     <span asp-validation-for="Tags" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="GameId"></label>
-                    <input asp-for="GameId" value="0" class="form-control">
-                    <span asp-validation-for="GameId" class="text-danger"></span>
+
+                <div id="HidedFields" style="display: none;">
+                    <div class="form-group">
+                        <label asp-for="ReviewGameId"></label>
+                        <input asp-for="ReviewGameId" value="0" class="form-control">
+                        <span asp-validation-for="ReviewGameId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReviewPlus"></label>
+                        <input asp-for="ReviewPlus" class="form-control">
+                        <span asp-validation-for="ReviewPlus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReviewMinus"></label>
+                        <input asp-for="ReviewMinus" class="form-control">
+                        <span asp-validation-for="ReviewMinus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReviewRating"></label>
+                        <input asp-for="ReviewRating" value="50" class="form-control">
+                        <span asp-validation-for="ReviewRating" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-success">Редагувати</button>
@@ -57,3 +75,27 @@
         <a href="/Home">Назад</a>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () 
+        {
+            var typeIdSelect = document.getElementById('TypeIdSelect');
+            var hidedFields = document.getElementById('HidedFields');
+
+            function toggleFieldsVisibility() 
+            {
+                var selectedValue = typeIdSelect.value;
+                if (selectedValue === 'Огляд') 
+                {
+                    hidedFields.style.display = 'block';
+                } else {
+                    hidedFields.style.display = 'none';
+                }
+            }
+
+            toggleFieldsVisibility(); // Викликати при завантаженні сторінки
+            typeIdSelect.addEventListener('change', toggleFieldsVisibility); // Додати обробник події для вибору
+        });
+    </script>
+}

@@ -7,6 +7,7 @@ public class Comment
     public int Id { get; set; }
     public int PostId { get; set; }
     public int? ReplyCommentId { get; set; }
+    //public string AuthorId { get; set; }
     [Display(Name = "Автор")]
     [Required(ErrorMessage = "Автор")]
     public string Author { get; set; }

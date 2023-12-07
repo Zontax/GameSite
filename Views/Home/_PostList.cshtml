@@ -1,18 +1,19 @@
 @using Microsoft.AspNetCore.Identity
 @using GameSite.Data
+@using GameSite.Models
 @using Humanizer
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@model List<Post>
+@model IEnumerable<Post>
 
 <div class="post-list">
     @foreach (Post post in ViewBag.Posts)
     {
         <div class="post">
-            @if (!string.IsNullOrEmpty(post.ImageUrl))
+            @if (!string.IsNullOrEmpty(post.TitleImage))
             {
                 <a class="no-underline" asp-action="Show" asp-route-id="@post.Id">
-                    <img src="@post.ImageUrl" alt="TitleImage" />
+                    <img src="@post.TitleImage" alt="TitleImage" />
                 </a>
             }
             <div class="post-content">
@@ -20,31 +21,39 @@
                     <h3>@post.Title</h3>
                 </a>
                 <b style="color: @(MyVoids.GetColorCode(post.TypeId))">@post.TypeId</b>
-                <p>@((string)post.Content.Substring(0, 125))...</p>
+                @if (post.Content.Length > 126)
+                {<p>@((string)post.Content.Substring(0, 125))...</p>}
+                else
+                {<p>@post.Content</p>}
+                
                 <p>@post.Author</p>
                 <p>
                     <i>Теги:
-                        @foreach (string tag in @post.Tags.Split(","))
-                        {
-                            <a class="post-tags" asp-action="Tag" asp-route-tag="@tag.Trim()">@tag.Trim().Replace('_', ' ')</a><b>,</b>
+                        @{
+                            var tags = post.Tags.Split(",");
+                            for (var i = 0; i < tags.Length; i++)
+                            {
+                                <a class="post-tags" asp-action="Tag" asp-route-tag="@tags[i].Trim()">@tags[i].Trim().Replace('_', ' ')</a>
+                                @if (i < tags.Length - 1)
+                                {
+                                    @:<b>,</b>
+                                }
+                            }
                         }
                     </i>
                 </p>
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    <p>
-                        <a asp-action="Edit" asp-route-id="@post.Id">Редагувати</a>
-                    </p>
 
-                    <p>
-                        <a asp-action="Delete" asp-route-id="@post.Id">Видалити</a>
-                    </p>
-                }
                 <p title="@post.Date.ToString("yyyy-MM-dd HH:mm")">
                     @post.Date.ToString("dd MMMM, yyyy")
                     <span class="comment-icon">💬</span>
                     @(ViewBag.CommentsCount.ContainsKey(post.Id) ? ViewBag.CommentsCount[post.Id] : 0)
                 </p>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@post.Id">Редагувати</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@post.Id">Видалити</a>
+                }
             </div>
         </div>
     }

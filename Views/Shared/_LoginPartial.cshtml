@@ -2,17 +2,33 @@
 @using GameSite.Data
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
 
 <ul class="navbar-nav">
+
     @if (SignInManager.IsSignedIn(User))
     {
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+                      asp-route-returnUrl="@Url.Action("Index", "Admin", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Адмін панель</button>
+                </form>
+            </li>
+        }
+
+        var user = await UserManager.GetUserAsync(User);
+
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                @User.Identity?.Name</a>
+                @user?.Name
+            </a>
         </li>
+
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
-                asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                  asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link text-dark">Вийти</button>
             </form>
         </li>

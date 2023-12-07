@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+//using Newtonsoft.Json;
 
 namespace GameSite.Controllers;
 
@@ -23,10 +23,26 @@ public class HomeController : Controller
         this.webHostEnv = webHostEnv;
     }
 
+    public IActionResult LangChange()
+    {
+        return View("Lang Change");
+    }
+
+    public IActionResult About()
+    {
+        return View("About");
+    }
+
     public async Task<ActionResult> Index()
     {
+        int page = 1;
+        int pageSize = 20;
+        if (page < 1) NotFound();
+
         var posts = await context.Posts
             .OrderByDescending(post => post.Date)
+            .Skip((page - 1) * pageSize)   // Пропустити певну кількість записів
+            .Take(pageSize)                // Взяти певну кількість записів
             .ToListAsync();
 
         var commentsCount = await context.Comments
@@ -40,9 +56,9 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult UserList()
+    public async Task<ActionResult> UserList()
     {
-        var users = context.ApplicationUsers.ToList();
+        var users = await context.ApplicationUsers.ToListAsync();
 
         return View(users);
     }
@@ -64,7 +80,7 @@ public class HomeController : Controller
         ViewBag.Posts = postsWithTag;
         ViewBag.CommentsCount = commentsCount;
 
-        if (postsWithTag == null) return RedirectToAction(nameof(Index));
+        if (postsWithTag == null || !postsWithTag.Any()) return RedirectToAction(nameof(Index));
 
         return View();
     }
@@ -72,7 +88,7 @@ public class HomeController : Controller
     public async Task<ActionResult> News()
     {
         var news = await context.Posts
-        .Where(x => x.TypeId == Models.Type.Новина)
+        .Where(x => x.TypeId == Models.PostType.Новина)
         .OrderByDescending(post => post.Date)
         .ToListAsync();
         var commentsCount = await context.Comments
@@ -88,7 +104,7 @@ public class HomeController : Controller
     public async Task<ActionResult> Reviews()
     {
         var reviews = await context.Posts
-            .Where(x => x.TypeId == Models.Type.Огляд)
+            .Where(x => x.TypeId == Models.PostType.Огляд)
             .OrderByDescending(post => post.Date)
             .ToListAsync();
         var commentsCount = await context.Comments
@@ -104,7 +120,7 @@ public class HomeController : Controller
     public async Task<ActionResult> Articles()
     {
         var reviews = await context.Posts
-            .Where(x => x.TypeId == Models.Type.Стаття)
+            .Where(x => x.TypeId == Models.PostType.Стаття)
             .OrderByDescending(post => post.Date)
             .ToListAsync();
         var commentsCount = await context.Comments
@@ -120,7 +136,7 @@ public class HomeController : Controller
     public async Task<ActionResult> Guides()
     {
         var reviews = await context.Posts
-            .Where(x => x.TypeId == Models.Type.Гайд)
+            .Where(x => x.TypeId == Models.PostType.Гайд)
             .OrderByDescending(post => post.Date)
             .ToListAsync();
         var commentsCount = await context.Comments
@@ -155,13 +171,13 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult> Show(int id, string author, string text)
+    public async Task<ActionResult> Show(int id, string author, string text, int? replyId)
     {
         if (ModelState.IsValid)
         {
             if (!string.IsNullOrEmpty(author) && !string.IsNullOrEmpty(text))
             {
-                Comment coment = new(id, author, text);
+                Comment coment = new(id, author, text, false, replyId);
                 await context.Comments.AddAsync(coment);
                 await context.SaveChangesAsync();
             }
@@ -169,17 +185,17 @@ public class HomeController : Controller
             return RedirectToAction(nameof(Show), id);
         }
 
-        return RedirectToAction(nameof(Index));
+        return NotFound();
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public ActionResult Create()
     {
-        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.Type)));
+        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.PostType)));
         return View();
     }
 
-    [HttpPost, Authorize]
+    [HttpPost, Authorize(Roles = "Admin")]
     public async Task<ActionResult> Create(Post post, IFormFile file)
     {
         // if (string.IsNullOrEmpty(post.ImageUrl))
@@ -190,19 +206,19 @@ public class HomeController : Controller
             if (file != null && file.Length > 0)
             {
                 // Збережіть файл у папці wwwroot або в потрібному вам шляху
-                var uploadsDirectory = Path.Combine(webHostEnv.WebRootPath, "uploads");
+                var uploadsDirectory = Path.Combine(webHostEnv.WebRootPath, "post_title_image");
                 if (!Directory.Exists(uploadsDirectory)) Directory.CreateDirectory(uploadsDirectory);
 
                 var fileExtension = Path.GetExtension(file.FileName);
                 var uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
-                var filePath = Path.Combine(webHostEnv.WebRootPath, "uploads", uniqueFileName);
+                var filePath = Path.Combine(webHostEnv.WebRootPath, "post_title_image", uniqueFileName);
 
                 using (FileStream stream = new(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
 
-                post.ImageUrl = "/post_title_image/" + uniqueFileName;
+                post.TitleImage = "/post_title_image/" + uniqueFileName;
             }
 
             await context.Posts.AddAsync(post);
@@ -210,14 +226,14 @@ public class HomeController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.Type)));
+        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.PostType)));
         return View(post);
     }
 
     [Authorize]
     public async Task<ActionResult> Edit(int id)
     {
-        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.Type)));
+        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.PostType)));
         var post = await context.Posts.FindAsync(id);
 
         if (post == null) return NotFound();
@@ -231,25 +247,25 @@ public class HomeController : Controller
         {
             if (file != null && file.Length > 0)
             {
-                string uploadsDirectory = Path.Combine(webHostEnv.WebRootPath, "uploads");
+                string uploadsDirectory = Path.Combine(webHostEnv.WebRootPath, "post_title_image");
                 if (!Directory.Exists(uploadsDirectory)) Directory.CreateDirectory(uploadsDirectory);
 
                 string fileExtension = Path.GetExtension(file.FileName);
                 string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
-                string filePath = Path.Combine(webHostEnv.WebRootPath, "uploads", uniqueFileName);
+                string filePath = Path.Combine(webHostEnv.WebRootPath, "post_title_image", uniqueFileName);
 
                 using (FileStream fileStream = new(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);
                 }
 
-                post.ImageUrl = "/post_title_image/" + uniqueFileName;
+                post.TitleImage = "/post_title_image/" + uniqueFileName;
             }
             else
             {
                 // Якщо файл не був вибраний, використовуйте поточне зображення
                 var existingPost = await context.Posts.FindAsync(post.Id);
-                post.ImageUrl = existingPost?.ImageUrl;
+                post.TitleImage = existingPost?.TitleImage;
             }
 
             context.Posts.Update(post);
@@ -258,8 +274,8 @@ public class HomeController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.Type)));
-        post.ImageUrl = context.Posts.Find(post.Id)?.ImageUrl;
+        ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.PostType)));
+        post.TitleImage = context.Posts.Find(post.Id)?.TitleImage;
         await context.SaveChangesAsync();
         return View(post);
     }

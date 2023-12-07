@@ -2,21 +2,21 @@ namespace GameSite.Models;
 
 public static class MyVoids
 {
-    public static string GetColorCode(Type typeId)
+    public static string GetColorCode(PostType typeId)
     {
         switch (typeId)
         {
-            case Type.Новина:
+            case PostType.Новина:
                 return "rgb(201, 142, 5)";
-            case Type.Огляд:
+            case PostType.Огляд:
                 return "orange";
-            case Type.Стаття:
+            case PostType.Стаття:
                 return "yellow";
-            case Type.Гайд:
+            case PostType.Гайд:
                 return "green";
-            case Type.Відео:
+            case PostType.Відео:
                 return "blue";
-            case Type.Подкаст:
+            case PostType.Подкаст:
                 return "brown";
             default:
                 return "black";

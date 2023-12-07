@@ -25,6 +25,7 @@ body {
     margin-bottom: 60px;
 }
 div.container {
+    margin-top: 50px;
     background-color: rgb(223, 223, 223);
 }
 
@@ -60,9 +61,8 @@ a.no-underline:hover {
 
 .post img {
     margin-right: 20px; /* Збільшено відступ для зображення */
-    max-width: 150px;
+    max-width: 320px;
     flex-shrink: 0; /* Запобігає зміні розміру зображення */
-    border-radius: 5px; /* Округлення країв зображення */
 }
 
 .post-content {
@@ -109,7 +109,7 @@ a.post-tags {
 
 /* Коментарі поста */
 .comment-count {
-    color: #ff6600;
+    color: grey;
     font-weight: bold;
 }
 
@@ -153,6 +153,8 @@ a.post-tags {
     border-bottom: 1px solid #ced4da;
     margin-bottom: 20px;
     padding-bottom: 10px;
+    margin-left: 0px; /* Зсув вправо для відповідей */
+    width: 900px;
 }
 
 .post-comment:last-child {
@@ -174,4 +176,26 @@ a.post-tags {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
+}
+
+/* Стилі для форм відповіді на коментарі */
+.comment-form {
+    margin-bottom: 15px;
+}
+
+.comment-form textarea {
+    height: 80px;
+}
+
+/* Стилі для коментарів, що є відповідями */
+.reply-comment {
+    margin-left: 80px; /* Зсув вправо для відповідей */
+    width: 500px;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Щоб меню було поверх іншого контенту */
 }

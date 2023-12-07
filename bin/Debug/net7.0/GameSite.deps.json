@@ -22,6 +22,11 @@
         },
         "runtime": {
           "GameSite.dll": {}
+        },
+        "resources": {
+          "en/GameSite.resources.dll": {
+            "locale": "en"
+          }
         }
       },
       "Azure.Core/1.25.0": {
