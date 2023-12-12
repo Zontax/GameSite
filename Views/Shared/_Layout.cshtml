@@ -10,6 +10,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - IgroNewsUa</title>
+
+    <link rel="stylesheet" href="~/css/tooplate_style.css" />
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GameSite.styles.css" asp-append-version="true" />
@@ -31,27 +34,29 @@
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="News">Новини</a>
+                            <a class="nav-link text-dark" asp-controller="Home"
+                                asp-action="News">@Resources.Resource.News</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Reviews">Огляди</a>
+                            <a class="nav-link text-dark" asp-controller="Home"
+                                asp-action="Reviews">@Resources.Resource.Reviews</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Articles">Статті</a>
+                            <a class="nav-link text-dark" asp-controller="Home"
+                                asp-action="Articles">@Resources.Resource.Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Guides">Гайди</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="UserList">UserList</a>
+                            <a class="nav-link text-dark" asp-controller="Home"
+                                asp-action="Guides">@Resources.Resource.Guides</a>
                         </li>
 
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            @if (User.IsInRole("Admin"))
+                            @if (User.IsInRole("Author"))
                             {
                                 <li class="nav-item align-content-end">
-                                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Create">Створити</a>
+                                    <a class="nav-link text-dark" asp-controller="Home"
+                                        asp-action="Create">@Resources.Resource.Create_a_post</a>
                                 </li>
                             }
                         }
@@ -72,8 +77,9 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @(DateTime.UtcNow.ToString("yyyy")) - IgroNewsUa - <a asp-controller="Home" asp-action="About">Про
-                нас</a>
+            &copy; @(DateTime.UtcNow.ToString("yyyy")) - IgroNewsUa - <a asp-controller="Home" asp-action="About">
+                @Resources.Resource.AboutUs
+            </a>
         </div>
     </footer>
 

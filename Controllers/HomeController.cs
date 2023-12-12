@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using PagedList.Core;
 //using Newtonsoft.Json;
 
 namespace GameSite.Controllers;
@@ -16,69 +18,53 @@ public class HomeController : Controller
     readonly ILogger<HomeController> logger;
     readonly ApplicationDbContext context;
     readonly IWebHostEnvironment webHostEnv;
+    readonly UserManager<ApplicationUser> userManager;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IWebHostEnvironment webHostEnv)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IWebHostEnvironment webHostEnv, UserManager<ApplicationUser> userManager)
     {
         this.logger = logger;
         this.context = context;
         this.webHostEnv = webHostEnv;
+        this.userManager = userManager;
     }
 
-    public IActionResult ChangeCulture(string lang)
+    public async Task<ActionResult> Index(int? page)
     {
-        string returnUrl = Request.Headers["Referer"].ToString();
-        List<string> cultures = new() { "uk", "en" };
+        int pageNumber = page ?? 1;
+        int pageSize = 3;
 
-        if (!cultures.Contains(lang))
-        {
-            lang = "uk";
-        }
+        if (pageNumber < 1)
+            NotFound();
 
-        Response.Cookies.Append("lang", lang, new CookieOptions
-        {
-            HttpOnly = false,
-            Expires = DateTime.Now.AddYears(1)
-        });
-
-        return RedirectToAction("Index");
-    }
-
-    public IActionResult About()
-    {
-        return View("About");
-    }
-
-    public async Task<ActionResult> Index()
-    {
-
-        int page = 1;
-        int pageSize = 20;
-        if (page < 1) NotFound();
-
-        var posts = await context.Posts
+        var posts = context.Posts
             .OrderByDescending(post => post.Date)
-            .Skip((page - 1) * pageSize)   // Пропустити певну кількість записів
-            .Take(pageSize)                // Взяти певну кількість записів
-            .ToListAsync();
+            .ToPagedList(pageNumber, pageSize);
 
         var commentsCount = await context.Comments
             .GroupBy(com => com.PostId)
             .Select(group => new { PostId = group.Key, Count = group.Count() })
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
+        ViewBag.TotalCount = await context.Posts.CountAsync();
+        ViewBag.Page = pageNumber;
+        ViewBag.PageSize = pageSize;
+        ViewBag.TotalPages = (int)Math.Ceiling((double)ViewBag.TotalCount / pageSize);
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 
-        return View();
+        if (pageNumber > ViewBag.TotalPages)
+            NotFound();
+
+        return View(posts);
     }
 
-    public async Task<ActionResult> UserList()
+    [Route("/About")]
+    public IActionResult About()
     {
-        var users = await context.ApplicationUsers.ToListAsync();
-
-        return View(users);
+        return RedirectToAction(nameof(Index));
     }
 
+    [Route("/Post")]
     public async Task<ActionResult> Tag(string tag)
     {
         string[] tags = tag.Split(new[] { ',' });
@@ -101,6 +87,7 @@ public class HomeController : Controller
         return View();
     }
 
+    [Route("/News")]
     public async Task<ActionResult> News()
     {
         var news = await context.Posts
@@ -117,6 +104,7 @@ public class HomeController : Controller
         return View();
     }
 
+    [Route("/Reviews")]
     public async Task<ActionResult> Reviews()
     {
         var reviews = await context.Posts
@@ -133,6 +121,7 @@ public class HomeController : Controller
         return View();
     }
 
+    [Route("/Articles")]
     public async Task<ActionResult> Articles()
     {
         var reviews = await context.Posts
@@ -149,6 +138,7 @@ public class HomeController : Controller
         return View();
     }
 
+    [Route("/Guides")]
     public async Task<ActionResult> Guides()
     {
         var reviews = await context.Posts
@@ -178,7 +168,9 @@ public class HomeController : Controller
     public async Task<ActionResult> Show(int id)
     {
         var post = await context.Posts.FindAsync(id);
-        var coments = await context.Comments.Where(x => x.PostId == id).ToListAsync();
+        var coments = await context.Comments
+            .Where(x => x.PostId == id)
+            .ToListAsync();
 
         ViewBag.Post = post;
         ViewBag.Coments = coments;
@@ -307,6 +299,8 @@ public class HomeController : Controller
         await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
+
+
 
     [Authorize]
     public async Task<ActionResult> SetRole()

@@ -62,7 +62,7 @@ public class RegisterModel : PageModel
     public class InputModel
     {
         [Required(ErrorMessageResourceType = typeof(Resources.Resource),
- ErrorMessageResourceName = "RequiredField")]
+        ErrorMessageResourceName = "RequiredField")]
         [Display(Name = "User_Name", ResourceType = typeof(Resources.Resource))]
         public string Name { get; set; }
 
@@ -70,28 +70,35 @@ public class RegisterModel : PageModel
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        [Required]
         [EmailAddress]
-        [Display(Name = "Пошта (Email)")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+        ErrorMessageResourceName = "RequiredField")]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resource))]
         public string Email { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+        ErrorMessageResourceName = "RequiredField")]
         [StringLength(100, ErrorMessage = "{0} має містити принаймні {2} і не більше {1} символів.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password", ResourceType = typeof(Resources.Resource))]
         public string Password { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+        ErrorMessageResourceName = "RequiredField")]
         [DataType(DataType.Password)]
-        [Display(Name = "Підтвердити пароль")]
-        [Compare(nameof(Password), ErrorMessage = "Паролі не збігаються.")]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Resource))]
+        [Compare(nameof(Password),
+        ErrorMessageResourceType = typeof(Resources.Resource),
+        ErrorMessageResourceName = "PasswordDontCompare")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -143,7 +150,7 @@ public class RegisterModel : PageModel
                     return LocalRedirect(returnUrl);
                 }
             }
-#pragma warning restore IDE0037 // Использовать имя выводимого элемента
+#pragma warning restore IDE0037
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);

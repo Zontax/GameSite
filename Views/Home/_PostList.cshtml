@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Identity
+@using System.Text.RegularExpressions
 @using GameSite.Data
 @using GameSite.Models
 @using Humanizer
@@ -7,6 +8,7 @@
 @model IEnumerable<Post>
 
 <div class="post-list">
+
     @foreach (Post post in ViewBag.Posts)
     {
         <div class="post">
@@ -21,14 +23,15 @@
                     <h3>@post.Title</h3>
                 </a>
                 <b style="color: @(MyVoids.GetColorCode(post.TypeId))">@post.TypeId</b>
+
                 @if (post.Content.Length > 126)
-                {<p>@((string)post.Content.Substring(0, 125))...</p>}
+                    { <p>@((string)Regex.Replace(post.Content, "<.*?>", "").Substring(0, 125))...</p> }
                 else
-                {<p>@post.Content</p>}
+                    { <p>@Regex.Replace(post.Content, "<.*?>", "")</p> }
                 
                 <p>@post.Author</p>
                 <p>
-                    <i>Теги:
+                    <i>@Resources.Resource.Tags:
                         @{
                             var tags = post.Tags.Split(",");
                             for (var i = 0; i < tags.Length; i++)
@@ -51,8 +54,11 @@
 
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@post.Id">Редагувати</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@post.Id">Видалити</a>
+                    @if (User.IsInRole("Author"))
+                    {
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@post.Id">@Resources.Resource.Edit</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@post.Id">@Resources.Resource.Delete</a>
+                    }        
                 }
             </div>
         </div>

@@ -1,11 +1,11 @@
 ﻿@model Post;
 @{
-    ViewData["Title"] = "Створити";
+    ViewData["Title"] = "Створити публікацію";
 }
 
 <div class="text-center">
     <div>
-        <h3>Створити пост</h3>
+        <h3>Створити публікацію</h3>
 
         <form asp-controller="Home" asp-action="Create" method="post" enctype="multipart/form-data">
 
@@ -16,14 +16,15 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="TypeId"></label>
-                    <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control" id="TypeIdSelect"></select>
+                    <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control"
+                        id="TypeIdSelect"></select>
                     <span asp-validation-for="TypeId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="TitleImage"></label>
-                    <input asp-for="TitleImage" name="file" type="file" accept="image/jpg,image/jpeg,image/png,image/gif"
-                           class="form-control">
+                    <input asp-for="TitleImage" name="file" type="file"
+                        accept="image/jpg,image/jpeg,image/png,image/gif" class="form-control">
                     <span asp-validation-for="TitleImage" class="text-danger"></span>
                 </div>
 

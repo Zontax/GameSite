@@ -3,10 +3,10 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @model IEnumerable<ApplicationUser>
 @{
-    ViewData["Title"] = "Адмін панель";
+    ViewData["Title"] = @Resources.Resource.AdminPanel;
 }
 
-<h1>Адмін панель</h1>
+<h1>@ViewData["Title"]</h1>
 <ul>
     @foreach (ApplicationUser user in Model)
     {
@@ -18,12 +18,25 @@
         {
             <li>
                 <p><b>Email:</b> @user?.Email</p>
-                <p><b>UserName:</b> @user?.UserName</p>
                 <p><b>Name:</b> @user?.Name</p>
                 <p><b>PhoneNumber:</b> @user?.PhoneNumber</p>
-                <p><b>Role:</b> @user?.Role</p>
+                <p>
+                    <b>Roles:</b>
+                    @foreach (string role in await SignInManager.UserManager.GetRolesAsync(user))
+                    {
+                        <b> @role</b>
+                    }
+                </p>
                 <p><b>Age:</b> @user?.Age</p>
                 <p><b>Дата реєстрації:</b> @user?.RegistrationDate</p>
+
+                <form asp-asp-controller="Admin" asp-action="ManageRole" method="post">
+                    <input type="hidden" value="@user?.Id" name="userId" readonly hidden />
+                    <label>Назва ролі</label>
+                    <input type="text" name="role" />
+                    <button type="submit" class="btn btn-primary" name="submitType" value="Add">Назначити роль</button>
+                    <button type="submit" class="btn btn-danger" name="submitType" value="Remove">Видалити роль</button>
+                </form>
                 <br>
             </li>
         }

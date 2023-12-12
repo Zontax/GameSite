@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @using GameSite.Models
 @using GameSite.Data
 @using Humanizer
@@ -7,6 +8,9 @@
 @model Comment;
 @{
     ViewData["Title"] = @ViewBag.Post.Title;
+
+    ViewBag.CurrentUserId = User.Identity is ClaimsIdentity claimsIdentity
+        ? claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value : "";
 }
 
 <div class="text-center">
@@ -25,8 +29,8 @@
 
         <p>@ViewBag.Post.Date <b>@ViewBag.Post.Author</b></p>
         <p>
-            <a title="Подобається">👍@(ViewBag.Post.LikesCount)</a>
-            <a title="Неподобається">👎@(ViewBag.Post.DislikesCount)</a>
+            <button class="likeButton" data-userid="@ViewBag.CurrentUserId" data-postid="@ViewBag.Post.Id" title="Подобається">👍@ViewBag.Post.LikesCount</button>
+            <a title="Неподобається" asp-action="AddDislike" asp-route-postId="@ViewBag.Post.Id">👎@ViewBag.Post.DislikesCount</a>
         </p>
         <p>
             <i>Теги:
@@ -82,8 +86,8 @@
         @if (comment.ReplyCommentId == null)
         {
             <div class="post-comment">
-                <p><b>@(comment.Author): </b> @comment.Text</p>
-                <p class="date-time" title="@(comment.Date.ToString("yyyy-MM-dd HH:mm"))">
+                <p><b>@Html.Encode(comment.Author): </b> @Html.Encode(comment.Text)</p>
+                <p class="date-time" title="@comment.Date.ToString("yyyy-MM-dd HH:mm")">
                     @(DateTime.UtcNow.Add(-((TimeSpan)(DateTime.UtcNow - comment.Date))).Humanize())
                     @if (comment.Edited)
                     {
@@ -115,13 +119,10 @@
             @foreach (Comment reply in ((List<Comment>)ViewBag.Coments).Where(c => c.ReplyCommentId == comment.Id))
             {
                 <div class="reply-comment">
-                    <p><b>(reply to @(comment.Author)) @(reply.Author): </b> @reply.Text</p>
-                    <p class="date-time" title="@(reply.Date.ToString("yyyy-MM-dd HH:mm"))">
+                    <p><b>(reply to @Html.Encode(comment.Author)) @Html.Encode(reply.Author): </b> @Html.Encode(reply.Text)</p>
+                    <p class="date-time" title="@reply.Date.ToString("yyyy-MM-dd HH:mm")">
                         @(DateTime.UtcNow.Add(-((TimeSpan)(DateTime.UtcNow - reply.Date))).Humanize())
-                        @if (reply.Edited)
-                        {
-                            <b> (змінено)</b>
-                        }
+                        @if (reply.Edited) { <b> (змінено)</b> }
                     </p>
                 </div>
             }
@@ -130,4 +131,44 @@
 </div>
 
 
+@section Scripts {
+    <script>
+        $(document).ready(function () 
+        {
+            $('.likeButton').click(function () 
+            {
+                var button = $(this);
+                var postId = $(this).data('postid');
+                var userId = $(this).data('userid');
+                var likesCountElement = button;
+                var currentLikes = parseInt(likesCountElement.text().trim().substring(2));
 
+                if (userId != "")
+                {
+                    $.ajax({
+                        url: '/Ajax/Like',
+                        type: 'Post',
+                        data: { postId: postId, userId: userId },
+                        success: function (response) 
+                        {
+                            if (response.success) 
+                            {   
+                                likesCountElement.text('👍' + (currentLikes + 1));
+                                console.error("Ви поставили лайк");
+                            } 
+                            else 
+                            {
+                                likesCountElement.text('👍' + (currentLikes - 1));
+                                console.error("Ви забрали лайк");
+                            }
+                        },
+                        error: function (xhr, status, error) 
+                        {
+                            console.error(error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

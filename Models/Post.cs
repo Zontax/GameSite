@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using GameSite.Data;
 
 namespace GameSite.Models;
 
@@ -33,6 +34,8 @@ public class Post
 
     public int LikesCount { get; set; }
 
+    public virtual ICollection<ApplicationUser>? LikedByUsers { get; set; }
+
     public int DislikesCount { get; set; }
 
     [Required(ErrorMessage = "Введіть теги")]
@@ -47,7 +50,7 @@ public class Post
 
     //// Якщо тип Огляд
     [Display(Name = "Гра на огляді")]
-    public int? ReviewGameId { get; set; }
+    public string? ReviewGameId { get; set; } = string.Empty;
 
     [Display(Name = "Оцінка")]
     public string? ReviewRating { get; set; } = string.Empty;

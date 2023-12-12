@@ -10,8 +10,10 @@ var connectionString = builder.Configuration.GetConnectionString("SQLiteConnecti
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString)); //  SQLite
-                                          //options.UseSqlServer(connectionString)); // MSSQL Server
-                                          //options.UsePostgreSqlServer(connectionString)); // Postgre
+                                          // .UseNpgsql("Host=localhost;Port=5433;Database=usersdb;Username=postgres;Password=asd123456");
+
+// options.UseSqlServer(connectionString)); // MSSQL Server
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
@@ -41,17 +43,11 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = true;
 });
 
-
-void ConfigureServices(IServiceCollection services)
+builder.Services.AddRazorPages();
+builder.Services.Configure<RouteOptions>(options =>
 {
-    services.AddRazorPages();
-    services.Configure<RouteOptions>(options =>
-    {
-        options.LowercaseUrls = true;
-    });
-}
-
-ConfigureServices(builder.Services);
+    options.LowercaseUrls = true;
+});
 
 //builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddControllersWithViews();
@@ -62,6 +58,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+
 }
 else
 {
@@ -75,7 +72,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
-
+app.UseMiddleware<LanguageMiddleware>();
 
 app.MapDefaultControllerRoute();
 app.MapControllerRoute(
@@ -97,46 +94,3 @@ using (var scope = app.Services.CreateScope())
     PostDbInitializer.Initialize(context, userManager, roleManager);
 }
 app.Run();
-
-// void CreateRoles(IServiceProvider serviceProvider)
-// {
-//     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-//     var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-//     Task<IdentityResult> roleResult;
-//     string email = "jrvadim19@gmail.com";
-
-//     //Check that there is an Administrator role and create if not
-//     Task<bool> hasAdminRole = roleManager.RoleExistsAsync("Administrator");
-//     hasAdminRole.Wait();
-
-//     if (!hasAdminRole.Result)
-//     {
-//         roleResult = roleManager.CreateAsync(new IdentityRole("Administrator"));
-//         roleResult.Wait();
-//     }
-
-//     //Check if the admin user exists and create it if not
-//     //Add to the Administrator role
-
-//     Task<ApplicationUser> testUser = userManager.FindByEmailAsync(email);
-//     testUser?.Wait();
-
-//     if (testUser.Result == null)
-//     {
-//         ApplicationUser administrator = new()
-//         {
-//             Email = email,
-//             UserName = email.ToUpper(),
-//             EmailConfirmed = true,
-//         };
-
-//         Task<IdentityResult> newUser = userManager.CreateAsync(administrator, "asdASD12345#");
-//         newUser.Wait();
-
-//         if (newUser.Result.Succeeded)
-//         {
-//             Task<IdentityResult> newUserRole = userManager.AddToRoleAsync(administrator, "Administrator");
-//             newUserRole.Wait();
-//         }
-//     }
-// }

@@ -6,12 +6,22 @@
 
 <ul class="navbar-nav">
 
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Language" asp-action="SetLanguage" asp-route-lang="uk"
+            asp-route-returnUrl="@Context.Request.Path">Укр</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Language" asp-action="SetLanguage" asp-route-lang="en"
+            asp-route-returnUrl="@Context.Request.Path">Eng</a>
+    </li>
+
     @if (SignInManager.IsSignedIn(User))
     {
         @if (User.IsInRole("Admin"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">Адмін панель</a>
+                <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">@Resources.Resource.AdminPanel</a>
             </li>
         }
 
@@ -25,18 +35,18 @@
 
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
-                  asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Вийти</button>
+                asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">@Resources.Resource.SignOut</button>
             </form>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Реєстрація</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">@Resources.Resource.Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Увійти</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">@Resources.Resource.LogIn</a>
         </li>
     }
 </ul>
