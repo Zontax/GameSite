@@ -4,6 +4,6 @@ namespace GameSite.Models;
 
 public class RoleModel
 {
-    [Required]
-    public string RoleName { get; set; } = null!;
+    [Required(ErrorMessage = "Поле 'Назва ролі' є обов'язковим")]
+    public string RoleName { get; set; }
 }

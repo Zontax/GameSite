@@ -186,4 +186,40 @@
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
   </data>
+  <data name="AddTags" xml:space="preserve">
+    <value>Add tags like this "tag1, tag2, third_tag" separated by commas</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="CreatePost" xml:space="preserve">
+    <value>Create publication</value>
+  </data>
+  <data name="Edited" xml:space="preserve">
+    <value>edited</value>
+  </data>
+  <data name="No_more_than_140_characters" xml:space="preserve">
+    <value>No more than 140 characters</value>
+  </data>
+  <data name="Publicate" xml:space="preserve">
+    <value>Publicate</value>
+  </data>
+  <data name="Publication_cover" xml:space="preserve">
+    <value>Publication cover</value>
+  </data>
+  <data name="Publication_type" xml:space="preserve">
+    <value>Publication type</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="SavedPosts" xml:space="preserve">
+    <value>Saved posts</value>
+  </data>
 </root>

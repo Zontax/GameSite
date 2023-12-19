@@ -1,0 +1,86 @@
+blockquote {
+    background: #afc1d4;
+    border-left: 10px solid rgb(22, 102, 199); /* Додав властивість solid */
+    padding: 10px; /* Додав падінг для кращого відображення */
+    padding-bottom: 0.5px;
+}
+
+.review-title-plus {
+    color: white;
+    align-items: center;
+    background-color: #99cd00;
+    width: 170px;
+    height: 45px;
+    padding: 3px;
+}
+
+.review-title-minus {
+    color: white;
+    align-items: center;
+    background-color: red;
+    width: 170px;
+    height: 45px;
+    padding: 3px;
+}
+
+.review-info {
+    display: flex;
+    width: 100%;
+}
+
+.review-info__rating {
+    background-color: #99cd00;
+    padding: 10px;
+    width: 30%;
+    margin-right: 10px; /* Додав маржин праворуч для рейтингу */
+}
+
+.review-info__other {
+    width: 70%;
+    padding: 10px;
+    display: flex; /* Змінив на flex для використання контейнера flex */
+    flex-direction: column; /* Розміщення блоків в стовпчик */
+}
+
+.review-info__other > div {
+    margin-bottom: 20px;
+}
+
+.review-info__other h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.ul-null {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.icon-dot-a:before {
+    content: '\2022'; /* Замініть на вашу іконку */
+    color: #99cd00;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.icon-dot-b:before {
+    content: '\2022'; /* Замініть на вашу іконку */
+    color: red;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.toast {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #343a40;
+    color: #ffffff;
+    width: 300px;
+    max-width: 100%;
+    z-index: 10000;
+}

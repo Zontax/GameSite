@@ -66,4 +66,36 @@ public class AjaxController : Controller
 
         return Json(new { success = true });
     }
+
+    [HttpPost, Authorize]
+    public async Task<IActionResult> AddToSaved(int postId, bool isSaved)
+    {
+        var user = await userManager.GetUserAsync(User);
+        Post? post = await context.Posts
+            .Include(p => p.SavedByUsers)
+            .FirstOrDefaultAsync(p => p.Id == postId);
+
+        if (post != null && user != null)
+        {
+            if (isSaved)
+            {
+                if (post.SavedByUsers != null && post.SavedByUsers.Contains(user))
+                {
+                    post.SavedByUsers.Remove(user);
+                }
+            }
+            else
+            {
+                if (post.SavedByUsers == null)
+                    post.SavedByUsers = new List<ApplicationUser>();
+
+                post.SavedByUsers.Add(user);
+            }
+
+            await context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+        return Json(new { success = false });
+    }
 }

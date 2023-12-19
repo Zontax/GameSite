@@ -3,10 +3,10 @@ using System.Text.RegularExpressions;
 using GameSite.Data;
 using GameSite.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using PagedList.Core;
 //using Newtonsoft.Json;
 
@@ -33,8 +33,7 @@ public class HomeController : Controller
         int pageNumber = page ?? 1;
         int pageSize = 3;
 
-        if (pageNumber < 1)
-            NotFound();
+        if (pageNumber < 1) return NotFound();
 
         var posts = context.Posts
             .OrderByDescending(post => post.Date)
@@ -46,14 +45,13 @@ public class HomeController : Controller
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
         ViewBag.TotalCount = await context.Posts.CountAsync();
+        ViewBag.TotalPages = (int)Math.Ceiling((double)ViewBag.TotalCount / pageSize);
         ViewBag.Page = pageNumber;
         ViewBag.PageSize = pageSize;
-        ViewBag.TotalPages = (int)Math.Ceiling((double)ViewBag.TotalCount / pageSize);
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 
-        if (pageNumber > ViewBag.TotalPages)
-            NotFound();
+        if (pageNumber > ViewBag.TotalPages) return NotFound();
 
         return View(posts);
     }
@@ -78,11 +76,34 @@ public class HomeController : Controller
             .Select(group => new { PostId = group.Key, Count = group.Count() })
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
-        ViewBag.Tag = tag;
+        ViewBag.Tag = tag.Replace('_', ' ');
         ViewBag.Posts = postsWithTag;
         ViewBag.CommentsCount = commentsCount;
 
-        if (postsWithTag == null || !postsWithTag.Any()) return RedirectToAction(nameof(Index));
+        if (!postsWithTag.Any()) return NotFound();
+
+        return View();
+    }
+
+    [Route("/Saved"), Authorize]
+    public async Task<ActionResult> SavedPosts()
+    {
+        ApplicationUser? user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound();
+
+        List<Post> posts = await context.Posts
+            .Where(post => post.SavedByUsers.Any(u => u.Id == user.Id))
+            .ToListAsync();
+
+        if (!posts.Any()) return NotFound();
+
+        var commentsCount = await context.Comments
+            .GroupBy(com => com.PostId)
+            .Select(group => new { PostId = group.Key, Count = group.Count() })
+            .ToDictionaryAsync(i => i.PostId, i => i.Count);
+
+        ViewBag.Posts = posts;
+        ViewBag.CommentsCount = commentsCount;
 
         return View();
     }
@@ -196,14 +217,14 @@ public class HomeController : Controller
         return NotFound();
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Author")]
     public ActionResult Create()
     {
         ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.PostType)));
         return View();
     }
 
-    [HttpPost, Authorize(Roles = "Admin")]
+    [HttpPost, Authorize(Roles = "Author")]
     public async Task<ActionResult> Create(Post post, IFormFile file)
     {
         // if (string.IsNullOrEmpty(post.ImageUrl))
@@ -236,6 +257,30 @@ public class HomeController : Controller
 
         ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.PostType)));
         return View(post);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UploadImage(IFormFile upload)
+    {
+        if (upload != null && upload.Length > 0)
+        {
+            var fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + upload.FileName;
+            var path = Path.Combine(Directory.GetCurrentDirectory(), webHostEnv.WebRootPath, fileName);
+            var stream = new FileStream(path, FileMode.Create);
+            await upload.CopyToAsync(stream);
+
+            return new JsonResult(new { path = "/uploads/" + fileName });
+        }
+
+        return RedirectToAction(nameof(Create));
+    }
+
+    [HttpGet]
+    public IActionResult UploadExplorer()
+    {
+        var dir = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), webHostEnv.WebRootPath));
+        ViewBag.fileInfo = dir.GetFiles();
+        return View("FileExplorer");
     }
 
     [Authorize]
@@ -279,7 +324,7 @@ public class HomeController : Controller
             context.Posts.Update(post);
             await context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Show), new { id = post.Id });
         }
 
         ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.PostType)));
@@ -296,22 +341,6 @@ public class HomeController : Controller
         if (post == null) return NotFound();
 
         context.Posts.Remove(post);
-        await context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-
-
-
-    [Authorize]
-    public async Task<ActionResult> SetRole()
-    {
-        await context.SaveChangesAsync();
-        return View();
-    }
-
-    [HttpPost, Authorize]
-    public async Task<ActionResult> SetRole(int userId)
-    {
         await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }

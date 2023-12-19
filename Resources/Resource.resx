@@ -186,4 +186,40 @@
   <data name="Tags" xml:space="preserve">
     <value>Теги</value>
   </data>
+  <data name="AddTags" xml:space="preserve">
+    <value>Додайте теги таким чином "тег1, тег2, третій_тег" через кому</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Автор</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Коментарі</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Контент</value>
+  </data>
+  <data name="CreatePost" xml:space="preserve">
+    <value>Створити публікацію</value>
+  </data>
+  <data name="Edited" xml:space="preserve">
+    <value>змінено</value>
+  </data>
+  <data name="No_more_than_140_characters" xml:space="preserve">
+    <value>Не більше 140 символів</value>
+  </data>
+  <data name="Publicate" xml:space="preserve">
+    <value>Опублікувати</value>
+  </data>
+  <data name="Publication_cover" xml:space="preserve">
+    <value>Обкладинка публікації</value>
+  </data>
+  <data name="Publication_type" xml:space="preserve">
+    <value>Тип публікації</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="SavedPosts" xml:space="preserve">
+    <value>Збережене</value>
+  </data>
 </root>

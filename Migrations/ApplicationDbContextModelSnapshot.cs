@@ -32,6 +32,21 @@ namespace GameSite.Migrations
                     b.ToTable("PostUserLikes", (string)null);
                 });
 
+            modelBuilder.Entity("ApplicationUserPost1", b =>
+                {
+                    b.Property<string>("SavedByUsersId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SavedPostsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("SavedByUsersId", "SavedPostsId");
+
+                    b.HasIndex("SavedPostsId");
+
+                    b.ToTable("PostUserSaved", (string)null);
+                });
+
             modelBuilder.Entity("GameSite.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -70,6 +85,10 @@ namespace GameSite.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AuthorId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -118,10 +137,6 @@ namespace GameSite.Migrations
 
                     b.Property<int>("TypeId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("UrlSlug")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("VideoUrl")
                         .HasColumnType("TEXT");
@@ -377,6 +392,21 @@ namespace GameSite.Migrations
                     b.HasOne("GameSite.Models.Post", null)
                         .WithMany()
                         .HasForeignKey("LikedPostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ApplicationUserPost1", b =>
+                {
+                    b.HasOne("GameSite.Data.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("SavedByUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameSite.Models.Post", null)
+                        .WithMany()
+                        .HasForeignKey("SavedPostsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

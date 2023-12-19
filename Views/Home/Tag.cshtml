@@ -1,10 +1,10 @@
 ﻿@using Humanizer
 @{
-    ViewData["Title"] = $"{ViewBag.Tag}";
+    ViewData["Title"] = ViewBag.Tag;
 }
 
 <div class="text-center">
-    <h1 class="display-4">Пошук за тегом: @ViewBag.Tag</h1>
+    <h1 class="display-4">@ViewBag.Tag</h1>
 
     <partial name="_PostList" />
 </div>

@@ -18,17 +18,21 @@
 
     @if (SignInManager.IsSignedIn(User))
     {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Home" asp-action="SavedPosts">@Resources.Resource.SavedPosts</a>
+        </li>
+
         @if (User.IsInRole("Admin"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">@Resources.Resource.AdminPanel</a>
+                <a class="nav-link text-dark" asp-controller="Admin" asp-action="AdminPanel">@Resources.Resource.AdminPanel</a>
             </li>
         }
 
         var user = await UserManager.GetUserAsync(User);
 
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="@user?.UserName">
                 @user?.Name
             </a>
         </li>

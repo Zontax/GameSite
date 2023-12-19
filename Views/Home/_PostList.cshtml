@@ -15,21 +15,36 @@
             @if (!string.IsNullOrEmpty(post.TitleImage))
             {
                 <a class="no-underline" asp-action="Show" asp-route-id="@post.Id">
-                    <img src="@post.TitleImage" alt="TitleImage" />
+                    <div class="cover-image-container">
+                        <img src="@post.TitleImage" class="cover-image" alt="Cover Image" />
+                    </div>
                 </a>
             }
             <div class="post-content">
                 <a class="no-underline" asp-action="Show" asp-route-id="@post.Id">
-                    <h3>@post.Title</h3>
+                    <center><h3>@post.Title</h3></center>
                 </a>
-                <b style="color: @(MyVoids.GetColorCode(post.TypeId))">@post.TypeId</b>
-
-                @if (post.Content.Length > 126)
-                    { <p>@((string)Regex.Replace(post.Content, "<.*?>", "").Substring(0, 125))...</p> }
-                else
-                    { <p>@Regex.Replace(post.Content, "<.*?>", "")</p> }
+                <b style="color: @SiteFunctions.GetColorCode(post.TypeId)">@post.TypeId</b>
                 
-                <p>@post.Author</p>
+                @{
+                    string Content = Regex.Replace(post.Content, "<.*?>", ""); // Видаляємо HTML теги
+                    int maxLength = 130; // Максимальна довжина тексту
+
+                    if (Content.Length > maxLength)
+                    {
+                        Content = Content.Substring(0, maxLength); // Обмежуємо довжину тексту
+                        int lastSpace = Content.LastIndexOf(" "); // Знаходимо останній пробіл
+                        Content = Content.Substring(0, lastSpace) + "..."; // Відкидаємо частину після останнього пробілу
+                    }
+                }
+
+                <p>@Content</p>
+                
+                @* @if (post.Content.Length > 126)
+                 { <p>@((string)Regex.Replace(post.Content, "<.*?>", "").Substring(0, 125))...</p> }
+                else
+                    { <p>@Regex.Replace(post.Content, "<.*?>", "")</p> } *@
+
                 <p>
                     <i>@Resources.Resource.Tags:
                         @{
@@ -56,11 +71,15 @@
                 {
                     @if (User.IsInRole("Author"))
                     {
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@post.Id">@Resources.Resource.Edit</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@post.Id">@Resources.Resource.Delete</a>
-                    }        
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@post.Id">
+                            @Resources.Resource.Edit</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@post.Id" 
+                            onclick="return confirmDelete('Ви впевнені, що хочете видалити цю публікацію?');">
+                            @Resources.Resource.Delete</a>
+                    }
                 }
             </div>
         </div>
     }
 </div>
+

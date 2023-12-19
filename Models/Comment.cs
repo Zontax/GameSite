@@ -13,7 +13,7 @@ public class Comment
     public string Author { get; set; }
     [Required(ErrorMessage = "Введіть текст до коментаря")]
     public string Text { get; set; }
-    public DateTime Date { get; set; } = DateTime.Now;
+    public DateTime Date { get; set; } = DateTime.UtcNow;
     public bool Edited { get; set; }
 
     public Comment(int postId, string author, string text, bool edited = false, int? replyCommentId = null)

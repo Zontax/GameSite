@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GameSite.Controllers;
 
@@ -21,42 +22,61 @@ public class AdminController : Controller
         this.roleManager = roleManager;
     }
 
-    public async Task<IActionResult> Index()
+    [Route("/AdminPanel")]
+    public async Task<IActionResult> AdminPanel()
     {
-        var users = await context.ApplicationUsers.ToListAsync();
         ViewBag.Roles = await context.Roles.ToListAsync();
+        ViewBag.Users = await context.ApplicationUsers.ToListAsync();
 
-        return View(users);
+        return View();
     }
 
     [HttpPost]
     public async Task<ActionResult> ManageRole(string submitType, string userId, string role)
     {
-        role = role.Trim();
         ApplicationUser? user = await userManager.FindByIdAsync(userId);
-
-        if (submitType == "Add")
+        if (user == null || submitType.IsNullOrEmpty())
         {
-            if (!await roleManager.RoleExistsAsync(role))
-            {
-                await roleManager.CreateAsync(new IdentityRole(role));
-            }
-
-            if (user != null)
-                await userManager.AddToRoleAsync(user, role);
-
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        else if (submitType == "Remove")
-        {
-            if (user != null)
-                await userManager.RemoveFromRoleAsync(user, role);
-
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
-        return NotFound();
+        switch (submitType)
+        {
+            case "Add":
+                if (!role.IsNullOrEmpty())
+                {
+                    role = role.Trim();
+                    if (!await roleManager.RoleExistsAsync(role))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                    await userManager.AddToRoleAsync(user, role);
+                    await context.SaveChangesAsync();
+                }
+                break;
+
+            case "Remove":
+                if (!role.IsNullOrEmpty())
+                {
+                    role = role.Trim();
+                    await userManager.RemoveFromRoleAsync(user, role);
+                    await context.SaveChangesAsync();
+                }
+                break;
+
+            case "Block":
+                user.LockoutEnd = DateTimeOffset.MaxValue;
+                await userManager.UpdateAsync(user);
+                break;
+
+            case "Unblock":
+                user.LockoutEnd = null;
+                await userManager.UpdateAsync(user);
+                break;
+        }
+
+        return RedirectToAction(nameof(AdminPanel));
     }
 }
+
+

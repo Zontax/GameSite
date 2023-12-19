@@ -7,28 +7,33 @@ public class Post
 {
     public int Id { get; set; }
 
-    [Display(Name = "Тип публікації")]
+    [Display(Name = "Publication_type", ResourceType = typeof(Resources.Resource))]
     public PostType TypeId { get; set; } = PostType.Новина;
 
-    public string UrlSlug { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "Це поле обов'язкове")]
-    [StringLength(140, ErrorMessage = "не більше 140 символів")]
-    [Display(Name = "Назва")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+        ErrorMessageResourceName = "RequiredField")]
+    [StringLength(140, ErrorMessageResourceType = typeof(Resources.Resource),
+        ErrorMessageResourceName = "No_more_than_140_characters")]
+    [Display(Name = "Title", ResourceType = typeof(Resources.Resource))]
     public string Title { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Це поле обов'язкове")]
-    [Display(Name = "Текст")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+        ErrorMessageResourceName = "RequiredField")]
+    [Display(Name = "Content", ResourceType = typeof(Resources.Resource))]
     public string Content { get; set; } = string.Empty;
 
-    [Display(Name = "Обкладинка публікації")]
+    [Display(Name = "Publication_cover", ResourceType = typeof(Resources.Resource))]
     public string? TitleImage { get; set; } = string.Empty;
 
     public string? VideoUrl { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Це поле обов'язкове")]
-    [Display(Name = "Автор")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+        ErrorMessageResourceName = "RequiredField")]
+    [Display(Name = "Author", ResourceType = typeof(Resources.Resource))]
     public string Author { get; set; } = string.Empty;
+
+    [Required]
+    public string AuthorId { get; set; }
 
     public DateTime Date { get; set; } = DateTime.UtcNow;
 
@@ -36,10 +41,12 @@ public class Post
 
     public virtual ICollection<ApplicationUser>? LikedByUsers { get; set; }
 
+    public virtual ICollection<ApplicationUser>? SavedByUsers { get; set; }
+
     public int DislikesCount { get; set; }
 
     [Required(ErrorMessage = "Введіть теги")]
-    [Display(Name = """Додайте теги таким чином "тег1, тег2, мій_третій_тег" через кому """)]
+    [Display(Name = "AddTags", ResourceType = typeof(Resources.Resource))]
     public string Tags { get; set; } = string.Empty;
 
     [Display(Name = "Чи редаговано")]
@@ -55,47 +62,48 @@ public class Post
     [Display(Name = "Оцінка")]
     public string? ReviewRating { get; set; } = string.Empty;
 
-    [Display(Name = "Плюси")]
+    [Display(Name = "Вдалося")]
     public string? ReviewPlus { get; set; } = string.Empty;
 
-    [Display(Name = "Мінуси")]
+    [Display(Name = "Невдалося")]
     public string? ReviewMinus { get; set; } = string.Empty;
     ////
 
     public Post()
     {
-        UrlSlug = Id.ToString();
     }
 
-    public Post(PostType type, string title, string content, string author)
+    public Post(string authorId)
     {
-        UrlSlug = Id.ToString();
+        AuthorId = authorId;
+    }
+
+    public Post(PostType type, string title, string content, string authorId, string author)
+    {
         TypeId = type;
         Title = title;
         Content = content;
         Author = author;
+        AuthorId = authorId;
     }
 
-    public Post(PostType type, string title, string content, string author, DateTime date)
-    : this(type, title, content, author)
+    public Post(PostType type, string title, string content, string authorId, string author, DateTime date)
+    : this(type, title, content, authorId, author)
     {
-        UrlSlug = Id.ToString();
         Date = date;
     }
 
-    public Post(PostType type, string title, string content, string author, string tags, int likes = 0, int dislikes = 0)
-    : this(type, title, content, author)
+    public Post(PostType type, string title, string content, string authorId, string author, string tags, int likes = 0, int dislikes = 0)
+    : this(type, title, content, authorId, author)
     {
-        UrlSlug = Id.ToString();
         Tags = tags;
         LikesCount = likes;
         DislikesCount = dislikes;
     }
 
-    public Post(PostType type, string title, string content, string author, string tags, DateTime date, int likes = 0, int dislikes = 0, string imageUrl = "")
-    : this(type, title, content, author)
+    public Post(PostType type, string title, string content, string authorId, string author, string tags, DateTime date, int likes = 0, int dislikes = 0, string imageUrl = "")
+    : this(type, title, content, authorId, author)
     {
-        UrlSlug = Id.ToString();
         Tags = tags;
         LikesCount = likes;
         DislikesCount = dislikes;

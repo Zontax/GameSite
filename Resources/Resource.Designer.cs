@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Додайте теги таким чином &quot;тег1, тег2, третій_тег&quot; через кому.
+        /// </summary>
+        public static string AddTags {
+            get {
+                return ResourceManager.GetString("AddTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Адмін панель.
         /// </summary>
         public static string AdminPanel {
@@ -88,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Автор.
+        /// </summary>
+        public static string Author {
+            get {
+                return ResourceManager.GetString("Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Назад.
         /// </summary>
         public static string Back {
@@ -97,11 +115,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Коментарі.
+        /// </summary>
+        public static string Comments {
+            get {
+                return ResourceManager.GetString("Comments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Підтвердити пароль.
         /// </summary>
         public static string ConfirmPassword {
             get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Контент.
+        /// </summary>
+        public static string Content {
+            get {
+                return ResourceManager.GetString("Content", resourceCulture);
             }
         }
         
@@ -124,6 +160,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Створити публікацію.
+        /// </summary>
+        public static string CreatePost {
+            get {
+                return ResourceManager.GetString("CreatePost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Видалити.
         /// </summary>
         public static string Delete {
@@ -138,6 +183,15 @@ namespace Resources {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на змінено.
+        /// </summary>
+        public static string Edited {
+            get {
+                return ResourceManager.GetString("Edited", resourceCulture);
             }
         }
         
@@ -187,6 +241,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Не більше 140 символів.
+        /// </summary>
+        public static string No_more_than_140_characters {
+            get {
+                return ResourceManager.GetString("No_more_than_140_characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Пароль.
         /// </summary>
         public static string Password {
@@ -201,6 +264,33 @@ namespace Resources {
         public static string PasswordDontCompare {
             get {
                 return ResourceManager.GetString("PasswordDontCompare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Опублікувати.
+        /// </summary>
+        public static string Publicate {
+            get {
+                return ResourceManager.GetString("Publicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Обкладинка публікації.
+        /// </summary>
+        public static string Publication_cover {
+            get {
+                return ResourceManager.GetString("Publication_cover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Тип публікації.
+        /// </summary>
+        public static string Publication_type {
+            get {
+                return ResourceManager.GetString("Publication_type", resourceCulture);
             }
         }
         
@@ -232,6 +322,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Збережене.
+        /// </summary>
+        public static string SavedPosts {
+            get {
+                return ResourceManager.GetString("SavedPosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Вийти.
         /// </summary>
         public static string SignOut {
@@ -246,6 +345,15 @@ namespace Resources {
         public static string Tags {
             get {
                 return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Назва.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         

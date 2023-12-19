@@ -17,14 +17,19 @@ public class ApplicationDbContext : IdentityDbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Post>()
-            .HasMany(c => c.LikedByUsers)
-            .WithMany(s => s.LikedPosts)
+            .HasMany(p => p.LikedByUsers)
+            .WithMany(u => u.LikedPosts)
             .UsingEntity(j => j.ToTable("PostUserLikes"));
 
-        // modelBuilder.Entity<Comment>()
-        //     .HasOne(c => c.Post)
-        //     .WithMany(p => p.Comments)
-        //     .HasForeignKey(c => c.PostId)
+        modelBuilder.Entity<Post>()
+            .HasMany(p => p.SavedByUsers)
+            .WithMany(u => u.SavedPosts)
+            .UsingEntity(j => j.ToTable("PostUserSaved"));
+
+        // modelBuilder.Entity<Post>()
+        //     .HasMany(p => p.Comments)
+        //     .WithOne(c => c.Post)
+        //     .HasForeignKey(c => c.PostId);
         //     .OnDelete(DeleteBehavior.ClientCascade);
     }
 

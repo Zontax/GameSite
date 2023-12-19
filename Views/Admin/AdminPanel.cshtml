@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using GameSite.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@model RoleModel
+@{
+    ViewData["Title"] = Resources.Resource.AdminPanel;
+}
+
+<h1>@Resources.Resource.AdminPanel</h1>
+
+@* <form method="post" action="">
+
+<label>Назва ролі</label>
+<input type="text" name="RoleName" />
+<button type="submit" class="btn btn-primary" asp-page-handler="NewRole">Створити роль</button>
+<button type="submit" class="btn btn-primary" asp-page-handler="AddRole">Назначити роль</button>
+<button type="submit" class="btn btn-danger" asp-page-handler="RemoveRole">Видалити роль</button>
+</form> *@
+
+<ul>
+    @foreach (ApplicationUser user in ViewBag.Users)
+    {
+        @if (user == null)
+        {
+            <li>Користувачів нема</li>
+        }
+        else
+        {
+            <li>
+                <p><b>Email:</b> @user?.Email</p>
+                <p><b>Name:</b> @user?.Name</p>
+                <p><b>PhoneNumber:</b> @user?.PhoneNumber</p>
+                @if (user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTimeOffset.Now)
+                {
+                    <p><b>Статус:</b> Заблокований до @user.LockoutEnd.Value.ToString()</p>
+                }
+                else
+                {
+                    <p><b>Статус:</b> Не заблокований</p>
+                }
+                <p>
+                    <b>Ролі:</b>
+                    @foreach (string role in await SignInManager.UserManager.GetRolesAsync(user))
+                    {
+                        <b> @role |</b>
+                    }
+                </p>
+                <p><b>Age:</b> @user?.Age</p>
+                <p><b>Дата реєстрації:</b> @user?.RegistrationDate</p>
+
+                <form asp-controller="Admin" asp-action="ManageRole" method="post">
+
+                    <input type="hidden" value="@user?.Id" name="userId" readonly hidden />
+                    <label>Назва ролі</label>
+                    <input type="text" name="role" />
+                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                    <button type="submit" class="btn btn-primary" name="submitType" value="Add">Назначити роль</button>
+                    <button type="submit" class="btn btn-warning" name="submitType" value="Remove">Видалити роль</button>
+                    <button type="submit" class="btn btn-danger" name="submitType" value="Block">Заблокувати</button>
+                    <button type="submit" class="btn btn-success" name="submitType" value="Unblock">Розблокувати</button>
+
+                </form>
+
+                <br>
+
+            </li>
+        }
+    }
+</ul>

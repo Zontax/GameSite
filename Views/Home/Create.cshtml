@@ -1,19 +1,29 @@
-﻿@model Post;
+﻿@using Microsoft.AspNetCore.Identity
+@using GameSite.Data
+@inject UserManager<ApplicationUser> UserManager
+@model Post;
 @{
-    ViewData["Title"] = "Створити публікацію";
+    ViewData["Title"] = Resources.Resource.CreatePost;
+    var user = await UserManager.GetUserAsync(User);
 }
 
 <div class="text-center">
     <div>
-        <h3>Створити публікацію</h3>
+        <h3>@Resources.Resource.CreatePost</h3>
 
         <form asp-controller="Home" asp-action="Create" method="post" enctype="multipart/form-data">
-
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <div class="form-group">
-                    <input type="hidden" asp-for="Author" class="form-control" value="@User.Identity?.Name" readonly>
+                    <input type="hidden" asp-for="Author" class="form-control" value="@user?.Name" readonly>
                     <span asp-validation-for="Author" class="text-danger"></span>
                 </div>
+
+                <div class="form-group">
+                    <input type="hidden" asp-for="AuthorId" class="form-control" value="@user?.Id" readonly>
+                    <span asp-validation-for="AuthorId" class="text-danger"></span>
+                </div>
+
                 <div class="form-group">
                     <label asp-for="TypeId"></label>
                     <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control"
@@ -36,9 +46,10 @@
 
                 <div class="form-group">
                     <label asp-for="Content"></label>
-                    <textarea asp-for="Content" class="form-control"></textarea>
+                    <textarea id="editor" asp-for="Content" class="form-control"></textarea>
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="Tags"></label>
                     <input asp-for="Tags" class="form-control">
@@ -47,20 +58,17 @@
 
                 <div id="HidedFields" style="display: none;">
                     <div class="form-group">
-                        <label asp-for="ReviewGameId"></label>
-                        <input asp-for="ReviewGameId" value="0" class="form-control">
-                        <span asp-validation-for="ReviewGameId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
                         <label asp-for="ReviewPlus"></label>
-                        <input asp-for="ReviewPlus" class="form-control">
+                        <textarea asp-for="ReviewPlus" class="form-control"></textarea>
                         <span asp-validation-for="ReviewPlus" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="ReviewMinus"></label>
-                        <input asp-for="ReviewMinus" class="form-control">
+                        <input asp-for="ReviewMinus" class="form-control"></input>
                         <span asp-validation-for="ReviewMinus" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="ReviewRating"></label>
                         <input asp-for="ReviewRating" value="50" class="form-control">
@@ -69,27 +77,46 @@
                 </div>
 
             </div>
-            <button type="submit" class="btn btn-success">Опублікувати</button>
+            <button type="submit" class="btn btn-success">@Resources.Resource.Publicate</button>
 
         </form>
 
-        <a href="/Home">Назад</a>
+        <a href="/">@Resources.Resource.Back</a>
     </div>
 </div>
 
-@section Scripts {
+@section scripts {
     <script>
-        // Логіка для відображення/приховування полів в залежності від значення TypeId
-        document.getElementById('TypeIdSelect').addEventListener('change', function () {
-            var selectedValue = this.value;
-            var hidedFields = document.getElementById('HidedFields');
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
 
-            if (selectedValue === 'Огляд') {
-                hidedFields.style.display = 'block';
-            }
-            else {
-                hidedFields.style.display = 'none';
-            }
+        @*document.addEventListener("DOMContentLoaded", function (event) {
+        var editor = CKEDITOR.replace('Content');
         });
+
+        #(document).ready(function () {
+        CKEDITOR.replace('Content', {
+        height: 300,
+        width: 700,
+        filebrowserUploadUrl: 'home/UploadImage',
+        filebrowserBrowseUrl: 'home/UploadExplorer'
+        });
+        }); *@
+
+            // Логіка для відображення/приховування полів в залежності від значення TypeId
+            document.getElementById('TypeIdSelect').addEventListener('change', function () {
+                var selectedValue = this.value;
+                var hidedFields = document.getElementById('HidedFields');
+
+                if (selectedValue === 'Огляд') {
+                    hidedFields.style.display = 'block';
+                }
+                else {
+                    hidedFields.style.display = 'none';
+                }
+            });
     </script>
 }
