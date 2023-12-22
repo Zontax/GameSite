@@ -220,7 +220,7 @@
     <value>Назва</value>
   </data>
   <data name="SavedPosts" xml:space="preserve">
-    <value>Збережене</value>
+    <value>Закладки</value>
   </data>
   <data name="AddComment" xml:space="preserve">
     <value>Додати коментар</value>
@@ -341,5 +341,14 @@
   </data>
   <data name="TitleFileRequired" xml:space="preserve">
     <value>Файл для обкладинки обов'язковий</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Помилка</value>
+  </data>
+  <data name="InSaved" xml:space="preserve">
+    <value>В ЗАКЛАДКАХ</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>В закладки</value>
   </data>
 </root>

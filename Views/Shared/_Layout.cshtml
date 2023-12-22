@@ -9,7 +9,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - IgroNewsUa</title>
+
+    @if ((string?)ViewData["Title"] != "IgroNewsUa")
+    {
+        <title>@ViewData["Title"] - IgroNewsUa</title>
+    }
+    else
+    {
+        <title>IgroNewsUa</title>
+    }
 
     <link rel="stylesheet" href="~/css/tooplate_style.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -37,19 +45,23 @@
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-action="News">
+                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-controller="Home"
+                                asp-action="News">
                                 @Resources.Resource.News</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-action="Reviews">
+                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-controller="Home"
+                                asp-action="Reviews">
                                 @Resources.Resource.Reviews</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-action="Articles">
+                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-controller="Home"
+                                asp-action="Articles">
                                 @Resources.Resource.Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-action="Guides">
+                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-controller="Home"
+                                asp-action="Guides">
                                 @Resources.Resource.Guides</a>
                         </li>
 

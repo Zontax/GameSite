@@ -286,6 +286,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Помилка.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Забули пароль?.
         /// </summary>
         public static string ForgotPassword {
@@ -300,6 +309,15 @@ namespace Resources {
         public static string Guides {
             get {
                 return ResourceManager.GetString("Guides", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на В ЗАКЛАДКАХ.
+        /// </summary>
+        public static string InSaved {
+            get {
+                return ResourceManager.GetString("InSaved", resourceCulture);
             }
         }
         
@@ -573,7 +591,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Збережене.
+        ///   Ищет локализованную строку, похожую на В закладки.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Закладки.
         /// </summary>
         public static string SavedPosts {
             get {

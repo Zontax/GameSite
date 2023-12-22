@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\Programming\CS\WebApplication\GameSite\bin\Release\net7.0\publish\</_PublishTargetUrl>
+    <History>True|2023-12-22T22:11:58.6724382Z;True|2023-12-22T23:53:28.7703804+02:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="SQLiteConnection">
+      <Value>Server=%28localdb%29\mssqllocaldb%3bDatabase=aspnet-GameSite-5d85a846-07af-43df-ae34-22762e302220%3bTrusted_Connection=True%3bMultipleActiveResultSets=true</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

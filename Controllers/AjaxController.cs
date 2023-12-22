@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using PagedList.Core;
+using Resources;
 
 namespace GameSite.Controllers;
 
@@ -113,7 +114,7 @@ public class AjaxController : Controller
             {
                 post.SavedByUsers.Remove(user);
                 await context.SaveChangesAsync();
-                return Json(new { success = false, message = "Зберегти" });
+                return Json(new { success = false, message = Resources.Resource.Save });
             }
             else
             {
@@ -122,11 +123,11 @@ public class AjaxController : Controller
 
                 post.SavedByUsers.Add(user);
                 await context.SaveChangesAsync();
-                return Json(new { success = false, message = "В ЗБЕРЕЖЕНИХ" });
+                return Json(new { success = false, message = Resources.Resource.InSaved });
             }
         }
 
-        return Json(new { success = false, message = "Помилка!" });
+        return Json(new { success = false, message = Resources.Resource.Error });
     }
 
     [Authorize]
@@ -141,9 +142,9 @@ public class AjaxController : Controller
         {
             bool isSaved = post.SavedByUsers != null && post.SavedByUsers.Contains(user);
             if (isSaved)
-                return Json(new { message = "В ЗБЕРЕЖЕНИХ" });
+                return Json(new { message = Resources.Resource.InSaved });
         }
 
-        return Json(new { message = "Зберегти" });
+        return Json(new { message = Resources.Resource.Save });
     }
 }

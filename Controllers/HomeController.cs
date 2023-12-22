@@ -155,7 +155,7 @@ public class HomeController : Controller
 
         ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound();
-
+#pragma warning disable CS8604
         var posts = context.Posts
             .Where(post => post.SavedByUsers.Any(u => u.Id == user.Id))
             .OrderByDescending(post => post.Date)
@@ -169,7 +169,7 @@ public class HomeController : Controller
         ViewBag.PG = new Pagination(await context.Posts.Where(post => post.SavedByUsers.Any(u => u.Id == user.Id)).CountAsync(), pageNumber, 4, nameof(Saved));
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
-
+#pragma warning restore CS8604
         return View();
     }
 
@@ -345,6 +345,14 @@ public class HomeController : Controller
                 await file.CopyToAsync(fileStream);
             }
 
+            if (post.TitleImage != null && post.TitleImage.Contains("/post_title_image/"))
+            {
+                var deletePath = Path.Combine(webHostEnv.WebRootPath, post.TitleImage.Substring(1));
+
+                if (System.IO.File.Exists(deletePath))
+                    System.IO.File.Delete(deletePath);
+            }
+
             post.TitleImage = "/post_title_image/" + uniqueFileName;
         }
         else
@@ -375,8 +383,17 @@ public class HomeController : Controller
 
         if (post == null) return NotFound();
 
+        if (post?.TitleImage != null && post.TitleImage.Contains("/post_title_image/"))
+        {
+            var filePath = Path.Combine(webHostEnv.WebRootPath, post.TitleImage.Substring(1));
+
+            if (System.IO.File.Exists(filePath))
+                System.IO.File.Delete(filePath);
+        }
+
         context.Posts.Remove(post);
         await context.SaveChangesAsync();
+
         return RedirectToAction(nameof(Index));
     }
 

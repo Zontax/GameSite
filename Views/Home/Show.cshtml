@@ -57,11 +57,14 @@
         }
         
         <p style="margin-top: 10px;">
-            <button class="likeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="@Resources.Resource.Like">👍@ViewBag.Post.LikesCount</button>
-            <button class="dislikeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="@Resources.Resource.Dislike">👎@ViewBag.Post.DislikesCount</button>
+            <button class="btn btn-outline-primary" id="likeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="@Resources.Resource.Like">
+                👍@ViewBag.Post.LikesCount</button>
+            <button class="btn btn-outline-primary" id="dislikeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="@Resources.Resource.Dislike">
+                👎@ViewBag.Post.DislikesCount</button>
             @if (SignInManager.IsSignedIn(User))
             {
-                <button class="favoriteButton" data-postid="@ViewBag.Post.Id">@Resources.Resource.AddToSaved</button>
+                <button class="btn btn-outline-primary" id="favoriteButton" data-postid="@ViewBag.Post.Id">
+                    @Resources.Resource.AddToSaved</button>
             }
         </p>
         <p>
@@ -177,29 +180,29 @@
                 }
             }
 
-            $('.likeButton').click(function () {
+            $('#likeButton').click(function () {
                 var button = $(this);
                 var postId = button.data('postid');
                 var userId = button.data('userid');
                 var likesCountElement = button;
-                performAction(button, postId, userId, 'like', likesCountElement, $('.dislikeButton'));
+                performAction(button, postId, userId, 'like', likesCountElement, $('#dislikeButton'));
             });
 
-            $('.dislikeButton').click(function () {
+            $('#dislikeButton').click(function () {
                 var button = $(this);
                 var postId = button.data('postid');
                 var userId = button.data('userid');
                 var dislikesCountElement = button;
-                performAction(button, postId, userId, 'dislike', $('.likeButton'), dislikesCountElement);
+                performAction(button, postId, userId, 'dislike', $('#likeButton'), dislikesCountElement);
             });
 
 
-            $(".favoriteButton[data-postid]").each(function() {
+            $("#favoriteButton[data-postid]").each(function() {
                 var postId = $(this).data("postid");
                 checkIfSaved(postId);
             });
 
-            $(".favoriteButton").click(function () {
+            $("#favoriteButton").click(function () {
                 var button = $(this);
                 var postId = $(this).data('postid');
                 var userId = $(this).data('userid');
@@ -233,7 +236,7 @@
             type: "GET",
             data: { postId: postId },
             success: function (response) {
-                $('.favoriteButton[data-postid]').text(response.message);
+                $('#favoriteButton[data-postid]').text(response.message);
             },
             error: function (xhr, status, error) {
                 console.error(error);

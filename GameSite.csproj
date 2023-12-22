@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-GameSite-5d85a846-07af-43df-ae34-22762e302220</UserSecretsId>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="README.md" />
@@ -27,6 +28,7 @@
     <PackageReference Include="PagedList.Core.Mvc" Version="3.0.0" />
     <PackageReference Include="SendGrid" Version="9.28.1" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.7" />
+    <PackageReference Include="xunit.core" Version="2.6.3" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\Resource.en.Designer.cs">

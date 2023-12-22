@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace GameSite.Services;
@@ -18,16 +21,30 @@ public class EmailSender : IEmailSender
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
         //TODO Зробити підтвердження по пошті
+        // Set up SMTP client
+        SmtpClient client = new SmtpClient("smtp.ethereal.email", 587);
+        client.EnableSsl = true;
+        client.UseDefaultCredentials = false;
+        client.Credentials = new NetworkCredential("ua.game.world.ex@gmail.com", "djgwPz8DPss78aakBv");
+
+        // Create email message
+        var mailMessage = new MailMessage();
+        mailMessage.From = new MailAddress("ua.game.world.ex@gmail.com");
+        mailMessage.To.Add(email);
+        mailMessage.Subject = subject;
+        mailMessage.IsBodyHtml = true;
+
+        var mailBody = new StringBuilder();
+        mailBody.AppendFormat("<h1>User Registered</h1>");
+        mailBody.AppendFormat("<br />");
+        mailBody.AppendFormat("<p>Thank you For Registering account</p>");
+        mailBody.AppendFormat(htmlMessage);
+
+        mailMessage.Body = mailBody.ToString();
+
+        client.Send(mailMessage);
+
         logger.LogDebug(htmlMessage);
-
         await Task.CompletedTask;
-
-        // var client = new SendGridClient(sendGridApiKey);
-        // var from = new EmailAddress("your-email@example.com", "GameSiteUa");
-        // var to = new EmailAddress(email);
-        // var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlMessage);
-        // var response = await client.SendEmailAsync(msg);
-        // if (response.StatusCode != System.Net.HttpStatusCode.OK && response.StatusCode != System.Net.HttpStatusCode.Accepted)
-        // Обробка помилок
     }
 }

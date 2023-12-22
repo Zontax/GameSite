@@ -220,7 +220,7 @@
     <value>Title</value>
   </data>
   <data name="SavedPosts" xml:space="preserve">
-    <value>Saved posts</value>
+    <value>Bookmarks</value>
   </data>
   <data name="AddComment" xml:space="preserve">
     <value>Add Comment</value>
@@ -341,5 +341,14 @@
   </data>
   <data name="TitleFileRequired" xml:space="preserve">
     <value>Title file required</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="InSaved" xml:space="preserve">
+    <value>IN BOOKMARKS</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Add to bookmarks</value>
   </data>
 </root>
