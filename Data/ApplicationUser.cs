@@ -16,6 +16,7 @@ public class ApplicationUser : IdentityUser
     public int? Age { get; set; }
     public string? Role { get; set; }
     public virtual ICollection<Post>? LikedPosts { get; set; }
+    public virtual ICollection<Post>? DislikedPosts { get; set; }
     public virtual ICollection<Post>? SavedPosts { get; set; }
 }
 

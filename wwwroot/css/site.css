@@ -22,14 +22,21 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
+    padding-bottom: 60px;
+    background-color: #000;
+    background-image: url('~/img/background.webp');
 }
+
 div.container {
-    background-color: rgb(223, 223, 223);
+    background-color: rgb(224, 224, 224);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .publication {
-    background-color: rgb(199, 199, 199);
+    background-color: rgb(246, 246, 246);
 }
 
 .input-validation-error {
@@ -45,6 +52,10 @@ a.no-underline {
 a.no-underline:hover {
     color: rgb(75, 75, 75);
     text-decoration: none;
+}
+
+.nav-link.text-dark:hover {
+    color: #0056b3;
 }
 
 .post {
@@ -120,85 +131,13 @@ a.post-tags {
     font-weight: bold;
 }
 
-/* Сторінка показа поста */
-.show-post {
-    align-items: left;
-    background-color: rgb(238, 238, 238);
-    border: 1px solid #ced4da;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
 .likes-dislikes {
     margin-top: 10px;
 }
 
-/* Форма додавання коментаря */
-.comment-form {
-    margin-top: 20px;
-}
-
-.comment-form .form-group {
-    margin-bottom: 15px;
-}
-
-.comment-form button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-.comment-form button:hover {
-    background-color: #0056b3;
-}
-
-/* Стилі для списка коментарів */
-.comment {
-    border-bottom: 1px solid #ced4da;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    margin-left: 0px; /* Зсув вправо для відповідей */
-    width: 900px;
-}
-
-.post-comment:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.post-comment p[title]::before {
-    content: '\1F4C5';
-}
-
-.post-comment p.date-time {
+.date-time {
+    color: #888;
     font-size: 12px;
-}
-
-.reply-comment {
-    background-color: coral;
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-/* Стилі для форм відповіді на коментарі */
-.comment-form {
-    margin-bottom: 15px;
-}
-
-.comment-form textarea {
-    height: 80px;
-}
-
-/* Стилі для коментарів, що є відповідями */
-.reply-comment {
-    margin-left: 80px; /* Зсув вправо для відповідей */
-    width: 500px;
 }
 
 .pagging ul {
@@ -214,21 +153,31 @@ a.post-tags {
 }
 
 .pagging ul li a {
-    padding: 5px 10px;
-    background-color: #f0f0f0;
     color: #333;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
     text-decoration: none;
     border-radius: 5px;
 }
 
 .pagging ul li a:hover {
-    background-color: #ccc;
     color: #000;
+    background-color: #ccc;
 }
 
-/* .navbar {
+main {
+    padding-top: 60px;
+}
+
+/* Щоб меню було поверх іншого контенту  */
+.navbar {
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1000; /* Щоб меню було поверх іншого контенту 
-} */
+    z-index: 1000;
+}
+
+a#btn-outline-primary {
+    border-radius: 5px;
+    border: 5px;
+}

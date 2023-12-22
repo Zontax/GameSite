@@ -1,0 +1,17 @@
+/* Стилі для прямокутних блоків користувачів у адмін-панелі */
+.admin-user-block {
+    border: 1px solid #a4a4a4;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.admin-user-block p {
+    margin: 5px 0;
+}
+
+.admin-user-block form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}

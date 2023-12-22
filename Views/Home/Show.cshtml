@@ -12,58 +12,57 @@
 }
 
 <div>
+    <div class="show-post-title"><center><h1>@ViewBag.Post.Title</h1></center></div>
     <div class="show-post">
-        <center><h1>@ViewBag.Post.Title</h1></center>
-        <p>@ViewBag.Post.Date.ToString("dd MMMM, yyyy") @Resources.Resource.Author: <b>@ViewBag.Post.Author</b></p>
+        
+        <p class="author-date">@ViewBag.Post.Date.ToString("dd MMMM, yyyy") @Resources.Resource.Author: <b>@ViewBag.Post.Author</b></p>
 
         <div>
            @Html.Raw(ViewBag.Post.Content)
         </div>
 
-        @if ((PostType)ViewBag.Post.TypeId == PostType.Огляд)
+        @if (ViewBag.Post.TypeId == PostType.Огляд && ViewBag.Post.ReviewPlus != null && ViewBag.Post.ReviewMinus != null && ViewBag.Post.ReviewRating != null)
         {
+            <div style="align-items: center;">
             <div class="review-info">
-                <div class="review-info__rating">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <h1>@ViewBag.Post.ReviewRating</h1>
-                    </div>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <h2>@SiteFunctions.GetReviewText(ViewBag.Post.ReviewRating)</h2>
-                    </div>
+                <div class="review-plus">
+                    <div class="review-title-plus"><h3>@Resources.Resource.ReviewPlus</h3></div>
+                    <ul class="ul-null">
+                        @foreach (var item in ViewBag.Post.ReviewPlus.Split(','))
+                        {
+                            <li class="icon-dot-a">@item.Trim()</li>
+                        }
+                    </ul>
                 </div>
 
-                <div class="review-info__other">
-                    <div class="review-plus">
-                        <div class="review-title-plus"><h3>Вдалося</h3></div>
-                        <ul class="ul-null">
-                            @foreach (var item in ViewBag.Post.ReviewPlus.Split(','))
-                            {
-                                <li class="icon-dot-a">@item.Trim()</li>
-                            }
-                        </ul>
-                    </div>
-
-                    <div class="review-minus">
-                        <div class="review-title-minus"><h3>Не вдалося</h3></div>
-                        <ul class="ul-null">
-                            @foreach (var item in ViewBag.Post.ReviewMinus.Split(','))
-                            {
-                                <li class="icon-dot-b">@item.Trim()</li>
-                            }
-                        </ul>
-                    </div>
+                <div class="review-minus">
+                    <div class="review-title-minus"><h3>@Resources.Resource.ReviewMinus</h3></div>
+                    <ul class="ul-null">
+                        @foreach (var item in ViewBag.Post.ReviewMinus.Split(','))
+                        {
+                            <li class="icon-dot-b">@item.Trim()</li>
+                        }
+                    </ul>
                 </div>
+            </div>
+            <div class="review-info__rating">
+                <div class="d-flex justify-content-center align-items-center">
+                    <h1>@ViewBag.Post.ReviewRating</h1>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <h2>@SiteFunctions.GetReviewText(ViewBag.Post.ReviewRating)</h2>
+                </div>
+            </div>
             </div>
         }
         
-        <p>
-            <button class="likeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="Подобається">👍@ViewBag.Post.LikesCount</button>
-            <button class="dislikeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="Неподобається">👎@ViewBag.Post.DislikesCount</button>
-            @if (!SignInManager.IsSignedIn(User))
+        <p style="margin-top: 10px;">
+            <button class="likeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="@Resources.Resource.Like">👍@ViewBag.Post.LikesCount</button>
+            <button class="dislikeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="@Resources.Resource.Dislike">👎@ViewBag.Post.DislikesCount</button>
+            @if (SignInManager.IsSignedIn(User))
             {
-                <button class="favoriteButton" data-postid="@ViewBag.Post.Id" title="Додати до обраного">Зберегти</button>
+                <button class="favoriteButton" data-postid="@ViewBag.Post.Id">@Resources.Resource.AddToSaved</button>
             }
-            
         </p>
         <p>
             <i>@Resources.Resource.Tags:
@@ -82,12 +81,12 @@
         </p>
     </div>
 
-    <h5>Коментарі</h5>
+    <h5>@Resources.Resource.Comments</h5>
     @if (!SignInManager.IsSignedIn(User))
     {
         <p >
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
-                Увійдіть щоб залишати коментарі
+            <a asp-area="Identity" asp-page="/Account/Login">         
+                @Resources.Resource.SignInToPostComments
             </a> 
         </p>
     }
@@ -105,7 +104,7 @@
                 <span asp-validation-for="Text" class="text-danger"></span>
                 <textarea asp-for="Text" class="form-control"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Додати коментар</button>
+            <button type="submit" class="btn btn-primary">@Resources.Resource.AddComment</button>
 
         </form>
     }
@@ -115,11 +114,11 @@
         @if (comment.ReplyCommentId == null)
         {
             <div class="post-comment">
-                <p><b>@comment.Author: </b> @comment.Text</p>
                 <p class="date-time" title="@comment.Date.ToString("yyyy-MM-dd HH:mm")">
                     @(DateTime.UtcNow.Add(-((TimeSpan)(DateTime.UtcNow - comment.Date))).Humanize())
                     @if (comment.Edited) { <b> (@Resources.Resource.Edited)</b> }
                 </p>
+                <p><b>@comment.Author: </b>@comment.Text</p>
             </div>
 
             @* @if (SignInManager.IsSignedIn(User))
@@ -136,7 +135,7 @@
                         <span asp-validation-for="Text" class="text-danger"></span>
                         <textarea asp-for="Text" class="form-control"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Відповісти</button>
+                    <button type="submit" class="btn btn-primary">@Resources.Resource.Answer</button>
 
                 </form>
             } *@
@@ -145,7 +144,7 @@
             @foreach (Comment reply in ((List<Comment>)ViewBag.Coments).Where(c => c.ReplyCommentId == comment.Id))
             {
                 <div class="reply-comment">
-                    <p><b>(reply to @comment.Author) @reply.Author: </b> @reply.Text</p>
+                    <p title="(reply to @comment.Author)"><b>@reply.Author: </b> @reply.Text</p>
                     <p class="date-time" title="@reply.Date.ToString("yyyy-MM-dd HH:mm")">
                         @(DateTime.UtcNow.Add(-((TimeSpan)(DateTime.UtcNow - reply.Date))).Humanize())
                         @if (reply.Edited) { <b> (@Resources.Resource.Edited)</b> }
@@ -158,71 +157,89 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () 
-        {
-            $('.likeButton').click(function () 
-            {
-                var button = $(this);
-                var postId = $(this).data('postid');
-                var userId = $(this).data('userid');
-                var likesCountElement = button;
-                var currentLikes = parseInt(likesCountElement.text().trim().substring(2));
+        $(document).ready(function () {
 
-                if (userId != "")
-                {
+            function performAction(button, postId, userId, action, likeElement, dislikeElement) {
+                if (userId !== "") {
                     $.ajax({
-                        url: '/Ajax/Like',
-                        type: 'Post',
-                        data: { postId: postId, userId: userId },
-                        success: function (response) 
-                        {
-                            if (response.success) 
-                            {   
-                                likesCountElement.text('👍' + (currentLikes + 1));
-                                console.error("Ви поставили лайк");
-                            } 
-                            else 
-                            {
-                                likesCountElement.text('👍' + (currentLikes - 1));
-                                console.error("Ви забрали лайк");
-                            }
+                        url: '/Ajax/LikeOrDislike',
+                        type: 'POST',
+                        data: { postId: postId, userId: userId, action: action },
+
+                        success: function (response) {
+                            likeElement.text('👍' + response.likes);
+                            dislikeElement.text('👎' + response.dislikes);
                         },
-                        error: function (xhr, status, error) 
-                        {
+                        error: function (xhr, status, error) {
                             console.error(error);
                         }
                     });
                 }
+            }
+
+            $('.likeButton').click(function () {
+                var button = $(this);
+                var postId = button.data('postid');
+                var userId = button.data('userid');
+                var likesCountElement = button;
+                performAction(button, postId, userId, 'like', likesCountElement, $('.dislikeButton'));
             });
 
-            $(".favoriteButton").click(function() {
-    var postId = $(this).data("postid");
-    var isSaved = $(this).data("issaved");
+            $('.dislikeButton').click(function () {
+                var button = $(this);
+                var postId = button.data('postid');
+                var userId = button.data('userid');
+                var dislikesCountElement = button;
+                performAction(button, postId, userId, 'dislike', $('.likeButton'), dislikesCountElement);
+            });
 
-    $.ajax({
-            url: "/Ajax/AddToSaved",
-            type: "POST",
-            data: { postId: postId, isSaved: isSaved },
-            success: function(response) {
-                if (isSaved === "True") {
-                    $(this).data("issaved", "False");
-                    // Здійснюємо дії для видалення поста з обраних
-                    // Наприклад, змінюємо іконку або колір кнопки
-                    $(this).removeClass("selected");
-                } else {
-                    $(this).data("issaved", "True");
-                    // Здійснюємо дії для додавання поста до обраних
-                    // Наприклад, змінюємо іконку або колір кнопки
-                    $(this).addClass("selected");
-                    $('.toast').toast('show'); // Показуємо Toast при успішному додаванні
+
+            $(".favoriteButton[data-postid]").each(function() {
+                var postId = $(this).data("postid");
+                checkIfSaved(postId);
+            });
+
+            $(".favoriteButton").click(function () {
+                var button = $(this);
+                var postId = $(this).data('postid');
+                var userId = $(this).data('userid');
+
+                if (userId != "") {
+                    $.ajax({
+                        url: '/Ajax/AddToSaved',
+                        type: 'POST',
+                        data: { postId: postId, userId: userId },
+
+                        success: function (response) {
+                            if (response.success)
+                            {   
+                                button.text(response.message);
+                            } 
+                            else 
+                            {
+                                button.text(response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
                 }
+    });
+    
+    function checkIfSaved(postId) {
+        $.ajax({
+            url: "/Ajax/CheckSaved",
+            type: "GET",
+            data: { postId: postId },
+            success: function (response) {
+                $('.favoriteButton[data-postid]').text(response.message);
             },
-            error: function(xhr, status, error) {
-                alert("Помилка при збереженні публікації: " + error);
+            error: function (xhr, status, error) {
+                console.error(error);
             }
         });
+    }
     });
-
-        });
     </script>
 }

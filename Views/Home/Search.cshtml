@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = ViewBag.Search.ToUpper();
+}
+
+<div class="text-center">
+    @if (ViewBag.Posts == null)
+    {
+        <h1 class="display-4">@Resources.Resource.NothingFound</h1>
+    }
+    else
+    {
+        <h1 class="display-4">@Resources.Resource.SearchResultsFor: <b>@ViewBag.Search.ToUpper()</b></h1>
+        <partial name="_PostList" />
+        <partial name="_Pagination" />
+    }
+</div>

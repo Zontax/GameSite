@@ -1,12 +1,11 @@
-﻿@using Humanizer
-@using GameSite.Models
-@{
-    ViewData["Title"] = "Головна";
+﻿@{
+    ViewData["Title"] = Resources.Resource.Reviews;
 }
 
 <div class="text-center">
-    <h1 class="display-4">Огляди</h1>
+    <h1 class="display-4">@Resources.Resource.Reviews</h1>
 
     <partial name="_PostList" />
+    <partial name="_Pagination" />
 
 </div>

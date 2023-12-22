@@ -34,6 +34,21 @@ namespace GameSite.Migrations
 
             modelBuilder.Entity("ApplicationUserPost1", b =>
                 {
+                    b.Property<string>("DislikedByUsersId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("DislikedPostsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("DislikedByUsersId", "DislikedPostsId");
+
+                    b.HasIndex("DislikedPostsId");
+
+                    b.ToTable("PostUserDislikes", (string)null);
+                });
+
+            modelBuilder.Entity("ApplicationUserPost2", b =>
+                {
                     b.Property<string>("SavedByUsersId")
                         .HasColumnType("TEXT");
 
@@ -111,17 +126,14 @@ namespace GameSite.Migrations
                     b.Property<int>("LikesCount")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ReviewGameId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("ReviewMinus")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ReviewPlus")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ReviewRating")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("ReviewRating")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Tags")
                         .IsRequired()
@@ -397,6 +409,21 @@ namespace GameSite.Migrations
                 });
 
             modelBuilder.Entity("ApplicationUserPost1", b =>
+                {
+                    b.HasOne("GameSite.Data.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DislikedByUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameSite.Models.Post", null)
+                        .WithMany()
+                        .HasForeignKey("DislikedPostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ApplicationUserPost2", b =>
                 {
                     b.HasOne("GameSite.Data.ApplicationUser", null)
                         .WithMany()

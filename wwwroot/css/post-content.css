@@ -1,14 +1,55 @@
+/* Сторінка показа поста */
+.show-post {
+    background-color: rgb(255, 255, 255);
+    align-items: left;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+p.author-date {
+    color: #828282;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+p.author-date b {
+    color: #007bff;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+p {
+    font-size: 17px;
+}
+
+a[data-wpel-link='external'] {
+    color: #077fff;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+img {
+    width: 95%;
+    height: auto;
+    display: block;
+}
+
+.savedPost {
+    color: red;
+}
+
 blockquote {
-    background: #afc1d4;
-    border-left: 10px solid rgb(22, 102, 199); /* Додав властивість solid */
-    padding: 10px; /* Додав падінг для кращого відображення */
+    color: #686868;
+    background: #d0e0f0;
+    border-left: 10px solid rgb(22, 102, 199);
+    padding: 10px;
     padding-bottom: 0.5px;
 }
 
 .review-title-plus {
     color: white;
-    align-items: center;
     background-color: #99cd00;
+    align-items: center;
     width: 170px;
     height: 45px;
     padding: 3px;
@@ -16,30 +57,32 @@ blockquote {
 
 .review-title-minus {
     color: white;
-    align-items: center;
     background-color: red;
+    align-items: center;
     width: 170px;
     height: 45px;
     padding: 3px;
 }
 
 .review-info {
+    align-items: center;
     display: flex;
     width: 100%;
 }
 
 .review-info__rating {
     background-color: #99cd00;
+    align-items: center;
     padding: 10px;
     width: 30%;
-    margin-right: 10px; /* Додав маржин праворуч для рейтингу */
+    margin-right: 10px;
 }
 
 .review-info__other {
     width: 70%;
     padding: 10px;
-    display: flex; /* Змінив на flex для використання контейнера flex */
-    flex-direction: column; /* Розміщення блоків в стовпчик */
+    display: flex;
+    flex-direction: column;
 }
 
 .review-info__other > div {
@@ -57,8 +100,8 @@ blockquote {
 }
 
 .icon-dot-a:before {
-    content: '\2022'; /* Замініть на вашу іконку */
     color: #99cd00;
+    content: '\2022'; /* Замініть на вашу іконку */
     font-weight: bold;
     display: inline-block;
     width: 1em;
@@ -66,8 +109,8 @@ blockquote {
 }
 
 .icon-dot-b:before {
-    content: '\2022'; /* Замініть на вашу іконку */
     color: red;
+    content: '\2022'; /* Замініть на вашу іконку */
     font-weight: bold;
     display: inline-block;
     width: 1em;
@@ -75,12 +118,21 @@ blockquote {
 }
 
 .toast {
+    color: #ffffff;
+    background-color: #343a40;
     position: fixed;
     top: 10px;
     right: 10px;
-    background-color: #343a40;
-    color: #ffffff;
     width: 300px;
     max-width: 100%;
     z-index: 10000;
+}
+
+a.nav-link.text-dark {
+    color: black;
+    transition: color 0.3s ease;
+}
+
+a.nav-link.text-dark:hover {
+    color: #258cfb;
 }

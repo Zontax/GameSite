@@ -12,14 +12,13 @@
     <title>@ViewData["Title"] - IgroNewsUa</title>
 
     <link rel="stylesheet" href="~/css/tooplate_style.css" />
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/post-content.css" asp-append-version="true" />
-
     <link rel="stylesheet" href="~/GameSite.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/post-content.css" />
+    <link rel="stylesheet" href="~/css/post-comments.css" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" />
 
-    @* <link rel="stylesheet" href="~/ckeditor/contents.css" asp-append-version="true" /> *@
 </head>
 
 <body>
@@ -27,7 +26,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <span style="color: red;">Igro</span><span style="color: green;">News</span><span
+                    <span style="color: rgb(255, 145, 0);">Igro</span><span style="color: green;">News</span><span
                         style="color: blue;">Ua</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
@@ -38,28 +37,33 @@
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home"
-                                asp-action="News">@Resources.Resource.News</a>
+                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-action="News">
+                                @Resources.Resource.News</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home"
-                                asp-action="Reviews">@Resources.Resource.Reviews</a>
+                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-action="Reviews">
+                                @Resources.Resource.Reviews</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home"
-                                asp-action="Articles">@Resources.Resource.Articles</a>
+                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-action="Articles">
+                                @Resources.Resource.Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home"
-                                asp-action="Guides">@Resources.Resource.Guides</a>
+                            <a class="btn btn-outline-primary" id="btn-outline-primary" asp-action="Guides">
+                                @Resources.Resource.Guides</a>
                         </li>
 
                         @if (SignInManager.IsSignedIn(User))
                         {
+                            <li class="nav-item" style="margin-right: 10px;margin-left: 10px;">
+                                <a class="btn btn-primary" asp-controller="Home" asp-action="Saved">
+                                    @Resources.Resource.SavedPosts</a>
+                            </li>
+
                             @if (User.IsInRole("Author"))
                             {
                                 <li class="nav-item align-content-end">
-                                    <a class="nav-link text-dark" asp-controller="Home"
+                                    <a class="btn btn-success" asp-controller="Home"
                                         asp-action="Create">@Resources.Resource.Create_a_post</a>
                                 </li>
                             }
@@ -79,20 +83,7 @@
         </main>
     </div>
 
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
-        <div class="toast-header">
-            <strong class="mr-auto">Статус</strong>
-            <small class="text-muted">Тільки що</small>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="toast-body">
-            Пост успішно додано в обране!
-        </div>
-    </div>
-
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
         <div class="container">
             &copy; @(DateTime.UtcNow.ToString("yyyy")) - IgroNewsUa - <a asp-controller="Home" asp-action="About">
                 @Resources.Resource.AboutUs
@@ -105,8 +96,6 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
-    @* <script src="~/ckeditor/ckeditor.js"></script> *@
 
     @await RenderSectionAsync("Scripts", false)
 </body>

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Globalization
 @using GameSite.Data
 @inject UserManager<ApplicationUser> UserManager
 @model Post;
@@ -7,95 +8,93 @@
     var user = await UserManager.GetUserAsync(User);
 }
 
-<div class="text-center">
-    <div>
-        <h3>@Resources.Resource.Edit</h3>
+<div>
+    <h3>@Resources.Resource.Edit</h3>
 
-        <form asp-controller="Home" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <form asp-controller="Home" asp-action="Edit" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <div class="form-group">
+                <input type="hidden" asp-for="Author" class="form-control" value="@user?.Name" readonly>
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
+                <input type="hidden" asp-for="AuthorId" class="form-control" value="@user?.Id" readonly>
+                <span asp-validation-for="AuthorId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TypeId"></label>
+                <select asp-for="TypeId" asp-items="ViewBag.SelectItems" class="form-control"
+                    id="TypeIdSelect"></select>
+                <span asp-validation-for="TypeId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TitleImage"></label>
+                <input asp-for="TitleImage" name="file" type="file" class="form-control">
+                <span asp-validation-for="TitleImage" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Content"></label>
+                <textarea id="editor" asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Tags"></label>
+                <input asp-for="Tags" class="form-control">
+                <span asp-validation-for="Tags" class="text-danger"></span>
+            </div>
+
+            <div id="HidedFields" style="display: none;">
+
                 <div class="form-group">
-                    <input type="hidden" asp-for="Author" class="form-control" value="@user?.Name" readonly>
-                    <span asp-validation-for="Author" class="text-danger"></span>
+                    <label asp-for="ReviewPlus"></label>
+                    <textarea asp-for="ReviewPlus" class="form-control"></textarea>
+                    <span asp-validation-for="ReviewPlus" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <input type="hidden" asp-for="AuthorId" class="form-control" value="@user?.Id" readonly>
-                    <span asp-validation-for="AuthorId" class="text-danger"></span>
+                    <label asp-for="ReviewMinus"></label>
+                    <textarea asp-for="ReviewMinus" class="form-control"></textarea>
+                    <span asp-validation-for="ReviewMinus" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="TypeId"></label>
-                    <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control"
-                        id="TypeIdSelect"></select>
-                    <span asp-validation-for="TypeId" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="TitleImage"></label>
-                    <input asp-for="TitleImage" name="file" type="file" class="form-control">
-                    <span asp-validation-for="TitleImage" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Title"></label>
-                    <input asp-for="Title" class="form-control">
-                    <span asp-validation-for="Title" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Content"></label>
-                    <textarea id="editor" asp-for="Content" class="form-control"></textarea>
-                    <span asp-validation-for="Content" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Tags"></label>
-                    <input asp-for="Tags" class="form-control">
-                    <span asp-validation-for="Tags" class="text-danger"></span>
-                </div>
-
-                <div id="HidedFields" style="display: none;">
-                    <div class="form-group">
-                        <label asp-for="ReviewGameId"></label>
-                        <input asp-for="ReviewGameId" value="0" class="form-control">
-                        <span asp-validation-for="ReviewGameId" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="ReviewPlus"></label>
-                        <textarea asp-for="ReviewPlus" class="form-control"></textarea>
-                        <span asp-validation-for="ReviewPlus" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="ReviewMinus"></label>
-                        <textarea asp-for="ReviewMinus" class="form-control"></textarea>
-                        <span asp-validation-for="ReviewMinus" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="ReviewRating"></label>
-                        <input asp-for="ReviewRating" value="50" class="form-control">
-                        <span asp-validation-for="ReviewRating" class="text-danger"></span>
-                    </div>
+                    <label asp-for="ReviewRating"></label>
+                    <input asp-for="ReviewRating" class="form-control">
+                    <span asp-validation-for="ReviewRating" class="text-danger"></span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success">@Resources.Resource.Edit</button>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">@Resources.Resource.Edit</button>
 
-        </form>
-
-        <a href="/">@Resources.Resource.Back</a>
-    </div>
+    </form>
+    <br>
+    <a class="btn btn-primary" asp-action="Index">@Resources.Resource.Back</a>
 </div>
 
 @section Scripts {
+    <script src="~/ckeditor4/ckeditor.js"></script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'))
-            .catch(error => {
-                console.error(error);
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var editor = CKEDITOR.replace('editor', {
+                extraPlugins: 'youtube',
+                language: '@(CultureInfo.CurrentCulture.Name.ToLower())',
+                filebrowserUploadUrl: 'Home/UploadImage',
+                filebrowserBrowseUrl: 'Home/UploadExplorer'
             });
+        });
 
         document.addEventListener('DOMContentLoaded', function () {
             var typeIdSelect = document.getElementById('TypeIdSelect');
@@ -103,7 +102,7 @@
 
             function toggleFieldsVisibility() {
                 var selectedValue = typeIdSelect.value;
-                if (selectedValue === 'Огляд') {
+                if (selectedValue === 'Огляд' || selectedValue === 'Review') {
                     hidedFields.style.display = 'block';
                 }
                 else {
@@ -111,8 +110,8 @@
                 }
             }
 
-            toggleFieldsVisibility(); // Викликати при завантаженні сторінки
-            typeIdSelect.addEventListener('change', toggleFieldsVisibility); // Додати обробник події для вибору
+            toggleFieldsVisibility();
+            typeIdSelect.addEventListener('change', toggleFieldsVisibility);
         });
     </script>
 }

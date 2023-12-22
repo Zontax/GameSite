@@ -4,7 +4,9 @@
 # Щоб робити міграції
 dotnet tool install -g dotnet-ef
 # Міграція
+dotnet ef migrations add InitialCreate
 dotnet ef database update
+ef migrations remove
 або 
 Add-Migration InitialCreate
 Update-Database

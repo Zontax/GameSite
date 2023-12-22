@@ -222,4 +222,124 @@
   <data name="SavedPosts" xml:space="preserve">
     <value>Saved posts</value>
   </data>
+  <data name="AddComment" xml:space="preserve">
+    <value>Add Comment</value>
+  </data>
+  <data name="AddToSaved" xml:space="preserve">
+    <value>Saved post</value>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>Answer</value>
+  </data>
+  <data name="BackPage" xml:space="preserve">
+    <value>Back page</value>
+  </data>
+  <data name="Dislike" xml:space="preserve">
+    <value>Dislike</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot password?</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>Lang</value>
+  </data>
+  <data name="Like" xml:space="preserve">
+    <value>Like</value>
+  </data>
+  <data name="NextPage" xml:space="preserve">
+    <value>Next page</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>&lt;h1&gt;Privacy Policy&lt;/h1&gt;
+     This Privacy Policy explains how we collect, use and protect your personal information on our
+     website.
+     &lt;h4&gt;Collection and use of information&lt;/h4&gt;
+     We may collect various information for various purposes in order to improve our website and provide you with better services. This one
+     information may include your name, email address, contact information and other information you provide to us
+     provide
+     &lt;h4&gt;Privacy and Security&lt;/h4&gt;
+     We take the security of your personal information very seriously and do everything we can to protect it. We are not
+     we disclose your data to third parties without your consent.
+     Cookies
+     Our website may use cookies to improve your user experience. It helps us
+     analyze
+     traffic data and improve site performance.
+     &lt;h4&gt;Changes to the Privacy Policy&lt;/h4&gt;
+     We may update this policy from time to time. Please review it periodically to stay up-to-date
+     any
+     changes
+     If you have further questions about our Privacy Policy, please contact us.</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember me?</value>
+  </data>
+  <data name="ReviewMinus" xml:space="preserve">
+    <value>Minus</value>
+  </data>
+  <data name="ReviewPlus" xml:space="preserve">
+    <value>Plus</value>
+  </data>
+  <data name="ReviewRating" xml:space="preserve">
+    <value>Review rating</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SetTags" xml:space="preserve">
+    <value>Set tags</value>
+  </data>
+  <data name="SignInToPostComments" xml:space="preserve">
+    <value>Sign in to post comments</value>
+  </data>
+  <data name="AssignARole" xml:space="preserve">
+    <value>Assign a role</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>Blocked</value>
+  </data>
+  <data name="DeleteRole" xml:space="preserve">
+    <value>Delete role</value>
+  </data>
+  <data name="NotBlocked" xml:space="preserve">
+    <value>Not blocked</value>
+  </data>
+  <data name="NothingFound" xml:space="preserve">
+    <value>NOTHING FOUND</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Registration date</value>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>Role name</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="SearchResultsFor" xml:space="preserve">
+    <value>SEARCH RESULTS FOR</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Unblock</value>
+  </data>
+  <data name="PostType_Article" xml:space="preserve">
+    <value>Article</value>
+  </data>
+  <data name="PostType_Guide" xml:space="preserve">
+    <value>Guide</value>
+  </data>
+  <data name="PostType_News" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="PostType_Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="TitleFileRequired" xml:space="preserve">
+    <value>Title file required</value>
+  </data>
 </root>

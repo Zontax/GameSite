@@ -28,61 +28,92 @@ public class AjaxController : Controller
     }
 
     [HttpPost, Authorize]
-    public async Task<IActionResult> Like(int postId, string userId)
+    public async Task<IActionResult> LikeOrDislike(int postId, string userId, string action)
     {
+        ApplicationUser? user = await context.ApplicationUsers.FindAsync(userId);
         Post? post = await context.Posts
             .Include(p => p.LikedByUsers)
+            .Include(p => p.DislikedByUsers)
             .FirstOrDefaultAsync(p => p.Id == postId);
-        ApplicationUser? user = await context.ApplicationUsers.FindAsync(userId);
 
         if (post != null && user != null)
         {
-            if (post.LikedByUsers != null && post.LikedByUsers.Contains(user))
+            if (action == "like")
             {
-                post.LikedByUsers.Remove(user);
-                post.LikesCount--;
-                await context.SaveChangesAsync();
-                return Json(new { success = false });
-            }
-            else
-            {
-                if (post.LikedByUsers == null)
-                    post.LikedByUsers = new List<ApplicationUser>();
+                if (post.LikedByUsers != null && post.LikedByUsers.Contains(user))
+                {
+                    post.LikedByUsers.Remove(user);
+                    if (post.LikesCount != 0)
+                        post.LikesCount--;
+                }
+                else
+                {
+                    if (post.LikedByUsers == null)
+                        post.LikedByUsers = new List<ApplicationUser>();
 
-                post.LikedByUsers.Add(user);
-                post.LikesCount++;
-                await context.SaveChangesAsync();
-                return Json(new { success = true });
+                    post.LikedByUsers.Add(user);
+                    post.LikesCount++;
+                }
+
+                if (post.DislikedByUsers != null && post.DislikedByUsers.Contains(user))
+                {
+                    post.DislikedByUsers.Remove(user);
+                    if (post.DislikesCount != 0)
+                        post.DislikesCount--;
+                }
             }
+            else if (action == "dislike")
+            {
+                if (post.DislikedByUsers != null && post.DislikedByUsers.Contains(user))
+                {
+                    post.DislikedByUsers.Remove(user);
+                    if (post.DislikesCount != 0)
+                        post.DislikesCount--;
+                }
+                else
+                {
+                    if (post.DislikedByUsers == null)
+                        post.DislikedByUsers = new List<ApplicationUser>();
+
+                    post.DislikedByUsers.Add(user);
+                    post.DislikesCount++;
+                }
+
+                if (post.LikedByUsers != null && post.LikedByUsers.Contains(user))
+                {
+                    post.LikedByUsers.Remove(user);
+                    if (post.LikesCount != 0)
+                        post.LikesCount--;
+                }
+            }
+
+            await context.SaveChangesAsync();
+            return Json(new
+            {
+                success = true,
+                likes = post.LikesCount,
+                dislikes = post.DislikesCount
+            });
         }
 
-        return Json(new { success = false });
+        return Json(new { success = false, likes = post?.LikesCount, dislikes = post?.DislikesCount });
     }
 
     [HttpPost, Authorize]
-    public async Task<IActionResult> Dislike(int postId)
-    {
-        await context.SaveChangesAsync();
-
-        return Json(new { success = true });
-    }
-
-    [HttpPost, Authorize]
-    public async Task<IActionResult> AddToSaved(int postId, bool isSaved)
+    public async Task<IActionResult> AddToSaved(int postId)
     {
         var user = await userManager.GetUserAsync(User);
-        Post? post = await context.Posts
+        var post = await context.Posts
             .Include(p => p.SavedByUsers)
             .FirstOrDefaultAsync(p => p.Id == postId);
 
         if (post != null && user != null)
         {
-            if (isSaved)
+            if (post.SavedByUsers != null && post.SavedByUsers.Contains(user))
             {
-                if (post.SavedByUsers != null && post.SavedByUsers.Contains(user))
-                {
-                    post.SavedByUsers.Remove(user);
-                }
+                post.SavedByUsers.Remove(user);
+                await context.SaveChangesAsync();
+                return Json(new { success = false, message = "Зберегти" });
             }
             else
             {
@@ -90,12 +121,29 @@ public class AjaxController : Controller
                     post.SavedByUsers = new List<ApplicationUser>();
 
                 post.SavedByUsers.Add(user);
+                await context.SaveChangesAsync();
+                return Json(new { success = false, message = "В ЗБЕРЕЖЕНИХ" });
             }
-
-            await context.SaveChangesAsync();
-            return Json(new { success = true });
         }
 
-        return Json(new { success = false });
+        return Json(new { success = false, message = "Помилка!" });
+    }
+
+    [Authorize]
+    public async Task<IActionResult> CheckSaved(int postId)
+    {
+        var user = userManager.GetUserAsync(User).Result;
+        var post = await context.Posts
+            .Include(p => p.SavedByUsers)
+            .FirstOrDefaultAsync(p => p.Id == postId);
+
+        if (post != null && user != null)
+        {
+            bool isSaved = post.SavedByUsers != null && post.SavedByUsers.Contains(user);
+            if (isSaved)
+                return Json(new { message = "В ЗБЕРЕЖЕНИХ" });
+        }
+
+        return Json(new { message = "Зберегти" });
     }
 }

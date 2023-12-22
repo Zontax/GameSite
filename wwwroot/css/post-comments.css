@@ -1,0 +1,91 @@
+/* Форма додавання коментаря */
+.comment-form {
+    margin-top: 20px;
+}
+
+.comment-form .form-group {
+    margin-bottom: 15px;
+}
+
+.comment-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+.comment {
+    border-bottom: 1px solid #ced4da;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    margin-left: 0px;
+    width: 900px;
+}
+
+.post-comment {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+    padding-bottom: 30px;
+    flex: 0 0 auto;
+}
+
+.post-comment p {
+    margin-bottom: 5px;
+}
+
+.post-comment:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.post-comment p[title]::before {
+    content: '\1F4C5';
+}
+
+.post-comment p.date-time {
+    font-size: 12px;
+}
+
+.reply-comment {
+    background-color: coral;
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* Стилі для форм відповіді на коментарі */
+.comment-form {
+    margin-bottom: 15px;
+}
+
+.comment-form textarea {
+    height: 80px;
+}
+
+/* Стилі для коментарів, що є відповідями */
+.reply-comment {
+    margin-left: 80px;
+    width: 500px;
+}
+
+.reply-comment {
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    margin-left: 20px;
+    padding: 8px;
+}
+
+.reply-comment p {
+    margin: 0;
+}

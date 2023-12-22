@@ -1,10 +1,10 @@
-﻿@using Humanizer
-@{
-    ViewData["Title"] = "Статті";
+﻿@{
+    ViewData["Title"] = Resources.Resource.Articles;
 }
 
 <div class="text-center">
-    <h1 class="display-4">Статті</h1>
+    <h1 class="display-4">@Resources.Resource.Articles</h1>
 
     <partial name="_PostList" />
+    <partial name="_Pagination" />
 </div>

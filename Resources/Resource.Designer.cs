@@ -70,11 +70,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Додати коментар.
+        /// </summary>
+        public static string AddComment {
+            get {
+                return ResourceManager.GetString("AddComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Додайте теги таким чином &quot;тег1, тег2, третій_тег&quot; через кому.
         /// </summary>
         public static string AddTags {
             get {
                 return ResourceManager.GetString("AddTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Додати до збережених.
+        /// </summary>
+        public static string AddToSaved {
+            get {
+                return ResourceManager.GetString("AddToSaved", resourceCulture);
             }
         }
         
@@ -88,11 +106,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Відповісти.
+        /// </summary>
+        public static string Answer {
+            get {
+                return ResourceManager.GetString("Answer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Статті.
         /// </summary>
         public static string Articles {
             get {
                 return ResourceManager.GetString("Articles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Назначити роль.
+        /// </summary>
+        public static string AssignARole {
+            get {
+                return ResourceManager.GetString("AssignARole", resourceCulture);
             }
         }
         
@@ -111,6 +147,33 @@ namespace Resources {
         public static string Back {
             get {
                 return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Попередня сторінка.
+        /// </summary>
+        public static string BackPage {
+            get {
+                return ResourceManager.GetString("BackPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Заблокувати.
+        /// </summary>
+        public static string Block {
+            get {
+                return ResourceManager.GetString("Block", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Заблокований.
+        /// </summary>
+        public static string Blocked {
+            get {
+                return ResourceManager.GetString("Blocked", resourceCulture);
             }
         }
         
@@ -178,6 +241,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Видалити роль.
+        /// </summary>
+        public static string DeleteRole {
+            get {
+                return ResourceManager.GetString("DeleteRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Не подобається.
+        /// </summary>
+        public static string Dislike {
+            get {
+                return ResourceManager.GetString("Dislike", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Редагувати.
         /// </summary>
         public static string Edit {
@@ -205,11 +286,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Забули пароль?.
+        /// </summary>
+        public static string ForgotPassword {
+            get {
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Гайди.
         /// </summary>
         public static string Guides {
             get {
                 return ResourceManager.GetString("Guides", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Мова.
+        /// </summary>
+        public static string Lang {
+            get {
+                return ResourceManager.GetString("Lang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Подобається.
+        /// </summary>
+        public static string Like {
+            get {
+                return ResourceManager.GetString("Like", resourceCulture);
             }
         }
         
@@ -232,11 +340,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Далі.
+        ///   Ищет локализованную строку, похожую на Наступна сторінка.
         /// </summary>
         public static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Наступна сторінка.
+        /// </summary>
+        public static string NextPage {
+            get {
+                return ResourceManager.GetString("NextPage", resourceCulture);
             }
         }
         
@@ -246,6 +363,24 @@ namespace Resources {
         public static string No_more_than_140_characters {
             get {
                 return ResourceManager.GetString("No_more_than_140_characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Не заблокований.
+        /// </summary>
+        public static string NotBlocked {
+            get {
+                return ResourceManager.GetString("NotBlocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на НІЧОГО НЕ ЗНАЙДЕНО.
+        /// </summary>
+        public static string NothingFound {
+            get {
+                return ResourceManager.GetString("NothingFound", resourceCulture);
             }
         }
         
@@ -264,6 +399,59 @@ namespace Resources {
         public static string PasswordDontCompare {
             get {
                 return ResourceManager.GetString("PasswordDontCompare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Стаття.
+        /// </summary>
+        public static string PostType_Article {
+            get {
+                return ResourceManager.GetString("PostType_Article", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Гайд.
+        /// </summary>
+        public static string PostType_Guide {
+            get {
+                return ResourceManager.GetString("PostType_Guide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Новина.
+        /// </summary>
+        public static string PostType_News {
+            get {
+                return ResourceManager.GetString("PostType_News", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Огляд.
+        /// </summary>
+        public static string PostType_Review {
+            get {
+                return ResourceManager.GetString("PostType_Review", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;h1&gt;Політика конфіденційності&lt;/h1&gt;
+        ///    Ця Політика конфіденційності пояснює, як ми збираємо, використовуємо та захищаємо вашу особисту інформацію на нашому
+        ///    веб-сайті.
+        ///    &lt;h4&gt;Збір та використання інформації&lt;/h4&gt;
+        ///    Ми можемо збирати різну інформацію для різних цілей, щоб покращити наш веб-сайт та надати вам кращі послуги. Ця
+        ///    інформація може включати ваше ім&apos;я, адресу електронної пошти, контактні дані та іншу інформацію, яку ви нам
+        ///    надаєте.
+        ///    &lt;h4&gt;Конфіденційність і безпека&lt;/h4&gt;
+        ///    Ми  [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
             }
         }
         
@@ -304,11 +492,56 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Дата реєстрації.
+        /// </summary>
+        public static string RegistrationDate {
+            get {
+                return ResourceManager.GetString("RegistrationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Запам&apos;ятати мене?.
+        /// </summary>
+        public static string RememberMe {
+            get {
+                return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Це поле обов&apos;язкове.
         /// </summary>
         public static string RequiredField {
             get {
                 return ResourceManager.GetString("RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Невдалося.
+        /// </summary>
+        public static string ReviewMinus {
+            get {
+                return ResourceManager.GetString("ReviewMinus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вдалося.
+        /// </summary>
+        public static string ReviewPlus {
+            get {
+                return ResourceManager.GetString("ReviewPlus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Оцінка.
+        /// </summary>
+        public static string ReviewRating {
+            get {
+                return ResourceManager.GetString("ReviewRating", resourceCulture);
             }
         }
         
@@ -322,6 +555,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Назва ролі.
+        /// </summary>
+        public static string RoleName {
+            get {
+                return ResourceManager.GetString("RoleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ролі.
+        /// </summary>
+        public static string Roles {
+            get {
+                return ResourceManager.GetString("Roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Збережене.
         /// </summary>
         public static string SavedPosts {
@@ -331,11 +582,56 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Пошук.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на РЕЗУЛЬТАТИ ПОШУКУ ДЛЯ.
+        /// </summary>
+        public static string SearchResultsFor {
+            get {
+                return ResourceManager.GetString("SearchResultsFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Введіть теги.
+        /// </summary>
+        public static string SetTags {
+            get {
+                return ResourceManager.GetString("SetTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Увійдіть щоб залишати коментарі.
+        /// </summary>
+        public static string SignInToPostComments {
+            get {
+                return ResourceManager.GetString("SignInToPostComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Вийти.
         /// </summary>
         public static string SignOut {
             get {
                 return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Статус.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
             }
         }
         
@@ -354,6 +650,24 @@ namespace Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Файл для обкладинки обов&apos;язковий.
+        /// </summary>
+        public static string TitleFileRequired {
+            get {
+                return ResourceManager.GetString("TitleFileRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Розблокувати.
+        /// </summary>
+        public static string Unblock {
+            get {
+                return ResourceManager.GetString("Unblock", resourceCulture);
             }
         }
         

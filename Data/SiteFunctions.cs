@@ -12,17 +12,14 @@ public static class SiteFunctions
         {
             PostType.Новина => "rgb(201, 142, 5)",
             PostType.Огляд => "orange",
-            PostType.Стаття => "yellow",
+            PostType.Стаття => "rgb(204, 190, 0)",
             PostType.Гайд => "green",
-            PostType.Відео => "blue",
-            PostType.Подкаст => "brown",
-            _ => "black",
+            _ => "rgb(201, 142, 5)",
         };
     }
 
-    public static string GetReviewText(string ratingStr)
+    public static string GetReviewText(int? rating)
     {
-        int rating = Int32.Parse(ratingStr);
         string responce;
         if (rating < 10) responce = "Дуже погано";
         else if (rating < 25) responce = "Погано";

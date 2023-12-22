@@ -3,8 +3,11 @@
 @using GameSite.Data
 @using GameSite.Models
 @using Humanizer
+@using Microsoft.Extensions.Localization
+@using System.Globalization
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
 @model IEnumerable<Post>
 
 <div class="post-list">
@@ -24,26 +27,55 @@
                 <a class="no-underline" asp-action="Show" asp-route-id="@post.Id">
                     <center><h3>@post.Title</h3></center>
                 </a>
-                <b style="color: @SiteFunctions.GetColorCode(post.TypeId)">@post.TypeId</b>
-                
-                @{
-                    string Content = Regex.Replace(post.Content, "<.*?>", ""); // Видаляємо HTML теги
-                    int maxLength = 130; // Максимальна довжина тексту
 
-                    if (Content.Length > maxLength)
+                @{
+                    string typeId = post.TypeId switch
                     {
-                        Content = Content.Substring(0, maxLength); // Обмежуємо довжину тексту
-                        int lastSpace = Content.LastIndexOf(" "); // Знаходимо останній пробіл
-                        Content = Content.Substring(0, lastSpace) + "..."; // Відкидаємо частину після останнього пробілу
+                        PostType.Новина => "News",
+                        PostType.Огляд => "Review",
+                        PostType.Стаття => "Article",
+                        PostType.Гайд => "Guide",
+                        _ => "News",
+                    };
+                }
+                
+                @if (CultureInfo.CurrentCulture.Name == "uk")
+                {
+                    <b style="color: @SiteFunctions.GetColorCode(post.TypeId)">@post.TypeId</b>
+                }
+                else
+                {
+                    string Type = post.TypeId switch
+                    {
+                        PostType.Новина => "News",
+                        PostType.Огляд => "Review",
+                        PostType.Стаття => "Article",
+                        PostType.Гайд => "Guide",
+                        _ => "News",
+                    };
+                    <b style="color: @SiteFunctions.GetColorCode(post.TypeId)">@Type</b>
+                }
+
+                @{
+                    string Content = Regex
+                        .Replace(post.Content, "<.*?>", "")
+                        .Replace("&nbsp;", " ")
+                        .Replace("&rsquo;", "’")
+                        .Replace("&mdash;", "—")
+                        .Replace("&laquo;", "«")
+                        .Replace("&raquo;", "»")
+                        .Replace("&ldquo;", "“")
+                        .Replace("&rdquo;", "”");
+
+                    if (Content.Length > 130)
+                    {
+                        Content = Content.Substring(0, 130);
+                        int lastSpace = Content.LastIndexOf(" ");
+                        Content = Content.Substring(0, lastSpace) + "...";
                     }
                 }
 
                 <p>@Content</p>
-                
-                @* @if (post.Content.Length > 126)
-                 { <p>@((string)Regex.Replace(post.Content, "<.*?>", "").Substring(0, 125))...</p> }
-                else
-                    { <p>@Regex.Replace(post.Content, "<.*?>", "")</p> } *@
 
                 <p>
                     <i>@Resources.Resource.Tags:
@@ -82,4 +114,3 @@
         </div>
     }
 </div>
-
