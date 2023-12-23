@@ -1,11 +1,12 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Профіль";
+    ViewData["Title"] = Resources.Resource.Profile;
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h3>@Resources.Resource.Profile</h3>
+
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
@@ -21,7 +22,8 @@
                 <span asp-validation-for="Input.Name" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Будь ласка, введіть свій номер телефону." />
+                <input asp-for="Input.PhoneNumber" class="form-control"
+                    placeholder="Будь ласка, введіть свій номер телефону." />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>

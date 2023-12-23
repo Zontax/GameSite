@@ -26,7 +26,7 @@
 
             <div class="form-group">
                 <label asp-for="TypeId"></label>
-                <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control"
+                <select asp-for="TypeId" asp-items="@ViewBag.SelectItems" class="form-control" style="width:300px;"
                     id="TypeIdSelect"></select>
                 <span asp-validation-for="TypeId" class="text-danger"></span>
             </div>
@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label asp-for="TitleImage"></label>
                 <input asp-for="TitleImage" name="file" type="file" accept="image/jpg,image/jpeg,image/png,image/gif"
-                    class="form-control">
+                    class="form-control" style="width:300px;">
                 <span asp-validation-for="TitleImage" class="text-danger"></span>
             </div>
 

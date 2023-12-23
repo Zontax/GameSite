@@ -4,12 +4,12 @@
     ViewData["Title"] = @Resources.Resource.Register;
 }
 
-<h1>@Resources.Resource.Register</h1>
-
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>@Resources.Resource.CreateNewAccount</h2>
+            <center>
+                <h1>@Resources.Resource.Register</h1>
+            </center>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">

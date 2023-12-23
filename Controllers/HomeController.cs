@@ -35,14 +35,14 @@ public class HomeController : Controller
 
         var posts = context.Posts
             .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 4);
+            .ToPagedList(pageNumber, 7);
 
         var commentsCount = await context.Comments
             .GroupBy(com => com.PostId)
             .Select(group => new { PostId = group.Key, Count = group.Count() })
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
-        ViewBag.PG = new Pagination(await context.Posts.CountAsync(), pageNumber, 4, nameof(Index));
+        ViewBag.PG = new Pagination(await context.Posts.CountAsync(), pageNumber, 7, nameof(Index));
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 
@@ -59,14 +59,14 @@ public class HomeController : Controller
         var posts = context.Posts
             .Where(x => x.TypeId == Models.PostType.Новина)
             .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 4);
+            .ToPagedList(pageNumber, 7);
 
         var commentsCount = await context.Comments
             .GroupBy(com => com.PostId)
             .Select(group => new { PostId = group.Key, Count = group.Count() })
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
-        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Новина).CountAsync(), pageNumber, 4, nameof(News));
+        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Новина).CountAsync(), pageNumber, 7, nameof(News));
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 
@@ -83,14 +83,14 @@ public class HomeController : Controller
         var posts = context.Posts
             .Where(x => x.TypeId == Models.PostType.Огляд)
             .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 4);
+            .ToPagedList(pageNumber, 7);
 
         var commentsCount = await context.Comments
             .GroupBy(com => com.PostId)
             .Select(group => new { PostId = group.Key, Count = group.Count() })
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
-        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Новина).CountAsync(), pageNumber, 4, nameof(Reviews));
+        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Новина).CountAsync(), pageNumber, 7, nameof(Reviews));
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 
@@ -107,14 +107,14 @@ public class HomeController : Controller
         var posts = context.Posts
             .Where(x => x.TypeId == Models.PostType.Стаття)
             .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 4);
+            .ToPagedList(pageNumber, 7);
 
         var commentsCount = await context.Comments
             .GroupBy(com => com.PostId)
             .Select(group => new { PostId = group.Key, Count = group.Count() })
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
-        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Стаття).CountAsync(), pageNumber, 4, nameof(Articles));
+        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Стаття).CountAsync(), pageNumber, 7, nameof(Articles));
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 
@@ -131,14 +131,14 @@ public class HomeController : Controller
         var posts = context.Posts
             .Where(x => x.TypeId == Models.PostType.Гайд)
             .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 4);
+            .ToPagedList(pageNumber, 7);
 
         var commentsCount = await context.Comments
             .GroupBy(com => com.PostId)
             .Select(group => new { PostId = group.Key, Count = group.Count() })
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
-        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Гайд).CountAsync(), pageNumber, 4, nameof(Guides));
+        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Гайд).CountAsync(), pageNumber, 7, nameof(Guides));
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 
@@ -159,14 +159,14 @@ public class HomeController : Controller
         var posts = context.Posts
             .Where(post => post.SavedByUsers.Any(u => u.Id == user.Id))
             .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 4);
+            .ToPagedList(pageNumber, 7);
 
         var commentsCount = await context.Comments
             .GroupBy(com => com.PostId)
             .Select(group => new { PostId = group.Key, Count = group.Count() })
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
-        ViewBag.PG = new Pagination(await context.Posts.Where(post => post.SavedByUsers.Any(u => u.Id == user.Id)).CountAsync(), pageNumber, 4, nameof(Saved));
+        ViewBag.PG = new Pagination(await context.Posts.Where(post => post.SavedByUsers.Any(u => u.Id == user.Id)).CountAsync(), pageNumber, 7, nameof(Saved));
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 #pragma warning restore CS8604
@@ -184,7 +184,7 @@ public class HomeController : Controller
 
         var posts = context.Posts
             .Where(post => Regex.IsMatch(post.Tags, searchTags))
-            .ToPagedList(pageNumber, 4);
+            .ToPagedList(pageNumber, 7);
 
         if (!posts.Any()) return NotFound();
 
@@ -193,7 +193,7 @@ public class HomeController : Controller
             .Select(group => new { PostId = group.Key, Count = group.Count() })
             .ToDictionaryAsync(i => i.PostId, i => i.Count);
 
-        ViewBag.PG = new Pagination(await context.Posts.Where(post => Regex.IsMatch(post.Tags, searchTags)).CountAsync(), pageNumber, 4, nameof(Tag), tag);
+        ViewBag.PG = new Pagination(await context.Posts.Where(post => Regex.IsMatch(post.Tags, searchTags)).CountAsync(), pageNumber, 7, nameof(Tag), tag);
         ViewBag.Posts = posts;
         ViewBag.CommentsCount = commentsCount;
 
@@ -215,7 +215,7 @@ public class HomeController : Controller
            .Where(s => s.Title!.ToLower().Contains(search.ToLower()) ||
                    s.Content!.ToLower().Contains(search.ToLower()) ||
                    s.Tags.ToLower().Contains(search.ToLower()))
-           .ToPagedListAsync(pageNumber, 4);
+           .ToPagedListAsync(pageNumber, 7);
 
         ViewBag.CommentsCount = await context.Comments
             .GroupBy(com => com.PostId)
@@ -230,7 +230,7 @@ public class HomeController : Controller
             return View();
         }
 
-        ViewBag.PG = new Pagination(posts.Count, pageNumber, 4, nameof(Search), searchParametr: search);
+        ViewBag.PG = new Pagination(posts.Count, pageNumber, 7, nameof(Search), searchParametr: search);
         ViewBag.Posts = posts;
 
         if (pageNumber > ViewBag.PG.TotalPages) return NotFound();
@@ -347,7 +347,7 @@ public class HomeController : Controller
 
             if (post.TitleImage != null && post.TitleImage.Contains("/post_title_image/"))
             {
-                var deletePath = Path.Combine(webHostEnv.WebRootPath, post.TitleImage.Substring(1));
+                var deletePath = Path.Combine(webHostEnv.WebRootPath, post.TitleImage[1..]);
 
                 if (System.IO.File.Exists(deletePath))
                     System.IO.File.Delete(deletePath);
@@ -385,13 +385,13 @@ public class HomeController : Controller
 
         if (post?.TitleImage != null && post.TitleImage.Contains("/post_title_image/"))
         {
-            var filePath = Path.Combine(webHostEnv.WebRootPath, post.TitleImage.Substring(1));
+            var filePath = Path.Combine(webHostEnv.WebRootPath, post.TitleImage[1..]);
 
             if (System.IO.File.Exists(filePath))
                 System.IO.File.Delete(filePath);
         }
 
-        context.Posts.Remove(post);
+        if (post != null) context.Posts.Remove(post);
         await context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));

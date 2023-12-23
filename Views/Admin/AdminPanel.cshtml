@@ -1,12 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Globalization
 @using GameSite.Data
+@inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
-@model RoleModel
 @{
     ViewData["Title"] = Resources.Resource.AdminPanel;
+    var currentUser = await UserManager.GetUserAsync(User);
 }
 
-<h1>@Resources.Resource.AdminPanel</h1>
+<center>
+    <h1>@Resources.Resource.AdminPanel</h1>
+</center>
 
 <ul>
     @foreach (ApplicationUser user in ViewBag.Users)
@@ -38,16 +42,18 @@
                     <input type="hidden" value="@user?.Id" name="userId" readonly hidden />
                     <label>@Resources.Resource.RoleName</label>
                     <input type="text" name="role" />
-                    <span asp-validation-for="RoleName" class="text-danger"></span>
                     <button type="submit" class="btn btn-primary" name="submitType" value="Add">
                         @Resources.Resource.AssignARole</button>
                     <button type="submit" class="btn btn-warning" name="submitType" value="Remove">
                         @Resources.Resource.DeleteRole</button>
-                    <button type="submit" class="btn btn-danger" name="submitType" value="Block">
-                        @Resources.Resource.Block</button>
-                    <button type="submit" class="btn btn-success" name="submitType" value="Unblock">
-                        @Resources.Resource.Unblock</button>
 
+                    @if (user?.Id != currentUser?.Id)
+                    {
+                        <button type="submit" class="btn btn-danger" name="submitType" value="Block">
+                            @Resources.Resource.Block</button>
+                        <button type="submit" class="btn btn-success" name="submitType" value="Unblock">
+                            @Resources.Resource.Unblock</button>
+                    }
                 </form>
 
                 <br>

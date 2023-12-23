@@ -351,4 +351,19 @@
   <data name="Save" xml:space="preserve">
     <value>В закладки</value>
   </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Доступ заборонено</value>
+  </data>
+  <data name="AccessDeniedDescription" xml:space="preserve">
+    <value>Ви не маєте доступу до цього ресурсу. Можливо  у вас нема відповідних прав або ви заблоковані</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Ви впевнені, що хочете видалити цю публікацію?</value>
+  </data>
+  <data name="ConfirmEmail" xml:space="preserve">
+    <value>Підтвердити електронну пошту</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Профіль</value>
+  </data>
 </root>

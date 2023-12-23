@@ -1,14 +1,9 @@
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 using GameSite.Data;
 using GameSite.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using PagedList.Core;
-using Resources;
 
 namespace GameSite.Controllers;
 

@@ -36,16 +36,12 @@
     padding: 10px;
     padding-bottom: 30px;
     flex: 0 0 auto;
+    min-height: 60px;
+    width: 90%;
 }
 
 .post-comment p {
     margin-bottom: 5px;
-}
-
-.post-comment:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
 }
 
 .post-comment p[title]::before {
@@ -57,10 +53,16 @@
 }
 
 .reply-comment {
-    background-color: coral;
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+    padding-left: 35px;
+    padding-bottom: 30px;
+    flex: 0 0 auto;
+    min-height: 70px;
+    width: 70%;
 }
 
 /* Стилі для форм відповіді на коментарі */
@@ -69,6 +71,7 @@
 }
 
 .comment-form textarea {
+    width: 90%;
     height: 80px;
 }
 

@@ -70,6 +70,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Доступ заборонено.
+        /// </summary>
+        public static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ви не маєте доступу до цього ресурсу. Можливо  у вас нема відповідних прав або ви заблоковані.
+        /// </summary>
+        public static string AccessDeniedDescription {
+            get {
+                return ResourceManager.GetString("AccessDeniedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Додати коментар.
         /// </summary>
         public static string AddComment {
@@ -183,6 +201,24 @@ namespace Resources {
         public static string Comments {
             get {
                 return ResourceManager.GetString("Comments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ви впевнені, що хочете видалити цю публікацію?.
+        /// </summary>
+        public static string ConfirmDelete {
+            get {
+                return ResourceManager.GetString("ConfirmDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Підтвердити електронну пошту.
+        /// </summary>
+        public static string ConfirmEmail {
+            get {
+                return ResourceManager.GetString("ConfirmEmail", resourceCulture);
             }
         }
         
@@ -470,6 +506,15 @@ namespace Resources {
         public static string PrivacyPolicy {
             get {
                 return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Профіль.
+        /// </summary>
+        public static string Profile {
+            get {
+                return ResourceManager.GetString("Profile", resourceCulture);
             }
         }
         

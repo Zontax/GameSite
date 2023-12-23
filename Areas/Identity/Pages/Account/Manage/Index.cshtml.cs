@@ -48,6 +48,7 @@ public class IndexModel : PageModel
     public class InputModel
     {
         [Required(ErrorMessage = "Введіть ім'я, яке буде відображатись на сайті")]
+        [MaxLength(25)]
         [Display(Name = "Ім'я")]
         public string Name { get; set; }
 
@@ -103,7 +104,7 @@ public class IndexModel : PageModel
 
         if (Input.Name != user.Name)
         {
-            user.Name = Input.Name;
+            user.Name = Input.Name.Trim();
             var updateResult = await _userManager.UpdateAsync(user);
             if (!updateResult.Succeeded)
             {

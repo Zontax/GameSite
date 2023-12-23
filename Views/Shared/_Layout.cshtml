@@ -34,8 +34,10 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <span style="color: rgb(255, 145, 0);">Igro</span><span style="color: green;">News</span><span
-                        style="color: blue;">Ua</span>
+                    <b>
+                        <span style="color: rgb(255, 145, 0);">Igro</span><span style="color: green;">News</span><span
+                            style="color: blue;">Ua</span>
+                    </b>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,22 +49,22 @@
                         <li class="nav-item">
                             <a class="btn btn-outline-primary" id="btn-outline-primary" asp-controller="Home"
                                 asp-action="News">
-                                @Resources.Resource.News</a>
+                                <b>@Resources.Resource.News</b></a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-outline-primary" id="btn-outline-primary" asp-controller="Home"
                                 asp-action="Reviews">
-                                @Resources.Resource.Reviews</a>
+                                <b>@Resources.Resource.Reviews</b></a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-outline-primary" id="btn-outline-primary" asp-controller="Home"
                                 asp-action="Articles">
-                                @Resources.Resource.Articles</a>
+                                <b>@Resources.Resource.Articles</b></a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-outline-primary" id="btn-outline-primary" asp-controller="Home"
                                 asp-action="Guides">
-                                @Resources.Resource.Guides</a>
+                                <b>@Resources.Resource.Guides</b></a>
                         </li>
 
                         @if (SignInManager.IsSignedIn(User))
@@ -96,7 +98,7 @@
     </div>
 
     <footer class="footer text-muted">
-        <div class="container">
+        <div>
             &copy; @(DateTime.UtcNow.ToString("yyyy")) - IgroNewsUa - <a asp-controller="Home" asp-action="About">
                 @Resources.Resource.AboutUs
             </a>

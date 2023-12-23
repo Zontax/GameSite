@@ -1,15 +1,16 @@
 ﻿@page
 @model LoginModel
-
 @{
     ViewData["Title"] = Resources.Resource.LogIn;
 }
 
-<h1>@Resources.Resource.LogIn</h1>
 <div class="row">
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
+                <center>
+                    <h1>@Resources.Resource.LogIn</h1>
+                </center>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
@@ -34,6 +35,7 @@
                     <button id="login-submit" type="submit"
                         class="w-100 btn btn-lg btn-primary">@Resources.Resource.LogIn</button>
                 </div>
+                <hr />
                 <div>
                     <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">@Resources.Resource.ForgotPassword</a>

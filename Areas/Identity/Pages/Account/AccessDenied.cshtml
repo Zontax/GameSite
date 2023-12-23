@@ -1,10 +1,10 @@
 ﻿@page
 @model AccessDeniedModel
 @{
-    ViewData["Title"] = "Доступ заборонено";
+    ViewData["Title"] = Resources.Resource.AccessDenied;
 }
 
 <header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">Ви не маєте доступу до цього ресурсу.</p>
+    <h1 class="text-danger">@Resources.Resource.AccessDenied</h1>
+    <p class="text-danger">@Resources.Resource.AccessDeniedDescription</p>
 </header>

@@ -56,7 +56,7 @@
             </div>
         }
         
-        <p style="margin-top: 10px;">
+        <p>
             <button class="btn btn-outline-primary" id="likeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="@Resources.Resource.Like">
                 👍@ViewBag.Post.LikesCount</button>
             <button class="btn btn-outline-primary" id="dislikeButton" data-userid="@user?.Id" data-postid="@ViewBag.Post.Id" title="@Resources.Resource.Dislike">
@@ -112,7 +112,7 @@
         </form>
     }
 
-    @foreach (Comment comment in ViewBag.Coments)
+    @foreach (Comment comment in ((List<Comment>)ViewBag.Coments).OrderByDescending(c => c.Date))
     {
         @if (comment.ReplyCommentId == null)
         {

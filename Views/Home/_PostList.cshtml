@@ -106,7 +106,7 @@
                         <a class="btn btn-primary" asp-action="Edit" asp-route-id="@post.Id">
                             @Resources.Resource.Edit</a>
                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@post.Id" 
-                            onclick="return confirmDelete('Ви впевнені, що хочете видалити цю публікацію?');">
+                            onclick="return confirmDelete('@(Resources.Resource.ConfirmDelete)');">
                             @Resources.Resource.Delete</a>
                     }
                 }

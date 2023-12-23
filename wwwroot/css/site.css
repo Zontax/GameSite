@@ -23,16 +23,17 @@ html {
 
 body {
     padding-bottom: 60px;
-    background-color: #000;
-    background-image: url('~/img/background.webp');
+    background-color: #1c1c1c;
+    background-image: url('/img/background.png');
 }
 
 div.container {
-    background-color: rgb(224, 224, 224);
+    background-color: rgb(246, 246, 246);
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100%;
 }
 
 .publication {
@@ -62,11 +63,10 @@ a.no-underline:hover {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
+    background-color: #ffffff;
+    border: 2px solid #ccc;
     padding: 15px;
     margin-bottom: 20px;
-    border-radius: 5px;
 }
 
 .cover-image-container {
@@ -165,7 +165,8 @@ a.post-tags {
     background-color: #ccc;
 }
 
-main {
+main.pb-3 {
+    margin-top: 150px;
     padding-top: 60px;
 }
 
@@ -180,4 +181,14 @@ main {
 a#btn-outline-primary {
     border-radius: 5px;
     border: 5px;
+}
+
+.footer {
+    background-color: rgb(15, 13, 13);
+}
+
+div.col-md-4 {
+    margin: 0 auto;
+    background-color: rgb(255, 255, 255);
+    padding-bottom: 13px;
 }

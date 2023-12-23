@@ -2,8 +2,6 @@ using GameSite.Data;
 using GameSite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,7 +64,6 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
-
 }
 else
 {
@@ -83,16 +80,16 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.UseMiddleware<LanguageMiddleware>();
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("x-xss-protection", "1");
+    await next();
+});
 
 app.MapDefaultControllerRoute();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-//app.MapControllerRoute(
-//         name: "home",
-//         pattern: "{action}",
-//         defaults: new { controller = "Home", action = "Index", page = 1 });
 
 using (var scope = app.Services.CreateScope())
 {
