@@ -50,28 +50,34 @@ blockquote {
     color: white;
     background-color: #99cd00;
     align-items: center;
-    width: 170px;
     height: 45px;
     padding: 3px;
+    border-radius: 7px;
 }
 
 .review-title-minus {
     color: white;
     background-color: red;
     align-items: center;
-    width: 170px;
     height: 45px;
     padding: 3px;
+    border-radius: 7px;
 }
 
 .review-info {
     align-items: center;
+    justify-content: center;
     display: flex;
     width: 100%;
 }
 
+.review-info > * {
+    margin: 0 5px; /
+}
+
 .review-info__rating {
     background-color: #99cd00;
+    border-radius: 7px;
     align-items: center;
     padding: 10px;
     width: 30%;
@@ -94,27 +100,36 @@ blockquote {
     margin-bottom: 10px;
 }
 
+.review-plus {
+    padding: 10px;
+    min-width: 300px;
+    margin-right: 11px;
+}
+
+.review-minus {
+    padding: 10px;
+    min-width: 300px;
+}
+
 .ul-null {
     list-style-type: none;
     padding-left: 0;
 }
 
 .icon-dot-a:before {
-    color: #99cd00;
+    color: #9dcb12;
     content: '\2022'; /* Замініть на вашу іконку */
     font-weight: bold;
     display: inline-block;
     width: 1em;
-    margin-left: -1em;
 }
 
 .icon-dot-b:before {
-    color: red;
+    color: rgb(216, 15, 15);
     content: '\2022'; /* Замініть на вашу іконку */
     font-weight: bold;
     display: inline-block;
     width: 1em;
-    margin-left: -1em;
 }
 
 .toast {

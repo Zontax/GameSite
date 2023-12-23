@@ -33,8 +33,9 @@
 
             <div class="form-group">
                 <label asp-for="TitleImage"></label>
-                <input asp-for="TitleImage" name="file" type="file" accept="image/jpg,image/jpeg,image/png,image/gif"
-                    class="form-control" style="width:300px;">
+                <input asp-for="TitleImage" name="file" type="file"
+                    accept="image/jpg,image/jpeg,image/png,image/webp,image/gif" class="form-control"
+                    style="width:300px;">
                 <span asp-validation-for="TitleImage" class="text-danger"></span>
             </div>
 

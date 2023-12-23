@@ -26,7 +26,7 @@
             <div style="align-items: center;">
             <div class="review-info">
                 <div class="review-plus">
-                    <div class="review-title-plus"><h3>@Resources.Resource.ReviewPlus</h3></div>
+                    <div class="review-title-plus"><center><h3>@Resources.Resource.ReviewPlus</h3></center></div>
                     <ul class="ul-null">
                         @foreach (var item in ViewBag.Post.ReviewPlus.Split(','))
                         {
@@ -35,8 +35,17 @@
                     </ul>
                 </div>
 
+                <div class="review-info__rating">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <h1>@ViewBag.Post.ReviewRating</h1>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <h2>@SiteFunctions.GetReviewText(ViewBag.Post.ReviewRating)</h2>
+                    </div>
+                </div>
+
                 <div class="review-minus">
-                    <div class="review-title-minus"><h3>@Resources.Resource.ReviewMinus</h3></div>
+                    <div class="review-title-minus"><center><h3>@Resources.Resource.ReviewMinus</h3></center></div>
                     <ul class="ul-null">
                         @foreach (var item in ViewBag.Post.ReviewMinus.Split(','))
                         {
@@ -45,14 +54,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="review-info__rating">
-                <div class="d-flex justify-content-center align-items-center">
-                    <h1>@ViewBag.Post.ReviewRating</h1>
-                </div>
-                <div class="d-flex justify-content-center align-items-center">
-                    <h2>@SiteFunctions.GetReviewText(ViewBag.Post.ReviewRating)</h2>
-                </div>
-            </div>
+
             </div>
         }
         
