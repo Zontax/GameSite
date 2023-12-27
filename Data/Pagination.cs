@@ -1,7 +1,3 @@
-
-using GameSite.Models;
-using Microsoft.AspNetCore.Mvc;
-
 public class Pagination
 {
     public int PageSize;
@@ -15,8 +11,12 @@ public class Pagination
     public Pagination(int count, int? page, int pageSize, string actionName, string? tagParametr = null, string? searchParametr = null)
     {
         int pageNumber = page ?? 1;
-        TotalCount = count;
-        TotalPages = (int)Math.Ceiling((double)TotalCount / pageSize);
+        if (count == 0) TotalCount = 1;
+        else TotalCount = count;
+
+        if (TotalCount <= 1) TotalPages = 1;
+        else TotalPages = (int)Math.Ceiling((double)TotalCount / pageSize);
+
         Page = pageNumber;
         PageSize = pageSize;
         ActionName = actionName;

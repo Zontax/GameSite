@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using GameSite.Data;
-using Microsoft.Extensions.Localization;
 
 namespace GameSite.Models;
 
@@ -112,19 +111,14 @@ public class Post
 
     public string GetColorCode(PostType typeId)
     {
-        switch (typeId)
+        return typeId switch
         {
-            case PostType.Новина:
-                return "blue";
-            case PostType.Огляд:
-                return "green";
-            case PostType.Стаття:
-                return "red";
-            case PostType.Гайд:
-                return "orange";
-            default:
-                return "black";
-        }
+            PostType.Новина => "blue",
+            PostType.Огляд => "green",
+            PostType.Стаття => "red",
+            PostType.Гайд => "orange",
+            _ => "black",
+        };
     }
 }
 

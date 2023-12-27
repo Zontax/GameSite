@@ -15,14 +15,12 @@ namespace GameSite.Controllers;
 [Culture]
 public class HomeController : Controller
 {
-    readonly ILogger<HomeController> logger;
     readonly ApplicationDbContext context;
     readonly IWebHostEnvironment webHostEnv;
     readonly UserManager<ApplicationUser> userManager;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IWebHostEnvironment webHostEnv, UserManager<ApplicationUser> userManager)
+    public HomeController(ApplicationDbContext context, IWebHostEnvironment webHostEnv, UserManager<ApplicationUser> userManager)
     {
-        this.logger = logger;
         this.context = context;
         this.webHostEnv = webHostEnv;
         this.userManager = userManager;
@@ -211,11 +209,13 @@ public class HomeController : Controller
         if (string.IsNullOrEmpty(search) || search.Length < 3)
             search = string.Empty;
 
-        var posts = await context.Posts
-           .Where(s => s.Title!.ToLower().Contains(search.ToLower()) ||
-                   s.Content!.ToLower().Contains(search.ToLower()) ||
-                   s.Tags.ToLower().Contains(search.ToLower()))
-           .ToPagedListAsync(pageNumber, 7);
+        var query = context.Posts
+            .Where(s => s.Title!.ToLower().Contains(search.ToLower()) ||
+                           s.Content!.ToLower().Contains(search.ToLower()) ||
+                           s.Tags.ToLower().Contains(search.ToLower()));
+
+        int totalPostsCount = await query.CountAsync();
+        var posts = await query.ToPagedListAsync(pageNumber, 7);
 
         ViewBag.CommentsCount = await context.Comments
             .GroupBy(com => com.PostId)
@@ -224,13 +224,10 @@ public class HomeController : Controller
 
         ViewBag.Search = search;
 
-        if (!posts.Any() || string.IsNullOrEmpty(search))
-        {
-
+        if (!posts.Any() || string.IsNullOrEmpty(search)) // Коли нічого не знайдено
             return View();
-        }
 
-        ViewBag.PG = new Pagination(posts.Count, pageNumber, 7, nameof(Search), searchParametr: search);
+        ViewBag.PG = new Pagination(totalPostsCount, pageNumber, 7, nameof(Search), searchParametr: search);
         ViewBag.Posts = posts;
 
         if (pageNumber > ViewBag.PG.TotalPages) return NotFound();
