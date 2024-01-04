@@ -1,11 +1,19 @@
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 using GameSite.Models;
-using Humanizer;
 
 namespace GameSite.Data;
 
 public static class SiteFunctions
 {
+    public async static Task<Dictionary<int, int>?> GetCommentsCount(ApplicationDbContext context)
+    {
+        return await context.Comments
+            .GroupBy(com => com.PostId)
+            .Select(group => new { PostId = group.Key, Count = group.Count() })
+            .ToDictionaryAsync(i => i.PostId, i => i.Count);
+    }
+
     public static string GetColorCode(PostType typeId)
     {
         return typeId switch

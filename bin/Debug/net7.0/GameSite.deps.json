@@ -10,6 +10,7 @@
         "dependencies": {
           "Google.Cloud.Translation.V2": "3.2.0",
           "Humanizer.Core.uk": "2.14.1",
+          "Mailjet.Api": "3.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "7.0.12",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.12",
           "Microsoft.AspNetCore.Identity.UI": "7.0.12",
@@ -700,6 +701,18 @@
           "lib/netstandard2.0/JetBrains.Annotations.dll": {
             "assemblyVersion": "4242.42.42.42",
             "fileVersion": "2022.3.1.0"
+          }
+        }
+      },
+      "Mailjet.Api/3.0.0": {
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/netstandard1.1/Mailjet.Client.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
           }
         }
       },
@@ -3438,6 +3451,13 @@
       "sha512": "sha512-11nsS3+lFICGkztVs9PP2NRItxf9fF+qD6xEW/T0YGto52zj07wseUeBdMAU1ah9HNVTDZyRC1u4NWdtJScwhw==",
       "path": "jetbrains.annotations/2022.3.1",
       "hashPath": "jetbrains.annotations.2022.3.1.nupkg.sha512"
+    },
+    "Mailjet.Api/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/VeXC5+Q4e6YKcLm7yQVEJ5rBioJuXR7WVkVUVXgO/wkrd54+kGaB5/4F31iy7N4X07D97Gjxl8NlVNtcgHLsg==",
+      "path": "mailjet.api/3.0.0",
+      "hashPath": "mailjet.api.3.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Cryptography.Internal/7.0.12": {
       "type": "package",

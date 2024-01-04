@@ -23,9 +23,9 @@ public class Post
     public string Content { get; set; } = string.Empty;
 
     [Display(Name = "Publication_cover", ResourceType = typeof(Resources.Resource))]
-    public string? TitleImage { get; set; } = string.Empty;
+    public string? TitleImage { get; set; } = null;
 
-    public string? VideoUrl { get; set; } = string.Empty;
+    public string? VideoUrl { get; set; } = null;
 
     [Required(ErrorMessageResourceType = typeof(Resources.Resource),
         ErrorMessageResourceName = "RequiredField")]
@@ -46,6 +46,8 @@ public class Post
     public virtual ICollection<ApplicationUser>? DislikedByUsers { get; set; }
 
     public virtual ICollection<ApplicationUser>? SavedByUsers { get; set; }
+
+    public virtual ICollection<Comment>? Comments { get; set; }
 
     [Required(ErrorMessageResourceType = typeof(Resources.Resource),
         ErrorMessageResourceName = "SetTags")]

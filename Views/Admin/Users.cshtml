@@ -13,7 +13,7 @@
 </center>
 
 <ul>
-    @foreach (ApplicationUser user in ViewBag.Users)
+    @foreach (ApplicationUser? user in ViewBag.Users)
     {
         @if (user != null)
         {
@@ -63,10 +63,4 @@
     }
 </ul>
 
-@* <form method="post" action="">
-<label>Назва ролі</label>
-<input type="text" name="RoleName" />
-<button type="submit" class="btn btn-primary" asp-page-handler="NewRole">Створити роль</button>
-<button type="submit" class="btn btn-primary" asp-page-handler="AddRole">Назначити роль</button>
-<button type="submit" class="btn btn-danger" asp-page-handler="RemoveRole">Видалити роль</button>
-</form> *@
+<partial name="_Pagination" />

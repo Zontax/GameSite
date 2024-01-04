@@ -66,7 +66,7 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <button class="btn btn-outline-primary" id="favoriteButton" data-postid="@ViewBag.Post.Id">
-                    @Resources.Resource.AddToSaved</button>
+                    @Resources.Resource.Save</button>
             }
         </p>
         <p>
@@ -99,8 +99,11 @@
     {
         <form asp-action="Show" method="post" class="comment-form">
 
-            <input type="hidden" value="@ViewBag.Post.Id" name="PostId" />
             <input type="hidden" value="@null" name="ReplyId" />
+            <div class="form-group">
+                <span asp-validation-for="Author" class="text-danger"></span>
+                <input asp-for="PostId" class="form-control" value="@ViewBag.Post.Id" readonly hidden>
+            </div>
             <div class="form-group">
                 <span asp-validation-for="Author" class="text-danger"></span>
                 <input asp-for="Author" class="form-control" value="@user?.Name" readonly hidden>
@@ -114,7 +117,7 @@
         </form>
     }
 
-    @foreach (Comment comment in ((List<Comment>)ViewBag.Coments).OrderByDescending(c => c.Date))
+    @foreach (Comment comment in ((ICollection<Comment>)ViewBag.Post.Comments).OrderByDescending(c => c.Date))
     {
         @if (comment.ReplyCommentId == null)
         {
@@ -124,6 +127,16 @@
                     @if (comment.Edited) { <b> (@Resources.Resource.Edited)</b> }
                 </p>
                 <p><b>@comment.Author: </b>@comment.Text</p>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteComment"
+                       asp-route-commentId="@comment.Id"
+                       asp-route-postId="@ViewBag.Post.Id"
+                       onclick="return confirmDelete('@("Видалити коментар?")');">
+                        @Resources.Resource.Delete
+                    </a>
+                }
             </div>
 
             @* @if (SignInManager.IsSignedIn(User))
@@ -146,7 +159,9 @@
             } *@
 
             <!-- Вкладений цикл для коментарів-відповідей -->
-            @foreach (Comment reply in ((List<Comment>)ViewBag.Coments).Where(c => c.ReplyCommentId == comment.Id))
+            @foreach (Comment reply in ((ICollection<Comment>)ViewBag.Post.Comments)
+                .Where(c => c.ReplyCommentId == comment.Id)
+                .OrderByDescending(c => c.Date))
             {
                 <div class="reply-comment">
                     <p title="(reply to @comment.Author)"><b>@reply.Author: </b> @reply.Text</p>
@@ -215,15 +230,8 @@
                         type: 'POST',
                         data: { postId: postId, userId: userId },
 
-                        success: function (response) {
-                            if (response.success)
-                            {   
-                                button.text(response.message);
-                            } 
-                            else 
-                            {
-                                button.text(response.message);
-                            }
+                        success: function (response) {  
+                            button.text(response.message);
                         },
                         error: function (xhr, status, error) {
                             console.error(error);

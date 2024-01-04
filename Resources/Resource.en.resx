@@ -232,7 +232,7 @@
     <value>Answer</value>
   </data>
   <data name="BackPage" xml:space="preserve">
-    <value>Back page</value>
+    <value>Back</value>
   </data>
   <data name="Dislike" xml:space="preserve">
     <value>Dislike</value>
@@ -247,7 +247,7 @@
     <value>Like</value>
   </data>
   <data name="NextPage" xml:space="preserve">
-    <value>Next page</value>
+    <value>Next</value>
   </data>
   <data name="PrivacyPolicy" xml:space="preserve">
     <value>&lt;h1&gt;Privacy Policy&lt;/h1&gt;
@@ -365,5 +365,11 @@
   </data>
   <data name="Profile" xml:space="preserve">
     <value>User profile</value>
+  </data>
+  <data name="FirstPage" xml:space="preserve">
+    <value>First</value>
+  </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>Last</value>
   </data>
 </root>

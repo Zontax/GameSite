@@ -169,7 +169,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Попередня сторінка.
+        ///   Ищет локализованную строку, похожую на Назад.
         /// </summary>
         public static string BackPage {
             get {
@@ -331,6 +331,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Перша.
+        /// </summary>
+        public static string FirstPage {
+            get {
+                return ResourceManager.GetString("FirstPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Забули пароль?.
         /// </summary>
         public static string ForgotPassword {
@@ -363,6 +372,15 @@ namespace Resources {
         public static string Lang {
             get {
                 return ResourceManager.GetString("Lang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Остання.
+        /// </summary>
+        public static string LastPage {
+            get {
+                return ResourceManager.GetString("LastPage", resourceCulture);
             }
         }
         
@@ -403,7 +421,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Наступна сторінка.
+        ///   Ищет локализованную строку, похожую на Далі.
         /// </summary>
         public static string NextPage {
             get {

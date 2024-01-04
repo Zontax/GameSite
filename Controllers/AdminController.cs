@@ -1,5 +1,4 @@
 ﻿using GameSite.Data;
-using GameSite.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace GameSite.Controllers;
 
-[Route("AdminPanel"), Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin")]
 public class AdminController : Controller
 {
     readonly ApplicationDbContext context;
@@ -22,11 +21,19 @@ public class AdminController : Controller
         this.roleManager = roleManager;
     }
 
-    [Route("/AdminPanel")]
-    public async Task<IActionResult> AdminPanel()
+    public async Task<IActionResult> Users(int? page)
     {
+        if (page == null || page < 1) page = 1;
+        if (page < 1) return NotFound();
+
+        var users = await context.ApplicationUsers.ToListAsync();
+
+        Pager pager = new(users.Count(), page, 10, "Users", "Admin");
+        users = users.ToPagedList(pager);
+
+        ViewBag.Pager = pager;
+        ViewBag.Users = users;
         ViewBag.Roles = await context.Roles.ToListAsync();
-        ViewBag.Users = await context.ApplicationUsers.ToListAsync();
 
         return View();
     }
@@ -35,10 +42,9 @@ public class AdminController : Controller
     public async Task<ActionResult> ManageRole(string submitType, string userId, string role)
     {
         ApplicationUser? user = await userManager.FindByIdAsync(userId);
+
         if (user == null || submitType.IsNullOrEmpty())
-        {
             return RedirectToAction("Index", "Home");
-        }
 
         switch (submitType)
         {
@@ -75,7 +81,19 @@ public class AdminController : Controller
                 break;
         }
 
-        return RedirectToAction(nameof(AdminPanel));
+        return RedirectToAction(nameof(Users));
+    }
+
+    public async Task<IActionResult> DeleteComment(int commentId, int postId)
+    {
+        var comment = await context.Comments.FindAsync(commentId);
+
+        if (comment == null) return NotFound();
+
+        context.Comments.Remove(comment);
+        await context.SaveChangesAsync();
+
+        return RedirectToAction("Show", "Home", new { id = postId });
     }
 }
 

@@ -30,6 +30,12 @@ public class ApplicationDbContext : IdentityDbContext
             .HasMany(p => p.SavedByUsers)
             .WithMany(u => u.SavedPosts)
             .UsingEntity(j => j.ToTable("PostUserSaved"));
+
+        modelBuilder.Entity<Post>()
+            .HasMany(p => p.Comments)
+            .WithOne(c => c.Post)
+            .HasForeignKey(c => c.PostId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }

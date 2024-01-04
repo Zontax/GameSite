@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PagedList.Core;
-using X.PagedList;
 
 namespace GameSite.Controllers;
 
@@ -26,211 +24,154 @@ public class HomeController : Controller
         this.userManager = userManager;
     }
 
+    async Task<IActionResult> GetPostsByType(PostType type, int? page, string returnPage)
+    {
+        if (page == null || page < 1) page = 1;
+        if (page < 1) return NotFound(); ;
+
+        var posts = await context.Posts
+            .Include(p => p.Comments)
+            .Where(x => x.TypeId == type)
+            .OrderByDescending(post => post.Date)
+            .ToListAsync();
+
+        Pager pager = new(posts.Count(), page, 7, returnPage);
+        posts = posts.ToPagedList(pager);
+
+        ViewBag.Pager = pager;
+        ViewBag.Posts = posts;
+
+        if (page > pager.TotalPages) return NotFound();
+
+        return View(posts);
+    }
+
     public async Task<IActionResult> Index(int? page)
     {
-        int pageNumber = page ?? 1;
-        if (pageNumber < 1) return NotFound();
+        if (page == null || page < 1) page = 1;
+        if (page < 1) return NotFound();
 
-        var posts = context.Posts
+        var posts = await context.Posts
+            .Include(p => p.Comments)
             .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 7);
+            .ToListAsync();
 
-        var commentsCount = await context.Comments
-            .GroupBy(com => com.PostId)
-            .Select(group => new { PostId = group.Key, Count = group.Count() })
-            .ToDictionaryAsync(i => i.PostId, i => i.Count);
+        Pager pager = new(posts.Count(), page, 7, "Index");
+        posts = posts.ToPagedList(pager);
 
-        ViewBag.PG = new Pagination(await context.Posts.CountAsync(), pageNumber, 7, nameof(Index));
+        ViewBag.Pager = pager;
         ViewBag.Posts = posts;
-        ViewBag.CommentsCount = commentsCount;
 
-        if (pageNumber > ViewBag.PG.TotalPages) return NotFound();
-
-        return View(posts);
-    }
-
-    public async Task<IActionResult> News(int? page)
-    {
-        int pageNumber = page ?? 1;
-        if (pageNumber < 1) return NotFound();
-
-        var posts = context.Posts
-            .Where(x => x.TypeId == Models.PostType.Новина)
-            .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 7);
-
-        var commentsCount = await context.Comments
-            .GroupBy(com => com.PostId)
-            .Select(group => new { PostId = group.Key, Count = group.Count() })
-            .ToDictionaryAsync(i => i.PostId, i => i.Count);
-
-        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Новина).CountAsync(), pageNumber, 7, nameof(News));
-        ViewBag.Posts = posts;
-        ViewBag.CommentsCount = commentsCount;
-
-        if (pageNumber > ViewBag.PG.TotalPages) return NotFound();
-
-        return View(posts);
-    }
-
-    public async Task<IActionResult> Reviews(int? page)
-    {
-        int pageNumber = page ?? 1;
-        if (pageNumber < 1) return NotFound();
-
-        var posts = context.Posts
-            .Where(x => x.TypeId == Models.PostType.Огляд)
-            .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 7);
-
-        var commentsCount = await context.Comments
-            .GroupBy(com => com.PostId)
-            .Select(group => new { PostId = group.Key, Count = group.Count() })
-            .ToDictionaryAsync(i => i.PostId, i => i.Count);
-
-        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Новина).CountAsync(), pageNumber, 7, nameof(Reviews));
-        ViewBag.Posts = posts;
-        ViewBag.CommentsCount = commentsCount;
-
-        if (pageNumber > ViewBag.PG.TotalPages) return NotFound();
-
-        return View(posts);
-    }
-
-    public async Task<IActionResult> Articles(int? page)
-    {
-        int pageNumber = page ?? 1;
-        if (pageNumber < 1) return NotFound();
-
-        var posts = context.Posts
-            .Where(x => x.TypeId == Models.PostType.Стаття)
-            .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 7);
-
-        var commentsCount = await context.Comments
-            .GroupBy(com => com.PostId)
-            .Select(group => new { PostId = group.Key, Count = group.Count() })
-            .ToDictionaryAsync(i => i.PostId, i => i.Count);
-
-        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Стаття).CountAsync(), pageNumber, 7, nameof(Articles));
-        ViewBag.Posts = posts;
-        ViewBag.CommentsCount = commentsCount;
-
-        if (pageNumber > ViewBag.PG.TotalPages) return NotFound();
+        if (page > pager.TotalPages) return NotFound();
 
         return View();
     }
 
+    public async Task<IActionResult> News(int? page)
+    {
+        return await GetPostsByType(PostType.Новина, page, "News");
+    }
+
+    public async Task<IActionResult> Reviews(int? page)
+    {
+        return await GetPostsByType(PostType.Огляд, page, "Reviews");
+    }
+
+    public async Task<IActionResult> Articles(int? page)
+    {
+        return await GetPostsByType(PostType.Стаття, page, "Articles");
+    }
+
     public async Task<IActionResult> Guides(int? page)
     {
-        int pageNumber = page ?? 1;
-        if (pageNumber < 1) return NotFound();
-
-        var posts = context.Posts
-            .Where(x => x.TypeId == Models.PostType.Гайд)
-            .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 7);
-
-        var commentsCount = await context.Comments
-            .GroupBy(com => com.PostId)
-            .Select(group => new { PostId = group.Key, Count = group.Count() })
-            .ToDictionaryAsync(i => i.PostId, i => i.Count);
-
-        ViewBag.PG = new Pagination(await context.Posts.Where(p => p.TypeId == PostType.Гайд).CountAsync(), pageNumber, 7, nameof(Guides));
-        ViewBag.Posts = posts;
-        ViewBag.CommentsCount = commentsCount;
-
-        if (pageNumber > ViewBag.PG.TotalPages) return NotFound();
-
-        return View(posts);
+        return await GetPostsByType(PostType.Гайд, page, "Guides");
     }
 
     [Authorize]
     public async Task<IActionResult> Saved(int? page)
     {
-        int pageNumber = page ?? 1;
-        if (pageNumber < 1) return NotFound();
+        if (page == null || page < 1) page = 1;
+        if (page < 1) return NotFound();
 
         ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound();
+
 #pragma warning disable CS8604
-        var posts = context.Posts
+
+        var posts = await context.Posts
+            .Include(p => p.Comments)
             .Where(post => post.SavedByUsers.Any(u => u.Id == user.Id))
             .OrderByDescending(post => post.Date)
-            .ToPagedList(pageNumber, 7);
+            .ToListAsync();
 
-        var commentsCount = await context.Comments
-            .GroupBy(com => com.PostId)
-            .Select(group => new { PostId = group.Key, Count = group.Count() })
-            .ToDictionaryAsync(i => i.PostId, i => i.Count);
-
-        ViewBag.PG = new Pagination(await context.Posts.Where(post => post.SavedByUsers.Any(u => u.Id == user.Id)).CountAsync(), pageNumber, 7, nameof(Saved));
-        ViewBag.Posts = posts;
-        ViewBag.CommentsCount = commentsCount;
 #pragma warning restore CS8604
+
+        Pager pager = new(posts.Count(), page, 7, "Saved");
+        posts = posts.ToPagedList(pager);
+
+        ViewBag.Pager = pager;
+        ViewBag.Posts = posts;
+
+        if (page > pager.TotalPages) return NotFound();
+
         return View();
     }
 
-    [Route("/Post")]
     public async Task<IActionResult> Tag(string tag, int? page)
     {
-        int pageNumber = page ?? 1;
-        if (pageNumber < 1) return NotFound();
+        if (page == null || page < 1) page = 1;
 
         string[] tags = tag.Split(new[] { ',' });
         var searchTags = string.Join("|", tags.Select(t => $"\\b{Regex.Escape(t.Trim())}\\b"));
 
-        var posts = context.Posts
+        var posts = await context.Posts
+            .Include(p => p.Comments)
             .Where(post => Regex.IsMatch(post.Tags, searchTags))
-            .ToPagedList(pageNumber, 7);
+            .ToListAsync();
 
         if (!posts.Any()) return NotFound();
 
-        var commentsCount = await context.Comments
-            .GroupBy(com => com.PostId)
-            .Select(group => new { PostId = group.Key, Count = group.Count() })
-            .ToDictionaryAsync(i => i.PostId, i => i.Count);
+        Pager pager = new(posts.Count(), page, 7, "Tag", "Home", tag);
+        posts = posts.ToPagedList(pager);
 
-        ViewBag.PG = new Pagination(await context.Posts.Where(post => Regex.IsMatch(post.Tags, searchTags)).CountAsync(), pageNumber, 7, nameof(Tag), tag);
+        ViewBag.Tag = tag.Replace('_', ' ');
+        ViewBag.Pager = pager;
         ViewBag.Posts = posts;
-        ViewBag.CommentsCount = commentsCount;
 
-        if (pageNumber > ViewBag.PG.TotalPages) return NotFound();
+        if (page > pager.TotalPages) return NotFound();
 
         return View();
     }
 
     public async Task<IActionResult> Search(string? search, int? page)
     {
-        int pageNumber = page ?? 1;
-        if (pageNumber < 1) return NotFound();
+        if (page == null || page < 1) page = 1;
+        if (page < 1) return NotFound();
 
-        search = search?.Trim();
+        search = search?.Trim().ToLower();
         if (string.IsNullOrEmpty(search) || search.Length < 3)
             search = string.Empty;
 
-        var query = context.Posts
-            .Where(s => s.Title!.ToLower().Contains(search.ToLower()) ||
-                           s.Content!.ToLower().Contains(search.ToLower()) ||
-                           s.Tags.ToLower().Contains(search.ToLower()));
-
-        int totalPostsCount = await query.CountAsync();
-        var posts = await query.ToPagedListAsync(pageNumber, 7);
-
-        ViewBag.CommentsCount = await context.Comments
-            .GroupBy(com => com.PostId)
-            .Select(group => new { PostId = group.Key, Count = group.Count() })
-            .ToDictionaryAsync(i => i.PostId, i => i.Count);
-
-        ViewBag.Search = search;
+        var posts = await context.Posts
+            .Include(p => p.Comments)
+            .Where(s => s.Title!.ToLower().Contains(search) ||
+                        s.Content!.ToLower().Contains(search) ||
+                        s.Tags.ToLower().Contains(search)).ToListAsync();
 
         if (!posts.Any() || string.IsNullOrEmpty(search)) // Коли нічого не знайдено
+        {
+            ViewBag.Search = search;
             return View();
+        }
 
-        ViewBag.PG = new Pagination(totalPostsCount, pageNumber, 7, nameof(Search), searchParametr: search);
+        Pager pager = new(posts.Count(), page, 7, "Search", "Home", null, search);
+        posts = posts.ToPagedList(pager);
+
+        ViewBag.Search = search;
+        ViewBag.Pager = pager;
         ViewBag.Posts = posts;
 
-        if (pageNumber > ViewBag.PG.TotalPages) return NotFound();
+        if (page > pager.TotalPages) return NotFound();
 
         return View();
     }
@@ -238,33 +179,29 @@ public class HomeController : Controller
     public async Task<IActionResult> Show(int id)
     {
         var post = await context.Posts
-            .FindAsync(id);
+            .Include(p => p.Comments)
+            .FirstOrDefaultAsync(p => p.Id == id);
 
         if (post == null) return NotFound();
 
-        var coments = await context.Comments
-            .Where(x => x.PostId == id)
-            .ToListAsync();
-
         ViewBag.Post = post;
-        ViewBag.Coments = coments;
 
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Show(int id, string author, string text, int? replyId)
+    public async Task<IActionResult> Show(int postId, string author, string text, int? replyId)
     {
         if (ModelState.IsValid)
         {
             if (!string.IsNullOrEmpty(author) && !string.IsNullOrEmpty(text))
             {
-                Comment coment = new(id, author, text, false, replyId);
+                Comment coment = new(postId, author, text, false, replyId);
                 await context.Comments.AddAsync(coment);
                 await context.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(Show), id);
+            return RedirectToAction(nameof(Show), postId);
         }
 
         return NotFound();
@@ -287,25 +224,12 @@ public class HomeController : Controller
         {
             if (file != null && file.Length > 0)
             {
-                // Збережіть файл у папці wwwroot або в потрібному вам шляху
-                var uploadsDirectory = Path.Combine(webHostEnv.WebRootPath, "post_title_image");
-                if (!Directory.Exists(uploadsDirectory)) Directory.CreateDirectory(uploadsDirectory);
-
-                var fileExtension = Path.GetExtension(file.FileName);
-                var uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
-                var filePath = Path.Combine(webHostEnv.WebRootPath, "post_title_image", uniqueFileName);
-
-                using (FileStream stream = new(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-
-                post.TitleImage = "/post_title_image/" + uniqueFileName;
+                post.TitleImage = await SaveFileAsync(file, "post_title_image");
             }
 
             await context.Posts.AddAsync(post);
             await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Show), new { id = post.Id });
         }
 
         ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.PostType)));
@@ -323,44 +247,42 @@ public class HomeController : Controller
     }
 
     [HttpPost, Authorize(Roles = "Author")]
-    public async Task<IActionResult> Edit(Post post, IFormFile file)
+    public async Task<IActionResult> Edit(Post post, IFormFile? file)
     {
-        if (file == null)
-            ModelState.AddModelError(nameof(post.TitleImage), Resources.Resource.TitleFileRequired);
-
         if (file != null && file.Length > 0)
         {
-            string uploadsDirectory = Path.Combine(webHostEnv.WebRootPath, "post_title_image");
-            if (!Directory.Exists(uploadsDirectory)) Directory.CreateDirectory(uploadsDirectory);
+            // Видалення попереднього зображення
+            string? oldTitleImage = await context.Posts
+                .AsNoTracking()
+                .Where(p => p.Id == post.Id)
+                .Select(p => p.TitleImage)
+                .FirstOrDefaultAsync();
 
-            string fileExtension = Path.GetExtension(file.FileName);
-            string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
-            string filePath = Path.Combine(webHostEnv.WebRootPath, "post_title_image", uniqueFileName);
+            DeleteFile(oldTitleImage); // Видалення попереднього зображення
 
-            using (FileStream fileStream = new(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(fileStream);
-            }
+            post.TitleImage = await SaveFileAsync(file, "post_title_image");
 
-            if (post.TitleImage != null && post.TitleImage.Contains("/post_title_image/"))
-            {
-                var deletePath = Path.Combine(webHostEnv.WebRootPath, post.TitleImage[1..]);
-
-                if (System.IO.File.Exists(deletePath))
-                    System.IO.File.Delete(deletePath);
-            }
-
-            post.TitleImage = "/post_title_image/" + uniqueFileName;
         }
         else
         {
             // Якщо файл не був вибраний, використовуйте поточне зображення
-            var existingPost = await context.Posts.FindAsync(post.Id);
-            post.TitleImage = existingPost?.TitleImage;
+            post.TitleImage = await context.Posts
+                .AsNoTracking()
+                .Where(p => p.Id == post.Id)
+                .Select(p => p.TitleImage)
+                .FirstOrDefaultAsync();
         }
 
         if (ModelState.IsValid)
         {
+            DateTime oldDateTime = await context.Posts
+                .AsNoTracking()
+                .Where(p => p.Id == post.Id)
+                .Select(p => p.Date)
+                .FirstOrDefaultAsync();
+
+            post.Date = oldDateTime;
+
             context.Posts.Update(post);
             await context.SaveChangesAsync();
 
@@ -368,8 +290,6 @@ public class HomeController : Controller
         }
 
         ViewBag.SelectItems = new SelectList(Enum.GetValues(typeof(Models.PostType)));
-        post.TitleImage = context.Posts.Find(post.Id)?.TitleImage;
-        await context.SaveChangesAsync();
         return View(post);
     }
 
@@ -380,15 +300,8 @@ public class HomeController : Controller
 
         if (post == null) return NotFound();
 
-        if (post?.TitleImage != null && post.TitleImage.Contains("/post_title_image/"))
-        {
-            var filePath = Path.Combine(webHostEnv.WebRootPath, post.TitleImage[1..]);
-
-            if (System.IO.File.Exists(filePath))
-                System.IO.File.Delete(filePath);
-        }
-
-        if (post != null) context.Posts.Remove(post);
+        DeleteFile(post.TitleImage);
+        context.Posts.Remove(post);
         await context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
@@ -404,5 +317,32 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+    private async Task<string> SaveFileAsync(IFormFile file, string directoryPath)
+    {
+        string uploadsDirectory = Path.Combine(webHostEnv.WebRootPath, directoryPath);
+        if (!Directory.Exists(uploadsDirectory)) Directory.CreateDirectory(uploadsDirectory);
+
+        string fileExtension = Path.GetExtension(file.FileName);
+        string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
+        string filePath = Path.Combine(uploadsDirectory, uniqueFileName);
+
+        using (FileStream fileStream = new(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(fileStream);
+        }
+
+        return "/" + directoryPath + "/" + uniqueFileName;
+    }
+
+    private void DeleteFile(string? filePath)
+    {
+        if (filePath != null)
+        {
+            var deletePath = Path.Combine(webHostEnv.WebRootPath, filePath[1..]);
+            if (System.IO.File.Exists(deletePath))
+                System.IO.File.Delete(deletePath);
+        }
     }
 }

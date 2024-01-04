@@ -96,7 +96,7 @@
                 <p title="@post.Date.ToString("yyyy-MM-dd HH:mm")">
                     @post.Date.ToString("dd MMMM, yyyy")
                     <span class="comment-icon">💬</span>
-                    @(ViewBag.CommentsCount.ContainsKey(post.Id) ? ViewBag.CommentsCount[post.Id] : 0)
+                    @(post.Comments?.Count() ?? 0)
                 </p>
 
                 @if (SignInManager.IsSignedIn(User))

@@ -109,7 +109,7 @@ public class AjaxController : Controller
             {
                 post.SavedByUsers.Remove(user);
                 await context.SaveChangesAsync();
-                return Json(new { success = false, message = Resources.Resource.Save });
+                return Json(new { success = true, message = Resources.Resource.Save });
             }
             else
             {
@@ -118,7 +118,7 @@ public class AjaxController : Controller
 
                 post.SavedByUsers.Add(user);
                 await context.SaveChangesAsync();
-                return Json(new { success = false, message = Resources.Resource.InSaved });
+                return Json(new { success = true, message = Resources.Resource.InSaved });
             }
         }
 
@@ -140,6 +140,6 @@ public class AjaxController : Controller
                 return Json(new { message = Resources.Resource.InSaved });
         }
 
-        return Json(new { message = Resources.Resource.Save });
+        return Json(new { message = Resources.Resource.Save, });
     }
 }
