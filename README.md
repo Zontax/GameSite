@@ -9,12 +9,17 @@
 
 
 ```dotnet run``` 
+
+## tool для міграцій
+dotnet tool install --global dotnet-ef
+
 ## Щоб робити міграції
 dotnet tool install -g dotnet-ef
 ## Міграції
 ### в консолі
 dotnet ef migrations add InitialCreate
-dotnet ef database update
+dotnet ef migrations add Initial -c ApplicationDbContext
+dotnet ef database update -c ApplicationDbContext
 ef migrations remove
 ### в консолі NumGet
 Add-Migration InitialCreate

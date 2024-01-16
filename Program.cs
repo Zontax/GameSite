@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("SQLiteConnection");
+var connectionString = builder.Configuration.GetConnectionString("PostgreConnection");
 
 builder.Services.AddLocalization(options =>
     options.ResourcesPath = "Resources");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString)); //  SQLite
-                                          // .UseNpgsql("Host=localhost;Port=5433;Database=usersdb;Username=postgres;Password=asd123456");
-
-// options.UseSqlServer(connectionString)); // MSSQL Server
+    options.UseNpgsql(connectionString)); // PostgreSQL
+    //options.UseSqlite(connectionString)); //  SQLite 
+    //options.UseSqlServer(connectionString)); // MS SQL Server
+    //options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -101,6 +101,7 @@ using (var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    PostDbInitializer.Initialize(context, userManager, roleManager);
+	AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); // Щоб не використовувати DateTimeOffset
+	PostDbInitializer.Initialize(context, userManager, roleManager);
 }
 app.Run();

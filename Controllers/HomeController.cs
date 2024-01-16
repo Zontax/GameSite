@@ -30,6 +30,7 @@ public class HomeController : Controller
         if (page < 1) return NotFound(); ;
 
         var posts = await context.Posts
+            .AsNoTracking()
             .Include(p => p.Comments)
             .Where(x => x.TypeId == type)
             .OrderByDescending(post => post.Date)
@@ -52,12 +53,14 @@ public class HomeController : Controller
         if (page < 1) return NotFound();
 
         var posts = await context.Posts
+            .AsNoTracking()
             .Include(p => p.Comments)
             .OrderByDescending(post => post.Date)
             .ToListAsync();
 
         Pager pager = new(posts.Count(), page, 7, "Index");
         posts = posts.ToPagedList(pager);
+
 
         ViewBag.Pager = pager;
         ViewBag.Posts = posts;
@@ -119,15 +122,21 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Tag(string tag, int? page)
     {
+        if (string.IsNullOrEmpty(tag)) return NotFound();
         if (page == null || page < 1) page = 1;
 
         string[] tags = tag.Split(new[] { ',' });
-        var searchTags = string.Join("|", tags.Select(t => $"\\b{Regex.Escape(t.Trim())}\\b"));
 
-        var posts = await context.Posts
+        var postsQuery = context.Posts
             .Include(p => p.Comments)
-            .Where(post => Regex.IsMatch(post.Tags, searchTags))
-            .ToListAsync();
+            .AsQueryable();
+
+        foreach (var t in tags)
+        {
+            postsQuery = postsQuery.Where(post => post.Tags.Contains(t.Trim()));
+        }
+
+        var posts = await postsQuery.ToListAsync();
 
         if (!posts.Any()) return NotFound();
 
@@ -146,11 +155,13 @@ public class HomeController : Controller
     public async Task<IActionResult> Search(string? search, int? page)
     {
         if (page == null || page < 1) page = 1;
-        if (page < 1) return NotFound();
 
         search = search?.Trim().ToLower();
         if (string.IsNullOrEmpty(search) || search.Length < 3)
-            search = string.Empty;
+        {
+            ViewBag.Search = search;
+            return View();
+        }
 
         var posts = await context.Posts
             .Include(p => p.Comments)
@@ -158,7 +169,7 @@ public class HomeController : Controller
                         s.Content!.ToLower().Contains(search) ||
                         s.Tags.ToLower().Contains(search)).ToListAsync();
 
-        if (!posts.Any() || string.IsNullOrEmpty(search)) // Коли нічого не знайдено
+        if (!posts.Any()) // Коли нічого не знайдено
         {
             ViewBag.Search = search;
             return View();
@@ -201,7 +212,7 @@ public class HomeController : Controller
                 await context.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(Show), postId);
+            return Redirect(Url.Action(nameof(Show), new { postId = postId }) + "#comments");
         }
 
         return NotFound();

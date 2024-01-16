@@ -5,3 +5,6 @@
 /GameSite
 *.db-shm
 *.db-wal
+*.exe
+*.dll
+*.pdb

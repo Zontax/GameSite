@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,79 +26,79 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -119,257 +119,318 @@
   </resheader>
   <data name="RequiredField" xml:space="preserve">
     <value>This field is required</value>
+    <comment/>
   </data>
   <data name="UserList" xml:space="preserve">
     <value>User List</value>
+    <comment/>
   </data>
   <data name="User_Name" xml:space="preserve">
     <value>The name that will be displayed on the site</value>
+    <comment/>
   </data>
   <data name="News" xml:space="preserve">
     <value>News</value>
+    <comment/>
   </data>
   <data name="Reviews" xml:space="preserve">
     <value>Reviews</value>
+    <comment/>
   </data>
   <data name="Articles" xml:space="preserve">
     <value>Articles</value>
+    <comment/>
   </data>
   <data name="Guides" xml:space="preserve">
     <value>Guides</value>
+    <comment/>
   </data>
   <data name="Create_a_post" xml:space="preserve">
     <value>Create a post</value>
+    <comment/>
   </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>Admin panel</value>
+    <comment/>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
+    <comment/>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Log in</value>
+    <comment/>
   </data>
   <data name="SignOut" xml:space="preserve">
     <value>Sign out</value>
+    <comment/>
   </data>
   <data name="AboutUs" xml:space="preserve">
     <value>About us</value>
+    <comment/>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm password</value>
+    <comment/>
   </data>
   <data name="CreateNewAccount" xml:space="preserve">
     <value>Create new account</value>
+    <comment/>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+    <comment/>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+    <comment/>
   </data>
   <data name="PasswordDontCompare" xml:space="preserve">
     <value>Password don't compare</value>
+    <comment/>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
+    <comment/>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+    <comment/>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+    <comment/>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
+    <comment/>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
+    <comment/>
   </data>
   <data name="AddTags" xml:space="preserve">
-    <value>Add tags like this "tag1, tag2, third_tag" separated by commas</value>
+    <value>Add tags like this "tag 1, tag 2, tag 3"</value>
+    <comment/>
   </data>
   <data name="Author" xml:space="preserve">
     <value>Author</value>
+    <comment/>
   </data>
   <data name="Comments" xml:space="preserve">
     <value>Comments</value>
+    <comment/>
   </data>
   <data name="Content" xml:space="preserve">
     <value>Content</value>
+    <comment/>
   </data>
   <data name="CreatePost" xml:space="preserve">
     <value>Create publication</value>
+    <comment/>
   </data>
   <data name="Edited" xml:space="preserve">
     <value>edited</value>
+    <comment/>
   </data>
   <data name="No_more_than_140_characters" xml:space="preserve">
     <value>No more than 140 characters</value>
+    <comment/>
   </data>
   <data name="Publicate" xml:space="preserve">
     <value>Publicate</value>
+    <comment/>
   </data>
   <data name="Publication_cover" xml:space="preserve">
     <value>Publication cover</value>
+    <comment/>
   </data>
   <data name="Publication_type" xml:space="preserve">
     <value>Publication type</value>
+    <comment/>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
+    <comment/>
   </data>
   <data name="SavedPosts" xml:space="preserve">
     <value>Bookmarks</value>
+    <comment/>
   </data>
   <data name="AddComment" xml:space="preserve">
     <value>Add Comment</value>
+    <comment/>
   </data>
   <data name="AddToSaved" xml:space="preserve">
     <value>Saved post</value>
+    <comment/>
   </data>
   <data name="Answer" xml:space="preserve">
     <value>Answer</value>
+    <comment/>
   </data>
   <data name="BackPage" xml:space="preserve">
     <value>Back</value>
+    <comment/>
   </data>
   <data name="Dislike" xml:space="preserve">
     <value>Dislike</value>
+    <comment/>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
     <value>Forgot password?</value>
+    <comment/>
   </data>
   <data name="Lang" xml:space="preserve">
     <value>Lang</value>
+    <comment/>
   </data>
   <data name="Like" xml:space="preserve">
     <value>Like</value>
+    <comment/>
   </data>
   <data name="NextPage" xml:space="preserve">
     <value>Next</value>
+    <comment/>
   </data>
   <data name="PrivacyPolicy" xml:space="preserve">
-    <value>&lt;h1&gt;Privacy Policy&lt;/h1&gt;
-     This Privacy Policy explains how we collect, use and protect your personal information on our
-     website.
-     &lt;h4&gt;Collection and use of information&lt;/h4&gt;
-     We may collect various information for various purposes in order to improve our website and provide you with better services. This one
-     information may include your name, email address, contact information and other information you provide to us
-     provide
-     &lt;h4&gt;Privacy and Security&lt;/h4&gt;
-     We take the security of your personal information very seriously and do everything we can to protect it. We are not
-     we disclose your data to third parties without your consent.
-     Cookies
-     Our website may use cookies to improve your user experience. It helps us
-     analyze
-     traffic data and improve site performance.
-     &lt;h4&gt;Changes to the Privacy Policy&lt;/h4&gt;
-     We may update this policy from time to time. Please review it periodically to stay up-to-date
-     any
-     changes
-     If you have further questions about our Privacy Policy, please contact us.</value>
+    <value>&lt;h1&gt;Privacy Policy&lt;/h1&gt;     This Privacy Policy explains how we collect, use and protect your personal information on our     website.     &lt;h4&gt;Collection and use of information&lt;/h4&gt;     We may collect various information for various purposes in order to improve our website and provide you with better services. This one     information may include your name, email address, contact information and other information you provide to us     provide     &lt;h4&gt;Privacy and Security&lt;/h4&gt;     We take the security of your personal information very seriously and do everything we can to protect it. We are not     we disclose your data to third parties without your consent.     Cookies     Our website may use cookies to improve your user experience. It helps us     analyze     traffic data and improve site performance.     &lt;h4&gt;Changes to the Privacy Policy&lt;/h4&gt;     We may update this policy from time to time. Please review it periodically to stay up-to-date     any     changes     If you have further questions about our Privacy Policy, please contact us.</value>
+    <comment/>
   </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Remember me?</value>
+    <comment/>
   </data>
   <data name="ReviewMinus" xml:space="preserve">
     <value>Minus</value>
+    <comment/>
   </data>
   <data name="ReviewPlus" xml:space="preserve">
     <value>Plus</value>
+    <comment/>
   </data>
   <data name="ReviewRating" xml:space="preserve">
     <value>Review rating</value>
+    <comment/>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+    <comment/>
   </data>
   <data name="SetTags" xml:space="preserve">
     <value>Set tags</value>
+    <comment/>
   </data>
   <data name="SignInToPostComments" xml:space="preserve">
     <value>Sign in to post comments</value>
+    <comment/>
   </data>
   <data name="AssignARole" xml:space="preserve">
     <value>Assign a role</value>
+    <comment/>
   </data>
   <data name="Block" xml:space="preserve">
     <value>Block</value>
+    <comment/>
   </data>
   <data name="Blocked" xml:space="preserve">
     <value>Blocked</value>
+    <comment/>
   </data>
   <data name="DeleteRole" xml:space="preserve">
     <value>Delete role</value>
+    <comment/>
   </data>
   <data name="NotBlocked" xml:space="preserve">
     <value>Not blocked</value>
+    <comment/>
   </data>
   <data name="NothingFound" xml:space="preserve">
     <value>NOTHING FOUND</value>
+    <comment/>
   </data>
   <data name="RegistrationDate" xml:space="preserve">
     <value>Registration date</value>
+    <comment/>
   </data>
   <data name="RoleName" xml:space="preserve">
     <value>Role name</value>
+    <comment/>
   </data>
   <data name="Roles" xml:space="preserve">
     <value>Roles</value>
+    <comment/>
   </data>
   <data name="SearchResultsFor" xml:space="preserve">
     <value>SEARCH RESULTS FOR</value>
+    <comment/>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
+    <comment/>
   </data>
   <data name="Unblock" xml:space="preserve">
     <value>Unblock</value>
+    <comment/>
   </data>
   <data name="PostType_Article" xml:space="preserve">
     <value>Article</value>
+    <comment/>
   </data>
   <data name="PostType_Guide" xml:space="preserve">
     <value>Guide</value>
+    <comment/>
   </data>
   <data name="PostType_News" xml:space="preserve">
     <value>News</value>
+    <comment/>
   </data>
   <data name="PostType_Review" xml:space="preserve">
     <value>Review</value>
+    <comment/>
   </data>
   <data name="TitleFileRequired" xml:space="preserve">
     <value>Title file required</value>
+    <comment/>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+    <comment/>
   </data>
   <data name="InSaved" xml:space="preserve">
     <value>IN BOOKMARKS</value>
+    <comment/>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Add to bookmarks</value>
+    <comment/>
   </data>
   <data name="AccessDenied" xml:space="preserve">
     <value>Access denied</value>
+    <comment/>
   </data>
   <data name="AccessDeniedDescription" xml:space="preserve">
     <value>You do not have access to this resource. Maybe you don't have the right rights or you're blocked</value>
+    <comment/>
   </data>
   <data name="ConfirmDelete" xml:space="preserve">
     <value>Are you sure you want to delete this post?</value>
+    <comment/>
   </data>
   <data name="ConfirmEmail" xml:space="preserve">
     <value>Confirm email</value>
+    <comment/>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>User profile</value>
+    <comment/>
   </data>
   <data name="FirstPage" xml:space="preserve">
     <value>First</value>
+    <comment/>
   </data>
   <data name="LastPage" xml:space="preserve">
     <value>Last</value>
+    <comment/>
   </data>
 </root>

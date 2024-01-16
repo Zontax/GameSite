@@ -14,8 +14,10 @@ public class ApplicationDbContext : IdentityDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+		base.OnModelCreating(modelBuilder);
 
+		modelBuilder.UseIdentityColumns();
+        
         modelBuilder.Entity<Post>()
             .HasMany(p => p.LikedByUsers)
             .WithMany(u => u.LikedPosts)

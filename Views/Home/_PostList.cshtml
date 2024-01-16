@@ -95,8 +95,12 @@
 
                 <p title="@post.Date.ToString("yyyy-MM-dd HH:mm")">
                     @post.Date.ToString("dd MMMM, yyyy")
-                    <span class="comment-icon">💬</span>
-                    @(post.Comments?.Count() ?? 0)
+
+                    <a class="no-underline" asp-action="Show" asp-route-id="@post.Id" asp-fragment="comments">
+                        <span class="comment-icon">💬</span>
+                        @(post.Comments?.Count() ?? 0)  </a>
+                    <span>👍@post.LikesCount  </span>
+                    <span>👎@post.DislikesCount  </span>
                 </p>
 
                 @if (SignInManager.IsSignedIn(User))

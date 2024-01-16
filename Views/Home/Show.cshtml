@@ -86,7 +86,7 @@
         </p>
     </div>
 
-    <h5>@Resources.Resource.Comments</h5>
+    <h5 id="comments">@Resources.Resource.Comments</h5>
     @if (!SignInManager.IsSignedIn(User))
     {
         <p >
@@ -177,6 +177,15 @@
 
 @section Scripts {
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const fragment = window.location.hash.substr(1); // Отримуємо фрагмент з URL
+            const element = document.getElementById(fragment); // Знаходимо елемент за ідентифікатором
+
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth" }); // Прокручуємо до елементу з плавним ефектом
+            }
+        });
+
         $(document).ready(function () {
 
             function performAction(button, postId, userId, action, likeElement, dislikeElement) {

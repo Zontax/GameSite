@@ -13,7 +13,7 @@ public class AdminController : Controller
     readonly ApplicationDbContext context;
     readonly UserManager<ApplicationUser> userManager;
     readonly RoleManager<IdentityRole> roleManager;
-
+    
     public AdminController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         this.context = context;
@@ -41,7 +41,8 @@ public class AdminController : Controller
     [HttpPost]
     public async Task<ActionResult> ManageRole(string submitType, string userId, string role)
     {
-        ApplicationUser? user = await userManager.FindByIdAsync(userId);
+		var currentUser = await userManager.GetUserAsync(User);
+		ApplicationUser? user = await userManager.FindByIdAsync(userId);
 
         if (user == null || submitType.IsNullOrEmpty())
             return RedirectToAction("Index", "Home");
@@ -65,7 +66,11 @@ public class AdminController : Controller
                 if (!role.IsNullOrEmpty())
                 {
                     role = role.Trim();
-                    await userManager.RemoveFromRoleAsync(user, role);
+
+                    if (role.ToLower() == "admin" && currentUser == user)
+						break;
+
+					await userManager.RemoveFromRoleAsync(user, role);
                     await context.SaveChangesAsync();
                 }
                 break;
@@ -93,7 +98,7 @@ public class AdminController : Controller
         context.Comments.Remove(comment);
         await context.SaveChangesAsync();
 
-        return RedirectToAction("Show", "Home", new { id = postId });
+        return Redirect(Url.Action("Show", "Home", new { id = postId }) + "#comments");
     }
 }
 

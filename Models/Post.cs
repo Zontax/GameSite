@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using GameSite.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameSite.Models;
 
+[Index(nameof(TypeId))]
 public class Post
 {
     public int Id { get; set; }
@@ -61,7 +64,7 @@ public class Post
     public DateTime EditedDate { get; set; } = DateTime.UtcNow;
 
     [Display(Name = "ReviewRating", ResourceType = typeof(Resources.Resource))]
-    public int? ReviewRating { get; set; }
+    public int? ReviewRating { get; set; } = 0;
 
     [Display(Name = "ReviewPlus", ResourceType = typeof(Resources.Resource))]
     public string? ReviewPlus { get; set; } = string.Empty;

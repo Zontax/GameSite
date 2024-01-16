@@ -210,7 +210,7 @@
     <comment/>
   </data>
   <data name="AddTags" xml:space="preserve">
-    <value>Додайте теги таким чином "тег1, тег2, третій_тег" через кому</value>
+    <value>Додайте теги таким чином "тег 1, тег 2, 3-й тег"</value>
     <comment/>
   </data>
   <data name="Author" xml:space="preserve">

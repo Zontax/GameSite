@@ -5,24 +5,23 @@
 namespace GameSite.Migrations
 {
     /// <inheritdoc />
-    public partial class AuthorIdInPost : Migration
+    public partial class AddIndexToTypeId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "UrlSlug",
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_TypeId",
                 table: "Posts",
-                newName: "AuthorId");
+                column: "TypeId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "AuthorId",
-                table: "Posts",
-                newName: "UrlSlug");
+            migrationBuilder.DropIndex(
+                name: "IX_Posts_TypeId",
+                table: "Posts");
         }
     }
 }
