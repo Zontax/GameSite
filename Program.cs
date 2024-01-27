@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("PostgreConnection");
-
 builder.Services.AddLocalization(options =>
     options.ResourcesPath = "Resources");
+
+var connectionString = builder.Configuration.GetConnectionString("PostgreConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString)); // PostgreSQL
@@ -58,7 +58,7 @@ builder.Services.Configure<RouteOptions>(options =>
     options.LowercaseUrls = true;
 });
 
-//builder.Services.AddTransient<IEmailSender, EmailSender>();
+// builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -102,6 +102,37 @@ using (var scope = app.Services.CreateScope())
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
 	AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); // Щоб не використовувати DateTimeOffset
-	PostDbInitializer.Initialize(context, userManager, roleManager);
+
+	// Додати адміна в БД при запуску сайта
+	var adminEmail = "jrvadim18@gmail.com";
+    var adminPassword = "asd123456";
+    var roles = new[] { "Admin", "Author", "Manager" };
+
+    foreach (var role in roles)
+    {
+	    if (!await roleManager.RoleExistsAsync(role))
+		    await roleManager.CreateAsync(new IdentityRole(role));
+    }
+
+    if (!context.Users.Any())
+    {
+	    if (await userManager.FindByEmailAsync(adminEmail) == null)
+	    {
+		    var admin = new ApplicationUser
+		    {
+			    Name = "ADMIN",
+			    Email = adminEmail,
+			    UserName = adminEmail,
+			    RegistrationDate = DateTime.Now,
+			    EmailConfirmed = true
+		    };
+
+		    await userManager.CreateAsync(admin, adminPassword);
+		    await userManager.AddToRoleAsync(admin, "Admin");
+		    await userManager.AddToRoleAsync(admin, "Author");
+	    }
+    } 
+
+    await context.SaveChangesAsync(); 
 }
 app.Run();

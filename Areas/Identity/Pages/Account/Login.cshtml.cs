@@ -121,7 +121,7 @@ public class LoginModel : PageModel
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Недійсна спроба входу.");
+                ModelState.AddModelError(string.Empty, Resources.Resource.ErrorLoginOrPassword);
                 return Page();
             }
         }

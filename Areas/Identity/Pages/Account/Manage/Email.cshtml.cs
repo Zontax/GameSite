@@ -65,7 +65,7 @@ namespace GameSite.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "Нова пошта (Email)")]
+            [Display(Name = "NewEmail", ResourceType = typeof(Resources.Resource))]
             public string NewEmail { get; set; }
         }
 
@@ -119,16 +119,17 @@ namespace GameSite.Areas.Identity.Pages.Account.Manage
                     pageHandler: null,
                     values: new { area = "Identity", userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
+                await _emailSender
+                    .SendEmailAsync(
                     Input.NewEmail,
-                    "Підтвердіть свою електронну адресу",
-                    $"Будь ласка підтвердіть свій аккаунт <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>натиснувши тут</a>.");
+                    Resources.Resource.ConfirmYourEmailAddress,
+                    $"{Resources.Resource.PleaseConfirmYourAccountPart1} <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>{Resources.Resource.PleaseConfirmYourAccountPart2}</a>.");
 
-                StatusMessage = "Надіслано посилання для підтвердження зміни електронної пошти. Будь ласка, перевірте свою електронну пошту.";
+                StatusMessage = Resources.Resource.MessageSentToEmail;
                 return RedirectToPage();
             }
 
-            StatusMessage = "Пошту не було змінено.";
+            StatusMessage = Resources.Resource.EmailDontBeChanged;
             return RedirectToPage();
         }
 
@@ -137,7 +138,7 @@ namespace GameSite.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Не вдалося завантажити користувача з ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"{Resources.Resource.FailedToLoadUserWithID} '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -155,12 +156,13 @@ namespace GameSite.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
+            await _emailSender
+                .SendEmailAsync(
                 email,
-                "Підтвердіть свою електронну адресу",
-                $"Будь ласка, підтвердіть свій аккаунт, <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>натиснувши тут</a>.");
+                Resources.Resource.ConfirmYourEmailAddress,
+                $"{Resources.Resource.PleaseConfirmYourAccountPart1} <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>{Resources.Resource.PleaseConfirmYourAccountPart2}</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = Resources.Resource.MessageSentToEmail;
             return RedirectToPage();
         }
     }

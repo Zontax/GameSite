@@ -66,7 +66,8 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <button class="btn btn-outline-primary" id="favoriteButton" data-postid="@ViewBag.Post.Id">
-                    @Resources.Resource.Save</button>
+                    @Resources.Resource.Bookmarked
+                </button>
             }
         </p>
         <p>
@@ -86,14 +87,13 @@
         </p>
     </div>
 
-    <h5 id="comments">@Resources.Resource.Comments</h5>
+    <h5 id="comments">@Resources.Resource.Comments @(((ICollection<Comment>?)ViewBag.Post.Comments)?.Count()) </h5>
+        
     @if (!SignInManager.IsSignedIn(User))
     {
-        <p >
-            <a asp-area="Identity" asp-page="/Account/Login">         
-                @Resources.Resource.SignInToPostComments
-            </a> 
-        </p>
+        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">
+            @Resources.Resource.SignInToPostComments
+        </a> 
     }
     else
     {

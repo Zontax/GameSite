@@ -47,28 +47,39 @@ public class ChangePasswordModel : PageModel
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+            ErrorMessageResourceName = "RequiredField")]
         [DataType(DataType.Password)]
-        [Display(Name = "Поточний пароль")]
+        [Display(Name = "CurrentPassword", ResourceType = typeof(Resources.Resource))]
         public string OldPassword { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        [Required]
-        [StringLength(100, ErrorMessage = "{0} має містити принаймні {2} і не більше {1} символів.", MinimumLength = 6)]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+            ErrorMessageResourceName = "RequiredField")]
+        [StringLength(100, 
+            ErrorMessageResourceType = typeof(Resources.Resource),
+            ErrorMessageResourceName = "PasswordMustContain021", 
+            MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Новий пароль")]
+        [Display(Name = "NewPassword", ResourceType = typeof(Resources.Resource))]
         public string NewPassword { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+            ErrorMessageResourceName = "RequiredField")]
         [DataType(DataType.Password)]
-        [Display(Name = "Підтвердити новий пароль")]
-        [Compare(nameof(NewPassword), ErrorMessage = "Паролі не збігаються.")]
+        [Display(Name = "ConfirmNewPassword", ResourceType = typeof(Resources.Resource))]
+        [Compare(
+            nameof(NewPassword), 
+            ErrorMessageResourceType = typeof(Resources.Resource),
+            ErrorMessageResourceName = "PasswordsDoNotMatch"
+        )]
         public string ConfirmPassword { get; set; }
     }
 
@@ -77,7 +88,7 @@ public class ChangePasswordModel : PageModel
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
         {
-            return NotFound($"Не вдалося завантажити користувача з ID '{_userManager.GetUserId(User)}'.");
+            return NotFound($"{Resources.Resource.FailedToLoadUserWithID} '{_userManager.GetUserId(User)}'.");
         }
 
         var hasPassword = await _userManager.HasPasswordAsync(user);
@@ -99,7 +110,7 @@ public class ChangePasswordModel : PageModel
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
         {
-            return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            return NotFound($"{Resources.Resource.FailedToLoadUserWithID} '{_userManager.GetUserId(User)}'.");
         }
 
         var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
@@ -114,7 +125,7 @@ public class ChangePasswordModel : PageModel
 
         await _signInManager.RefreshSignInAsync(user);
         _logger.LogInformation("User changed their password successfully.");
-        StatusMessage = "Your password has been changed.";
+        StatusMessage = Resources.Resource.YourPasswordHasBeenChanged;
 
         return RedirectToPage();
     }

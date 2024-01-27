@@ -1,0 +1,24 @@
+{
+    "dotnet.defaultSolution": "GameSite.sln",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/__pycache__": true,
+        "**/.db-shm": true,
+        "**/.db-wal": true,
+        "**/.meta": true,
+        "**/.vscode": true,
+        "**/temp": true,
+        "**/tmp": true,
+        "*.db-shm": true,
+        "**/*.db-shm": true,
+        "*.db-wal": true,
+        "**/*.db-wal": true
+    },
+    "editor.hideCursorInOverviewRuler": false,
+    "explorerExclude.backup": {}
+}

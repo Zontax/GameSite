@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,79 +26,79 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -119,318 +119,347 @@
   </resheader>
   <data name="RequiredField" xml:space="preserve">
     <value>Це поле обов'язкове</value>
-    <comment/>
   </data>
   <data name="UserList" xml:space="preserve">
     <value>Список користувачів</value>
-    <comment/>
   </data>
   <data name="User_Name" xml:space="preserve">
     <value>Ім'я, що буде відображатись на сайті</value>
-    <comment/>
   </data>
   <data name="News" xml:space="preserve">
     <value>Новини</value>
-    <comment/>
   </data>
   <data name="Reviews" xml:space="preserve">
     <value>Огляди</value>
-    <comment/>
   </data>
   <data name="Articles" xml:space="preserve">
     <value>Статті</value>
-    <comment/>
   </data>
   <data name="Guides" xml:space="preserve">
     <value>Гайди</value>
-    <comment/>
   </data>
   <data name="Create_a_post" xml:space="preserve">
     <value>Створити пост</value>
-    <comment/>
   </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>Адмін панель</value>
-    <comment/>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Зареєструватися</value>
-    <comment/>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Увійти</value>
-    <comment/>
   </data>
   <data name="SignOut" xml:space="preserve">
     <value>Вийти</value>
-    <comment/>
   </data>
   <data name="AboutUs" xml:space="preserve">
     <value>Про нас</value>
-    <comment/>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Підтвердити пароль</value>
-    <comment/>
   </data>
   <data name="CreateNewAccount" xml:space="preserve">
     <value>Створити новий акаунт</value>
-    <comment/>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Пошта (Email)</value>
-    <comment/>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
-    <comment/>
   </data>
   <data name="PasswordDontCompare" xml:space="preserve">
     <value>Паролі не збігаються</value>
-    <comment/>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Назад</value>
-    <comment/>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Видалити</value>
-    <comment/>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редагувати</value>
-    <comment/>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Наступна сторінка</value>
-    <comment/>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Теги</value>
-    <comment/>
   </data>
   <data name="AddTags" xml:space="preserve">
     <value>Додайте теги таким чином "тег 1, тег 2, 3-й тег"</value>
-    <comment/>
   </data>
   <data name="Author" xml:space="preserve">
     <value>Автор</value>
-    <comment/>
   </data>
   <data name="Comments" xml:space="preserve">
     <value>Коментарі</value>
-    <comment/>
   </data>
   <data name="Content" xml:space="preserve">
     <value>Контент</value>
-    <comment/>
   </data>
   <data name="CreatePost" xml:space="preserve">
     <value>Створити публікацію</value>
-    <comment/>
   </data>
   <data name="Edited" xml:space="preserve">
     <value>змінено</value>
-    <comment/>
   </data>
   <data name="No_more_than_140_characters" xml:space="preserve">
     <value>Не більше 140 символів</value>
-    <comment/>
   </data>
   <data name="Publicate" xml:space="preserve">
     <value>Опублікувати</value>
-    <comment/>
   </data>
   <data name="Publication_cover" xml:space="preserve">
     <value>Обкладинка публікації</value>
-    <comment/>
   </data>
   <data name="Publication_type" xml:space="preserve">
     <value>Тип публікації</value>
-    <comment/>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Назва</value>
-    <comment/>
   </data>
   <data name="SavedPosts" xml:space="preserve">
     <value>Закладки</value>
-    <comment/>
   </data>
   <data name="AddComment" xml:space="preserve">
     <value>Додати коментар</value>
-    <comment/>
   </data>
   <data name="AddToSaved" xml:space="preserve">
     <value>В закладки</value>
-    <comment/>
   </data>
   <data name="Answer" xml:space="preserve">
     <value>Відповісти</value>
-    <comment/>
   </data>
   <data name="BackPage" xml:space="preserve">
     <value>Назад</value>
-    <comment/>
   </data>
   <data name="Dislike" xml:space="preserve">
     <value>Не подобається</value>
-    <comment/>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
     <value>Забули пароль?</value>
-    <comment/>
   </data>
   <data name="Lang" xml:space="preserve">
     <value>Мова</value>
-    <comment/>
   </data>
   <data name="Like" xml:space="preserve">
     <value>Подобається</value>
-    <comment/>
   </data>
   <data name="NextPage" xml:space="preserve">
     <value>Далі</value>
-    <comment/>
   </data>
   <data name="PrivacyPolicy" xml:space="preserve">
     <value>&lt;h1&gt;Політика конфіденційності&lt;/h1&gt;    Ця Політика конфіденційності пояснює, як ми збираємо, використовуємо та захищаємо вашу особисту інформацію на нашому    веб-сайті.    &lt;h4&gt;Збір та використання інформації&lt;/h4&gt;    Ми можемо збирати різну інформацію для різних цілей, щоб покращити наш веб-сайт та надати вам кращі послуги. Ця    інформація може включати ваше ім'я, адресу електронної пошти, контактні дані та іншу інформацію, яку ви нам    надаєте.    &lt;h4&gt;Конфіденційність і безпека&lt;/h4&gt;    Ми приділяємо велику увагу безпеці вашої особистої інформації та робимо все можливе для її захисту. Ми не    розголошуємо ваші дані третім особам без вашої згоди.    Cookies    Наш веб-сайт може використовувати cookies для поліпшення вашого досвіду використання. Це допомагає нам    аналізувати    дані про трафік та покращувати роботу сайту.    &lt;h4&gt;Зміни у Політиці конфіденційності&lt;/h4&gt;    Ми можемо час від часу оновлювати цю політику. Будь ласка, періодично переглядайте її, щоб бути в курсі    будь-яких    змін.    Якщо у вас є додаткові питання про нашу Політику конфіденційності, будь ласка, зв'яжіться з нами.</value>
-    <comment/>
   </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Запам'ятати мене?</value>
-    <comment/>
   </data>
   <data name="ReviewMinus" xml:space="preserve">
     <value>Невдалося</value>
-    <comment/>
   </data>
   <data name="ReviewPlus" xml:space="preserve">
     <value>Вдалося</value>
-    <comment/>
   </data>
   <data name="ReviewRating" xml:space="preserve">
     <value>Оцінка</value>
-    <comment/>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Пошук</value>
-    <comment/>
   </data>
   <data name="SearchResultsFor" xml:space="preserve">
     <value>РЕЗУЛЬТАТИ ПОШУКУ ДЛЯ</value>
-    <comment/>
   </data>
   <data name="SetTags" xml:space="preserve">
     <value>Введіть теги</value>
-    <comment/>
   </data>
   <data name="SignInToPostComments" xml:space="preserve">
     <value>Увійдіть щоб залишати коментарі</value>
-    <comment/>
   </data>
   <data name="AssignARole" xml:space="preserve">
     <value>Назначити роль</value>
-    <comment/>
   </data>
   <data name="Block" xml:space="preserve">
     <value>Заблокувати</value>
-    <comment/>
   </data>
   <data name="Blocked" xml:space="preserve">
     <value>Заблокований</value>
-    <comment/>
   </data>
   <data name="DeleteRole" xml:space="preserve">
     <value>Видалити роль</value>
-    <comment/>
   </data>
   <data name="NotBlocked" xml:space="preserve">
     <value>Не заблокований</value>
-    <comment/>
   </data>
   <data name="NothingFound" xml:space="preserve">
     <value>НІЧОГО НЕ ЗНАЙДЕНО</value>
-    <comment/>
   </data>
   <data name="RegistrationDate" xml:space="preserve">
     <value>Дата реєстрації</value>
-    <comment/>
   </data>
   <data name="RoleName" xml:space="preserve">
     <value>Назва ролі</value>
-    <comment/>
   </data>
   <data name="Roles" xml:space="preserve">
     <value>Ролі</value>
-    <comment/>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Статус</value>
-    <comment/>
   </data>
   <data name="Unblock" xml:space="preserve">
     <value>Розблокувати</value>
-    <comment/>
   </data>
   <data name="PostType_Article" xml:space="preserve">
     <value>Стаття</value>
-    <comment/>
   </data>
   <data name="PostType_Guide" xml:space="preserve">
     <value>Гайд</value>
-    <comment/>
   </data>
   <data name="PostType_News" xml:space="preserve">
     <value>Новина</value>
-    <comment/>
   </data>
   <data name="PostType_Review" xml:space="preserve">
     <value>Огляд</value>
-    <comment/>
   </data>
   <data name="TitleFileRequired" xml:space="preserve">
     <value>Файл для обкладинки обов'язковий</value>
-    <comment/>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Помилка</value>
-    <comment/>
   </data>
   <data name="InSaved" xml:space="preserve">
     <value>В ЗАКЛАДКАХ</value>
-    <comment/>
   </data>
-  <data name="Save" xml:space="preserve">
+  <data name="Bookmarked" xml:space="preserve">
     <value>В закладки</value>
-    <comment/>
   </data>
   <data name="AccessDenied" xml:space="preserve">
     <value>Доступ заборонено</value>
-    <comment/>
   </data>
   <data name="AccessDeniedDescription" xml:space="preserve">
     <value>Ви не маєте доступу до цього ресурсу. Можливо  у вас нема відповідних прав або ви заблоковані</value>
-    <comment/>
   </data>
   <data name="ConfirmDelete" xml:space="preserve">
     <value>Ви впевнені, що хочете видалити цю публікацію?</value>
-    <comment/>
   </data>
   <data name="ConfirmEmail" xml:space="preserve">
     <value>Підтвердити електронну пошту</value>
-    <comment/>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Профіль</value>
-    <comment/>
   </data>
   <data name="FirstPage" xml:space="preserve">
     <value>Перша</value>
-    <comment/>
   </data>
   <data name="LastPage" xml:space="preserve">
     <value>Остання</value>
-    <comment/>
+  </data>
+  <data name="AddAuthenticationProgram" xml:space="preserve">
+    <value>Додати програму автентифікації</value>
+  </data>
+  <data name="ChangeEmail" xml:space="preserve">
+    <value>Змінити пошту</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Змінити пароль</value>
+  </data>
+  <data name="ClickHereToExit" xml:space="preserve">
+    <value>Натисніть тут, щоб вийти</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Підтвердити новий пароль</value>
+  </data>
+  <data name="ConfirmYourEmailAddress" xml:space="preserve">
+    <value>Підтвердіть свою електронну адресу</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Поточний пароль</value>
+  </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Видалити обліковий запис</value>
+  </data>
+  <data name="DownloadYourPersonalData" xml:space="preserve">
+    <value>Завантажте свої дані</value>
+  </data>
+  <data name="EmailDontBeChanged" xml:space="preserve">
+    <value>Пошту не було змінено</value>
+  </data>
+  <data name="EmailManagement" xml:space="preserve">
+    <value>Керування поштою</value>
+  </data>
+  <data name="EnterTheNameThatWillBeDisplayedOnTheSite" xml:space="preserve">
+    <value>Введіть ім'я, яке буде відображатись на сайті</value>
+  </data>
+  <data name="EnterYourPhoneNumber" xml:space="preserve">
+    <value>Будь ласка, введіть свій номер телефону.</value>
+  </data>
+  <data name="ErrorLoginOrPassword" xml:space="preserve">
+    <value>Неправильний логін чи пароль</value>
+  </data>
+  <data name="FailedToLoadUserWithID" xml:space="preserve">
+    <value>Не вдалося завантажити користувача з ID</value>
+  </data>
+  <data name="ManageYourAccount" xml:space="preserve">
+    <value>Керуйте своїм обліковим записом</value>
+  </data>
+  <data name="MessageSentToEmail" xml:space="preserve">
+    <value>Надіслано посилання для підтвердження зміни електронної пошти. Будь ласка, перевірте свою електронну пошту</value>
+  </data>
+  <data name="NewEmail" xml:space="preserve">
+    <value>Нова пошта (Email)</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Новий пароль</value>
+  </data>
+  <data name="PasswordMustContain021" xml:space="preserve">
+    <value>{0} має містити принаймні {2} і не більше {1} символів</value>
+  </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>Паролі не збігаються</value>
+  </data>
+  <data name="PersonalData" xml:space="preserve">
+    <value>Особисті дані</value>
+  </data>
+  <data name="PersonalDataTitle1" xml:space="preserve">
+    <value>Ваш обліковий запис містить персональні дані, які ви нам надали. Ця сторінка дозволяє завантажити або видалити ці дані.</value>
+  </data>
+  <data name="PersonalDataTitle2" xml:space="preserve">
+    <value>Видалення цих даних призведе до остаточного видалення вашого облікового запису, і його неможливо буде відновити.</value>
+  </data>
+  <data name="PesonalData" xml:space="preserve">
+    <value>Особисті дані</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Номер телефону</value>
+  </data>
+  <data name="PleaseConfirmYourAccountPart1" xml:space="preserve">
+    <value>Будь ласка, підтвердіть свій аккаунт,</value>
+  </data>
+  <data name="PleaseConfirmYourAccountPart2" xml:space="preserve">
+    <value>натиснувши тут</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TwoFactorAuthentication" xml:space="preserve">
+    <value>Двофакторна аутентифікація</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Ім'я користувача</value>
+  </data>
+  <data name="YourPasswordHasBeenChanged" xml:space="preserve">
+    <value>Ваш пароль був змінений</value>
+  </data>
+  <data name="YourProfileHasBeenUpdated" xml:space="preserve">
+    <value>Ваш профіль був оновлений</value>
+  </data>
+  <data name="YouSuccessfullyExitedTheSite" xml:space="preserve">
+    <value>Ви успішно вийшли з сайта</value>
+  </data>
+  <data name="_Name" xml:space="preserve">
+    <value>Ім'я</value>
   </data>
 </root>

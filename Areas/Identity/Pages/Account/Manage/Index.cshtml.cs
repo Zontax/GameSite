@@ -24,7 +24,7 @@ public class IndexModel : PageModel
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    [Display(Name = "Ім'я користувача")]
+    [Display(Name = "UserName", ResourceType = typeof(Resources.Resource))]
     public string Username { get; set; }
 
     /// <summary>
@@ -47,9 +47,11 @@ public class IndexModel : PageModel
     /// </summary>
     public class InputModel
     {
-        [Required(ErrorMessage = "Введіть ім'я, яке буде відображатись на сайті")]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources.Resource),
+            ErrorMessageResourceName = "EnterTheNameThatWillBeDisplayedOnTheSite")]
         [MaxLength(25)]
-        [Display(Name = "Ім'я")]
+        [Display(Name = "_Name", ResourceType = typeof(Resources.Resource))]
         public string Name { get; set; }
 
         /// <summary>
@@ -57,7 +59,7 @@ public class IndexModel : PageModel
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [Phone]
-        [Display(Name = "Номер телефону")]
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Resources.Resource))]
         public string PhoneNumber { get; set; }
     }
 
@@ -108,7 +110,7 @@ public class IndexModel : PageModel
             var updateResult = await _userManager.UpdateAsync(user);
             if (!updateResult.Succeeded)
             {
-                StatusMessage = "Не вдалося оновити профіль";
+                StatusMessage = Resources.Resource.Error;
                 return RedirectToPage();
             }
         }
@@ -119,13 +121,13 @@ public class IndexModel : PageModel
             var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
             if (!setPhoneResult.Succeeded)
             {
-                StatusMessage = "Неочікувана помилка під час спроби встановити номер телефону.";
+                StatusMessage = Resources.Resource.Error;
                 return RedirectToPage();
             }
         }
 
         await _signInManager.RefreshSignInAsync(user);
-        StatusMessage = "Ваш профіль був оновлений";
+        StatusMessage = Resources.Resource.YourProfileHasBeenUpdated;
         return RedirectToPage();
     }
 }

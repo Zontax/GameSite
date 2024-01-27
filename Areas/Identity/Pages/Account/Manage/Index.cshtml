@@ -17,17 +17,18 @@
                 <label asp-for="Username" class="form-label"></label>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Name" class="form-control" placeholder="Введіть своє ім'я." />
+                <input asp-for="Input.Name" class="form-control"/>
                 <label asp-for="Input.Name" class="form-label"></label>
                 <span asp-validation-for="Input.Name" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.PhoneNumber" class="form-control"
-                    placeholder="Будь ласка, введіть свій номер телефону." />
+                       placeholder="@Resources.Resource.EnterYourPhoneNumber" />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Зберегти</button>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">
+                @Resources.Resource.Save</button>
         </form>
     </div>
 </div>

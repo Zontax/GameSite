@@ -11,12 +11,13 @@
         {
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
                 asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Натисніть тут, щоб вийти</button>
+                <button type="submit" class="nav-link btn btn-link text-dark">
+                    @Resources.Resource.ClickHereToExit</button>
             </form>
         }
         else
         {
-            <p>Ви успішно вийшли з сайта.</p>
+            <p>@Resources.Resource.YouSuccessfullyExitedTheSite</p>
         }
     }
 </header>
