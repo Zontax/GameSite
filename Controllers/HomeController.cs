@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Text.RegularExpressions;
 using GameSite.Data;
 using GameSite.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -47,6 +46,44 @@ public class HomeController : Controller
         return View(posts);
     }
 
+    public async Task<IActionResult> Profile(string? id, int? page)
+    {
+        if (page == null || page < 1) page = 1;
+        if (page < 1) return NotFound();
+
+        if (string.IsNullOrEmpty(id)) return NotFound();
+        var user = await context.ApplicationUsers.FindAsync(id);
+        if (user == null) return NotFound();
+
+        var userRoles = await context.UserRoles
+            .Where(u => u.UserId == id)
+            .Select(u => u.RoleId)
+            .ToListAsync();
+
+        var roles = await context.Roles
+            .Where(r => userRoles.Contains(r.Id))
+            .ToListAsync();
+
+        var posts = await context.Posts
+            .AsNoTracking()
+            .Include(p => p.Comments)
+            .Where(p => p.AuthorId == user.Id)
+            .OrderByDescending(post => post.Date)
+            .ToListAsync();
+
+        Pager pager = new(posts.Count(), page, 7, nameof(Profile), "Home", null, null, id);
+        posts = posts.ToPagedList(pager);
+
+        ViewBag.User = user;
+        ViewBag.Roles = roles;
+        ViewBag.Pager = pager;
+        ViewBag.Posts = posts;
+
+        if (page > pager.TotalPages) return NotFound();
+
+        return View();
+    }
+
     public async Task<IActionResult> Index(int? page)
     {
         if (page == null || page < 1) page = 1;
@@ -72,22 +109,22 @@ public class HomeController : Controller
 
     public async Task<IActionResult> News(int? page)
     {
-        return await GetPostsByType(PostType.Новина, page, "News");
+        return await GetPostsByType(PostType.Новина, page, nameof(News));
     }
 
     public async Task<IActionResult> Reviews(int? page)
     {
-        return await GetPostsByType(PostType.Огляд, page, "Reviews");
+        return await GetPostsByType(PostType.Огляд, page, nameof(Reviews));
     }
 
     public async Task<IActionResult> Articles(int? page)
     {
-        return await GetPostsByType(PostType.Стаття, page, "Articles");
+        return await GetPostsByType(PostType.Стаття, page, nameof(Articles));
     }
 
     public async Task<IActionResult> Guides(int? page)
     {
-        return await GetPostsByType(PostType.Гайд, page, "Guides");
+        return await GetPostsByType(PostType.Гайд, page, nameof(Guides));
     }
 
     [Authorize]
@@ -189,25 +226,29 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Show(int id)
     {
+#pragma warning disable CS8620 
         var post = await context.Posts
             .Include(p => p.Comments)
+                .ThenInclude(c => c.Author)
             .FirstOrDefaultAsync(p => p.Id == id);
+#pragma warning restore CS8620
 
         if (post == null) return NotFound();
-
         ViewBag.Post = post;
 
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Show(int postId, string author, string text, int? replyId)
+    public async Task<IActionResult> Show(int postId, string text, int? replyId)
     {
         if (ModelState.IsValid)
         {
-            if (!string.IsNullOrEmpty(author) && !string.IsNullOrEmpty(text))
+            var user = await userManager.GetUserAsync(User);
+
+            if (user != null && !string.IsNullOrEmpty(text))
             {
-                Comment coment = new(postId, author, text, false, replyId);
+                Comment coment = new(postId, user.Id, text, false, replyId);
                 await context.Comments.AddAsync(coment);
                 await context.SaveChangesAsync();
             }
@@ -234,9 +275,7 @@ public class HomeController : Controller
         if (ModelState.IsValid)
         {
             if (file != null && file.Length > 0)
-            {
                 post.TitleImage = await SaveFileAsync(file, "post_title_image");
-            }
 
             await context.Posts.AddAsync(post);
             await context.SaveChangesAsync();

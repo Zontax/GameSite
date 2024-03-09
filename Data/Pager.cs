@@ -13,14 +13,15 @@ public class Pager
 
     public string Controller { get; private set; } = string.Empty;
     public string Action { get; private set; } = string.Empty;
-    public string? Param1 { get; private set; }
-    public string? Param2 { get; private set; }
+    public string? Param1 { get; private set; } // tag
+    public string? Param2 { get; private set; } // search
+    public string? Param3 { get; private set; } // id
 
     public Pager()
     {
     }
 
-    public Pager(int totalItems, int? page, int pageSize = 7, string action = "Index", string controller = "Home", string? param1 = null, string? param2 = null)
+    public Pager(int totalItems, int? page, int pageSize = 7, string action = "Index", string controller = "Home", string? param1 = null, string? param2 = null, string? param3 = null)
     {
         int totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
         if (totalPages == 0) totalPages = 1;
@@ -51,6 +52,7 @@ public class Pager
         Action = action;
         Param1 = param1;
         Param2 = param2;
+        Param3 = param3;
         RecSkip = (currentPage - 1) * pageSize;
     }
 }

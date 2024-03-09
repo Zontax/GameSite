@@ -745,6 +745,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на балів.
+        /// </summary>
+        public static string Points {
+            get {
+                return ResourceManager.GetString("Points", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Стаття.
         /// </summary>
         public static string PostType_Article {
@@ -925,7 +934,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Закладки.
+        ///   Ищет локализованную строку, похожую на Ваші закладки.
         /// </summary>
         public static string SavedPosts {
             get {

@@ -60,7 +60,14 @@ public class IndexModel : PageModel
         /// </summary>
         [Phone]
         [Display(Name = "PhoneNumber", ResourceType = typeof(Resources.Resource))]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
+
+        [Display(Name = "Гендер")]
+        public bool? Gender { get; set; }
+
+        [MaxLength(200)]
+        [Display(Name = "Опис")]
+        public string Description { get; set; }
     }
 
     async Task LoadAsync(ApplicationUser user)
@@ -68,6 +75,8 @@ public class IndexModel : PageModel
         var name = user.Name;
         var userName = await _userManager.GetUserNameAsync(user);
         var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+        var description = user.Description;
+        var gender = user.Gender;
 
         Username = userName;
 
@@ -75,6 +84,8 @@ public class IndexModel : PageModel
         {
             PhoneNumber = phoneNumber,
             Name = name,
+            Description = description,
+            Gender = gender,
         };
     }
 
@@ -126,8 +137,31 @@ public class IndexModel : PageModel
             }
         }
 
+        if (Input.Description != user.Description)
+        {
+            user.Description = Input.Description;
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                StatusMessage = Resources.Resource.Error;
+                return RedirectToPage();
+            }
+        }
+
+        if (Input.Gender != user.Gender)
+        {
+            user.Gender = Input.Gender;
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                StatusMessage = Resources.Resource.Error;
+                return RedirectToPage();
+            }
+        }
+
         await _signInManager.RefreshSignInAsync(user);
         StatusMessage = Resources.Resource.YourProfileHasBeenUpdated;
-        return RedirectToPage();
+
+        return RedirectToAction("Profile", new { id = user.Id });
     }
 }

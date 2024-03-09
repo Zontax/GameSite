@@ -1,8 +1,0 @@
-@model Comment
-<form asp-action="CreateComment" method="post"> <!-- asp-action вказує на метод контролера для обробки POST запиту -->
-    <div class="form-group">
-        <label asp-for="Text"></label>
-        <textarea asp-for="Text" class="form-control"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Додати коментар</button>
-</form>

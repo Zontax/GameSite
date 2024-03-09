@@ -15,10 +15,10 @@
     <div class="show-post-title"><center><h1>@ViewBag.Post.Title</h1></center></div>
     <div class="show-post">
         
-        <p class="author-date">@ViewBag.Post.Date.ToString("dd MMMM, yyyy") @Resources.Resource.Author: <b>@ViewBag.Post.Author</b></p>
-
+        <p class="author-date">@ViewBag.Post.Date.ToString("dd MMMM, yyyy") @Resources.Resource.Author: <a asp-controller="Home" asp-action="Profile" asp-route-id="@ViewBag.Post.AuthorId">@ViewBag.Post.Author</a></p>
+        
         <div>
-           @Html.Raw(ViewBag.Post.Content)
+            @Html.Raw(ViewBag.Post.Content)
         </div>
 
         @if (ViewBag.Post.TypeId == PostType.Огляд && ViewBag.Post.ReviewPlus != null && ViewBag.Post.ReviewMinus != null && ViewBag.Post.ReviewRating != null)
@@ -101,13 +101,10 @@
 
             <input type="hidden" value="@null" name="ReplyId" />
             <div class="form-group">
-                <span asp-validation-for="Author" class="text-danger"></span>
+                <span asp-validation-for="PostId" class="text-danger"></span>
                 <input asp-for="PostId" class="form-control" value="@ViewBag.Post.Id" readonly hidden>
             </div>
-            <div class="form-group">
-                <span asp-validation-for="Author" class="text-danger"></span>
-                <input asp-for="Author" class="form-control" value="@user?.Name" readonly hidden>
-            </div>
+     
             <div class="form-group">
                 <span asp-validation-for="Text" class="text-danger"></span>
                 <textarea asp-for="Text" class="form-control"></textarea>
@@ -126,14 +123,15 @@
                     @(DateTime.UtcNow.Add(-((TimeSpan)(DateTime.UtcNow - comment.Date))).Humanize())
                     @if (comment.Edited) { <b> (@Resources.Resource.Edited)</b> }
                 </p>
-                <p><b>@comment.Author: </b>@comment.Text</p>
+                <p><b><a asp-controller="Home" asp-action="Profile" asp-route-id="@comment.AuthorId">@comment.Author?.Name</a>: </b>
+                    @comment.Text</p>
 
                 @if (User.IsInRole("Admin"))
                 {
                     <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteComment"
                        asp-route-commentId="@comment.Id"
                        asp-route-postId="@ViewBag.Post.Id"
-                       onclick="return confirmDelete('@("Видалити коментар?")');">
+                       onclick="return confirmDelete('@(Resources.Resource.ConfirmDelete)');">
                         @Resources.Resource.Delete
                     </a>
                 }
@@ -141,6 +139,7 @@
 
             @* @if (SignInManager.IsSignedIn(User))
             {
+                // Форма для коментарів відповідей
                 <form asp-action="Show" method="post" class="comment-form" id="commentReplyForm">
 
                     <input type="hidden" value="@ViewBag.Post.Id" name="PostId" />
@@ -164,7 +163,7 @@
                 .OrderByDescending(c => c.Date))
             {
                 <div class="reply-comment">
-                    <p title="(reply to @comment.Author)"><b>@reply.Author: </b> @reply.Text</p>
+                    <p title="(reply to @comment.Author.Name)"><b>@reply.Author.Name: </b> @reply.Text</p>
                     <p class="date-time" title="@reply.Date.ToString("yyyy-MM-dd HH:mm")">
                         @(DateTime.UtcNow.Add(-((TimeSpan)(DateTime.UtcNow - reply.Date))).Humanize())
                         @if (reply.Edited) { <b> (@Resources.Resource.Edited)</b> }

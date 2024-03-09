@@ -13,9 +13,9 @@ var connectionString = builder.Configuration.GetConnectionString("PostgreConnect
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString)); // PostgreSQL
-    //options.UseSqlite(connectionString)); //  SQLite 
-    //options.UseSqlServer(connectionString)); // MS SQL Server
-    //options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+                                          //options.UseSqlite(connectionString)); //  SQLite 
+                                          //options.UseSqlServer(connectionString)); // MS SQL Server
+                                          //options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -24,7 +24,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 
 builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<SignInManager<ApplicationUser>>();
-
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -101,38 +100,38 @@ using (var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-	AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); // Щоб не використовувати DateTimeOffset
+    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); // Щоб не використовувати DateTimeOffset
 
-	// Додати адміна в БД при запуску сайта
-	var adminEmail = "jrvadim18@gmail.com";
-    var adminPassword = "asd123456";
+    // Додати адміна в БД при запуску сайта
+    var adminEmail = "jrvadim18@gmail.com";
+    var adminPassword = "*********";
     var roles = new[] { "Admin", "Author", "Manager" };
 
     foreach (var role in roles)
     {
-	    if (!await roleManager.RoleExistsAsync(role))
-		    await roleManager.CreateAsync(new IdentityRole(role));
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
     }
 
     if (!context.Users.Any())
     {
-	    if (await userManager.FindByEmailAsync(adminEmail) == null)
-	    {
-		    var admin = new ApplicationUser
-		    {
-			    Name = "ADMIN",
-			    Email = adminEmail,
-			    UserName = adminEmail,
-			    RegistrationDate = DateTime.Now,
-			    EmailConfirmed = true
-		    };
+        if (await userManager.FindByEmailAsync(adminEmail) == null)
+        {
+            var admin = new ApplicationUser
+            {
+                Name = "ADMIN",
+                Email = adminEmail,
+                UserName = adminEmail,
+                RegistrationDate = DateTime.Now,
+                EmailConfirmed = true
+            };
 
-		    await userManager.CreateAsync(admin, adminPassword);
-		    await userManager.AddToRoleAsync(admin, "Admin");
-		    await userManager.AddToRoleAsync(admin, "Author");
-	    }
-    } 
+            await userManager.CreateAsync(admin, adminPassword);
+            await userManager.AddToRoleAsync(admin, "Admin");
+            await userManager.AddToRoleAsync(admin, "Author");
+        }
+    }
 
-    await context.SaveChangesAsync(); 
+    await context.SaveChangesAsync();
 }
 app.Run();

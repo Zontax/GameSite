@@ -27,35 +27,24 @@
                 <a class="no-underline" asp-action="Show" asp-route-id="@post.Id">
                     <center><h3>@post.Title</h3></center>
                 </a>
-
-                @{
-                    string typeId = post.TypeId switch
+                <center>
+                    @if (CultureInfo.CurrentCulture.Name == "uk")
                     {
-                        PostType.Новина => "News",
-                        PostType.Огляд => "Review",
-                        PostType.Стаття => "Article",
-                        PostType.Гайд => "Guide",
-                        _ => "News",
-                    };
-                }
-                
-                @if (CultureInfo.CurrentCulture.Name == "uk")
-                {
-                    <b style="color: @SiteFunctions.GetColorCode(post.TypeId)">@post.TypeId</b>
-                }
-                else
-                {
-                    string Type = post.TypeId switch
+                        <b style="color: @SiteFunctions.GetColorCode(post.TypeId)">@post.TypeId</b>
+                    }
+                    else
                     {
-                        PostType.Новина => "News",
-                        PostType.Огляд => "Review",
-                        PostType.Стаття => "Article",
-                        PostType.Гайд => "Guide",
-                        _ => "News",
-                    };
-                    <b style="color: @SiteFunctions.GetColorCode(post.TypeId)">@Type</b>
-                }
-
+                        string Type = post.TypeId switch
+                        {
+                            PostType.Новина => "News",
+                            PostType.Огляд => "Review",
+                            PostType.Стаття => "Article",
+                            PostType.Гайд => "Guide",
+                            _ => "News",
+                        };
+                        <b style="color: @SiteFunctions.GetColorCode(post.TypeId)">@Type</b>
+                    }
+                </center>
                 @{
                     string Content = Regex
                         .Replace(post.Content, "<.*?>", "")
@@ -77,6 +66,14 @@
 
                 <p>@Content</p>
 
+                @if(post.TypeId == PostType.Огляд)
+                {
+                    <center>
+                        <div class="review-rating" title="@(post.ReviewRating)/100 @Resources.Resource.Points">
+                                @post.ReviewRating
+                        </div>
+                    </center>
+                }
                 <p>
                     <i>@Resources.Resource.Tags:
                         @{

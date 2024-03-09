@@ -16,7 +16,7 @@
         @if (pager.TotalPages > 1)
         {
             <ul class="pagination justify-content-end">
-                @if (pager.Param1 == null && pager.Param2 == null)
+                @if (pager.Param1 == null && pager.Param2 == null && pager.Param3 == null)
                 {
                     @if (pager.CurrentPage > 1)
                     {
@@ -111,6 +111,38 @@
                         <li class="page-item">
                             <a class="page-link" asp-controller="@pager.Controller" asp-action="@pager.Action"
                                 asp-route-search="@pager.Param2" asp-route-page="@pager.TotalPages">@Resources.Resource.LastPage</a>
+                        </li>
+                    }
+                }
+                else if (pager.Param1 == null && pager.Param2 == null && pager.Param3 != null)
+                {
+                    @if (pager.CurrentPage > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="@pager.Controller" asp-action="@pager.Action"
+                                asp-route-id="@pager.Param3" asp-route-page="1">@Resources.Resource.FirstPage</a>
+                        </li>
+                        <li>
+                            <a class="page-link" asp-controller="@pager.Controller" asp-action="@pager.Action"
+                                asp-route-id="@pager.Param3" asp-route-page="@(pager.CurrentPage - 1)">@Resources.Resource.BackPage</a>
+                        </li>
+                    }
+                    @for (int pge = pager.StartPage; pge <= pager.EndPage; pge++)
+                    {
+                        <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                            <a class="page-link" asp-controller="@pager.Controller" asp-action="@pager.Action"
+                                asp-route-id="@pager.Param3" asp-route-page="@(pge)">@pge</a>
+                        </li>
+                    }
+                    @if (pager.CurrentPage < pager.TotalPages)
+                    {
+                        <li>
+                            <a class="page-link" asp-controller="@pager.Controller" asp-action="@pager.Action"
+                                asp-route-id="@pager.Param3" asp-route-page="@(pager.CurrentPage + 1)">@Resources.Resource.NextPage</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="@pager.Controller" asp-action="@pager.Action"
+                                asp-route-id="@pager.Param3" asp-route-page="@pager.TotalPages">@Resources.Resource.LastPage</a>
                         </li>
                     }
                 }

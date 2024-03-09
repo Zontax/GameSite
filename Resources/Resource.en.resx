@@ -459,4 +459,7 @@
   <data name="_Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Points" xml:space="preserve">
+    <value>points</value>
+  </data>
 </root>

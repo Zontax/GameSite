@@ -10,13 +10,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    @if ((string?)ViewData["Title"] != "IgroNewsUa")
+    @if ((string?)ViewData["Title"] != "GameNewsUa")
     {
-        <title>@ViewData["Title"] - IgroNewsUa</title>
+        <title>@ViewData["Title"] - GameNewsUa</title>
     }
     else
     {
-        <title>IgroNewsUa</title>
+        <title>GameNewsUa</title>
     }
 
     <link rel="stylesheet" href="~/css/tooplate_style.css" />
@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="~/css/post-comments.css" />
     <link rel="stylesheet" href="~/css/recomended-posts.css" />
     <link rel="stylesheet" href="~/css/admin-panel.css" />
+    <link rel="stylesheet" href="~/css/user_profile.css" />
     <link rel="stylesheet" href="~/css/modal-window.css" />
 
 </head>
@@ -37,7 +38,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     <b>
-                        <span style="color: rgb(255, 145, 0);">Igro</span><span style="color: green;">News</span><span
+                        <span style="color: rgb(255, 145, 0);">Game</span><span style="color: green;">News</span><span
                             style="color: blue;">Ua</span>
                     </b>
                 </a>
@@ -101,7 +102,8 @@
 
     <footer class="footer text-muted">
         <div>
-            &copy; @(DateTime.UtcNow.ToString("yyyy")) - IgroNewsUa - <a asp-controller="Home" asp-action="About">
+            &copy; @(DateTime.UtcNow.ToString("yyyy")) - GameNewsUa - <a class="link-primary" asp-controller="Home"
+                asp-action="About">
                 @Resources.Resource.AboutUs
             </a>
         </div>

@@ -5,7 +5,7 @@ namespace GameSite.Models;
 
 public class AdminInitializer
 {
-    public static async void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
 		/* if (context.Posts.Any())
         {

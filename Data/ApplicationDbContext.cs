@@ -14,10 +14,10 @@ public class ApplicationDbContext : IdentityDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-		base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(modelBuilder);
 
-		modelBuilder.UseIdentityColumns();
-        
+        modelBuilder.UseIdentityColumns();
+
         modelBuilder.Entity<Post>()
             .HasMany(p => p.LikedByUsers)
             .WithMany(u => u.LikedPosts)
@@ -38,6 +38,11 @@ public class ApplicationDbContext : IdentityDbContext
             .WithOne(c => c.Post)
             .HasForeignKey(c => c.PostId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Comment>()
+            .HasOne(c => c.Author)
+            .WithMany()
+            .HasForeignKey(c => c.AuthorId);
     }
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }

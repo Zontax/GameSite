@@ -46,7 +46,7 @@ button.accept-policy {
     width: 100%;
     white-space: nowrap;
     line-height: 60px;
-    background-color: rgb(14, 14, 14);
+    background-color: #1c1c1c;
 }
 
 .input-validation-error {

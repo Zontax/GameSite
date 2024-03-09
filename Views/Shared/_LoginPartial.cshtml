@@ -39,7 +39,7 @@
         var user = await UserManager.GetUserAsync(User);
 
         <li class="nav-item" style="margin-left: 10px; margin-right: 10px;">
-            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/Index" title="@user?.UserName">
+            <a class="btn btn-primary" asp-controller="Home" asp-action="Profile" asp-route-id="@user?.Id">
                 @{
                     var userName = user?.Name ?? string.Empty;
                     var displayedName = userName.Length > 15 ? userName.Substring(0, 15) + "..." : userName;

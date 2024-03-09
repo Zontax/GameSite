@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Globalization
+@using GameSite.Data
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    ViewData["Title"] = ViewBag.User.Name;
+    var currentUser = await UserManager.GetUserAsync(User);
+}
+
+<center>
+    <div class="container">
+        <div class="row text-center">
+            <h2 class="card-title">@Resources.Resource.Profile: <b>@ViewBag.User.Name</b></h2>
+            <div class="profile-roles d-flex justify-content-center">
+                Ролі:&nbsp;
+                @foreach (var role in ViewBag.Roles)
+                {
+                    <span class="profile-role badge bg-primary">@role</span>
+                }
+            </div>
+            <p>@ViewBag.User.Description</p>
+            <p class="card-text">Дата приєднання: @ViewBag.User.RegistrationDate.ToString("dd MMMM, yyyy")</p>
+        </div>
+        <br>
+        @if (ViewBag.User.Id == currentUser?.Id)
+        {
+            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/Index">
+                Редагувати профіль
+            </a>
+        }
+    </div>
+    <br>
+</center>
+
+<partial name="_PostList" />
+<partial name="_Pagination" />

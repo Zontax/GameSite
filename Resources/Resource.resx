@@ -220,7 +220,7 @@
     <value>Назва</value>
   </data>
   <data name="SavedPosts" xml:space="preserve">
-    <value>Закладки</value>
+    <value>Ваші закладки</value>
   </data>
   <data name="AddComment" xml:space="preserve">
     <value>Додати коментар</value>
@@ -461,5 +461,8 @@
   </data>
   <data name="_Name" xml:space="preserve">
     <value>Ім'я</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>балів</value>
   </data>
 </root>

@@ -32,7 +32,7 @@
                     <b>@Resources.Resource.Roles:</b>
                     @foreach (string role in await SignInManager.UserManager.GetRolesAsync(user))
                     {
-                        <b> @role |</b>
+                        <span class="profile-role badge bg-primary">@role</span>
                     }
                 </p>
                 <p><b>@Resources.Resource.RegistrationDate:</b> @user?.RegistrationDate</p>

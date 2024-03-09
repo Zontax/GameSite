@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using GameSite.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameSite.Data;
 
 // Summary:
 //     Користувач сайта на основі IdentityUser
+[Index(nameof(Name), IsUnique = true)]
 public class ApplicationUser : IdentityUser
 {
     public string? Name { get; set; }
