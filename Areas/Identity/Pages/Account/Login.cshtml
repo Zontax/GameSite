@@ -4,14 +4,21 @@
     ViewData["Title"] = Resources.Resource.LogIn;
 }
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="row">
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
+                <br>
                 <center>
                     <h1>@Resources.Resource.LogIn</h1>
                 </center>
-                <hr />
+                <br>
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"
@@ -33,9 +40,9 @@
                 </div>
                 <div>
                     <button id="login-submit" type="submit"
-                        class="w-100 btn btn-lg btn-primary">@Resources.Resource.LogIn</button>
+                        class="w-100 btn btn-lg btn-success">@Resources.Resource.LogIn</button>
                 </div>
-                <hr />
+                <br>
                 <div>
                     <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">@Resources.Resource.ForgotPassword</a>

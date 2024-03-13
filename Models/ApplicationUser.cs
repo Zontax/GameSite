@@ -6,7 +6,7 @@ namespace GameSite.Data;
 
 // Summary:
 //     Користувач сайта на основі IdentityUser
-[Index(nameof(Name), IsUnique = true)]
+[Index(nameof(Name))]
 public class ApplicationUser : IdentityUser
 {
     public string? Name { get; set; }

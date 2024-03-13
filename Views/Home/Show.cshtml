@@ -91,9 +91,12 @@
         
     @if (!SignInManager.IsSignedIn(User))
     {
-        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">
-            @Resources.Resource.SignInToPostComments
-        </a> 
+        <div>
+            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">
+                @Resources.Resource.SignInToPostComments
+            </a>
+        </div>
+        <br>
     }
     else
     {
@@ -109,7 +112,7 @@
                 <span asp-validation-for="Text" class="text-danger"></span>
                 <textarea asp-for="Text" class="form-control"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">@Resources.Resource.AddComment</button>
+            <button type="submit">@Resources.Resource.AddComment</button>
 
         </form>
     }
@@ -163,7 +166,7 @@
                 .OrderByDescending(c => c.Date))
             {
                 <div class="reply-comment">
-                    <p title="(reply to @comment.Author.Name)"><b>@reply.Author.Name: </b> @reply.Text</p>
+                    <p title="(reply to @comment.Author?.Name)"><b>@reply.Author?.Name: </b> @reply.Text</p>
                     <p class="date-time" title="@reply.Date.ToString("yyyy-MM-dd HH:mm")">
                         @(DateTime.UtcNow.Add(-((TimeSpan)(DateTime.UtcNow - reply.Date))).Humanize())
                         @if (reply.Edited) { <b> (@Resources.Resource.Edited)</b> }

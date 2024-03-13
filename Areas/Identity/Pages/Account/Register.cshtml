@@ -4,13 +4,20 @@
     ViewData["Title"] = @Resources.Resource.Register;
 }
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <br>
             <center>
                 <h1>@Resources.Resource.Register</h1>
             </center>
-            <hr />
+            <br>
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Name" class="form-control" aria-required="true" />
@@ -36,7 +43,7 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit"
-                class="w-100 btn btn-lg btn-primary">@Resources.Resource.Register</button>
+                class="w-100 btn btn-lg btn-success">@Resources.Resource.Register</button>
         </form>
     </div>
     @* <div class="col-md-6 col-md-offset-2">

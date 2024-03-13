@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using GameSite.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,8 @@ public class Post
 
     [Required(ErrorMessageResourceType = typeof(Resources.Resource),
         ErrorMessageResourceName = "RequiredField")]
+
+    [Column("author")]
     [Display(Name = "Author", ResourceType = typeof(Resources.Resource))]
     public string Author { get; set; } = string.Empty;
 

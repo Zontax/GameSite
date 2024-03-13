@@ -2,6 +2,10 @@
 @using GameSite.Data
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@{
+    bool hideMainAndContainer = Context.Request.Path.StartsWithSegments("/Identity/Account/Login") ||
+    Context.Request.Path.StartsWithSegments("/Identity/Account/Register");
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -94,11 +98,19 @@
         </nav>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    @if (!hideMainAndContainer)
+    {
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    }
+    else
+    {
+        @RenderBody()
+    }
+
 
     <footer class="footer text-muted">
         <div>
